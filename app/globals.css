@@ -4,6 +4,7 @@
 
 @layer base {
   :root {
+    --chart-1: 215 70% 58%;
     --background: 20 66% 99%;
     --foreground: 20 51% 4%;
     --muted: 20 25% 86%;
@@ -101,5 +102,15 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
