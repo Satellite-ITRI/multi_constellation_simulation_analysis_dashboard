@@ -9,7 +9,7 @@ export const loginService = async (credentials) => {
       user_password: credentials.user_password
     });
 
-    if ('data' in response && response.data.status === 'success') {
+    if (response.data.status === 'success') {
       // 將使用者資料存入 localStorage 或 sessionStorage
       localStorage.setItem('userData', JSON.stringify(response.data.data));
       return {

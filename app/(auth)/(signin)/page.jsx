@@ -69,7 +69,7 @@ export default function LoginPage() {
         </form>
 
         <div className="text-center">
-          <Button variant="link" onClick={() => router.push('/auth/register')}>
+          <Button variant="link" onClick={() => router.push('/signup')}>
             還沒有帳號？立即註冊
           </Button>
         </div>

@@ -1,16 +1,17 @@
+// app/signup/service.js
 'use client';
 
 import { postAPI } from '@/app/api/entrypoint';
 
-export const registerService = async (userData) => {
+export const signupService = async (userData) => {
   try {
-    const response = await postAPI('auth/register', {
+    const response = await postAPI('meta_data_mgt/userManager/create_user', {
       user_name: userData.user_name,
       user_password: userData.user_password,
       user_email: userData.user_email
     });
 
-    if ('data' in response) {
+    if (response.data.status === 'success') {
       return {
         status: 'success',
         data: response.data

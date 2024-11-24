@@ -1,12 +1,13 @@
+// app/signup/page.jsx
 'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { registerService } from './service';
+import { signupService } from './service';
 
-export default function RegisterPage() {
+export default function SignupPage() {
   const router = useRouter();
   const [formData, setFormData] = useState({
     user_name: '',
@@ -26,9 +27,20 @@ export default function RegisterPage() {
     e.preventDefault();
     setError('');
 
-    const result = await registerService(formData);
+    // 基本驗證
+    if (!formData.user_email.includes('@')) {
+      setError('請輸入有效的電子郵件地址');
+      return;
+    }
+
+    if (formData.user_password.length < 8) {
+      setError('密碼長度至少需要8個字元');
+      return;
+    }
+
+    const result = await signupService(formData);
     if (result.status === 'success') {
-      router.push('/auth/login');
+      router.push('/login');
     } else {
       setError(result.message);
     }
@@ -37,7 +49,7 @@ export default function RegisterPage() {
   return (
     <div className="flex min-h-screen items-center justify-center">
       <div className="w-full max-w-md space-y-8 rounded-lg bg-white p-8 shadow">
-        <h2 className="text-center text-2xl font-bold">註冊</h2>
+        <h2 className="text-center text-2xl font-bold">註冊帳號</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -81,7 +93,7 @@ export default function RegisterPage() {
         </form>
 
         <div className="text-center">
-          <Button variant="link" onClick={() => router.push('/auth/login')}>
+          <Button variant="link" onClick={() => router.push('/')}>
             已有帳號？立即登入
           </Button>
         </div>
