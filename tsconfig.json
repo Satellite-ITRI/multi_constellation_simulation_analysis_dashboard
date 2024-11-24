@@ -27,7 +27,9 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/dashboard/overview/_components/overview.jsx"
+    "app/dashboard/overview/_components/overview.jsx",
+    "app/(auth)/_components/sigin-view.tsx",
+    "app/(auth)/(signin)/page.jsx"
   ],
   "exclude": ["node_modules"]
 }

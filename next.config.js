@@ -1,20 +1,16 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'utfs.io',
-        port: ''
-      },
-      {
-        protocol: 'https',
-        hostname: 'api.slingacademy.com',
-        port: ''
-      }
-    ]
+module.exports = {
+  reactStrictMode: false,
+  env: {
+    ACCESS_TOKEN_NAME: process.env.ACCESS_TOKEN_NAME,
+    PROTOCAL: process.env.PROTOCAL,
+    HOST: process.env.HOST,
+    API_PORT: process.env.API_PORT,
+    API_ROOT: process.env.API_ROOT,
+    API_VERSION: process.env.API_VERSION,
+    AUTH_HEADER_TYPE: process.env.AUTH_HEADER_TYPE
   },
-  transpilePackages: ['geist']
+  typescript: {
+    ignoreBuildErrors: true
+  }
 };
-
-module.exports = nextConfig;

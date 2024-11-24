@@ -14,7 +14,7 @@ import {
   CardTitle
 } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useFetchApplications } from '@/app/dashboard/overview/_components/service';
+import { useHandoverData } from '@/app/dashboard/overview/_components/service';
 import ApplicationCard from '@/app/dashboard/overview/_components/applicationCard';
 import HandoverAnalyzeForm from '@/app/dashboard/overview/_components/HandoverAnalyzeForm';
 import CustomToast from '@/components/base/CustomToast';
@@ -28,7 +28,8 @@ export default function OverViewPage() {
     setShowToast,
     toastType,
     toastMessage
-  } = useFetchApplications();
+  } = useHandoverData();
+
   const [showAnalyzeForm, setShowAnalyzeForm] = useState(false);
   return (
     <PageContainer scrollable>
@@ -52,9 +53,11 @@ export default function OverViewPage() {
             ) : (
               <div className="max-h-[630px] space-y-4 overflow-y-auto">
                 {!isLoading &&
-                  applications &&
-                  Object.entries(applications).map(([id, data]) => (
-                    <ApplicationCard key={id} id={id} data={data} />
+                  applications.map((handover) => (
+                    <ApplicationCard
+                      key={handover.handover_uid}
+                      data={handover}
+                    />
                   ))}
               </div>
             )}

@@ -1,88 +1,135 @@
+// service.jsx
 'use client';
 import { useEffect, useState } from 'react';
+import { postAPI } from '@/app/api/entrypoint';
 
-// 模擬的應用程序數據
-const MOCK_APPLICATIONS = {
-  1: {
-    strategy: 'MaxVisibleTime',
-    timing: 'Preemptive',
-    fleet: 'TLE_3P_22Sats_29deg_F1',
-    status: 'In Progress'
-  },
-  2: {
-    strategy: 'MaxVisibleTime',
-    timing: 'Nonpreemptive',
-    fleet: 'TLE_3P_22Sats_29deg_F1',
-    status: 'Done'
-  },
-  3: {
-    strategy: 'MinRange',
-    timing: 'Preemptive',
-    fleet: 'TLE_3P_22Sats_29deg_F1',
-    status: 'Failed'
-  }
-  // ... 其他數據
-};
-
-export const useFetchApplications = () => {
-  const [applications, setApplications] = useState([]);
+export const useHandoverData = () => {
+  const [handoverData, setHandoverData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [showToast, setShowToast] = useState(false);
-  const [toastType, setToastType] = useState('success');
-  const [toastMessage, setToastMessage] = useState('');
+  const [toast, setToast] = useState({
+    show: false,
+    type: '',
+    message: ''
+  });
+
+  const fetchHandoverData = async () => {
+    setIsLoading(true);
+
+    try {
+      const userData = JSON.parse(localStorage.getItem('userData'));
+      if (!userData?.user_uid) {
+        throw new Error('未找到使用者資料');
+      }
+
+      const response = await postAPI(
+        'meta_data_mgt/handoverManager/query_handoverData_by_user',
+        {
+          user_uid: userData.user_uid
+        }
+      );
+
+      if (response.data.status === 'success') {
+        setHandoverData(response.data.data.handovers);
+        setToast({
+          show: true,
+          type: 'success',
+          message: '成功獲取Handover資料'
+        });
+      } else {
+        throw new Error(response.data?.message || '獲取資料失敗');
+      }
+    } catch (error) {
+      console.error('獲取Handover資料錯誤:', error);
+      setToast({
+        show: true,
+        type: 'error',
+        message: error.message || '獲取Handover資料失敗'
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchApplications = async () => {
-      setIsLoading(true);
-
-      // 模擬 API 調用延遲
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      try {
-        // 將對象轉換為數組格式，以便於在UI中渲染
-        const formattedApplications = Object.entries(MOCK_APPLICATIONS).map(
-          ([id, data]) => ({
-            uid: id,
-            title: `${data.strategy} - ${data.timing}`,
-            status: data.status, // 你可以根據需要設置狀態
-            createdAt: new Date().toISOString(), // 模擬創建時間
-            updatedAt: new Date().toISOString(), // 模擬更新時間
-            description: `Fleet: ${data.fleet}`,
-            strategy: data.strategy,
-            timing: data.timing,
-            fleet: data.fleet
-          })
-        );
-
-        setApplications(formattedApplications);
-        setToastType('success');
-        setToastMessage('Handover records fetched successfully!');
-        setShowToast(true);
-      } catch (error) {
-        setToastType('error');
-        setToastMessage('Failed to fetch handover records.');
-        setShowToast(true);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchApplications();
+    fetchHandoverData();
   }, []);
 
   useEffect(() => {
-    if (showToast) {
-      const timer = setTimeout(() => setShowToast(false), 3000);
+    if (toast.show) {
+      const timer = setTimeout(() => {
+        setToast((prev) => ({ ...prev, show: false }));
+      }, 3000);
       return () => clearTimeout(timer);
     }
-  }, [showToast]);
+  }, [toast.show]);
 
   return {
-    applications,
+    applications: handoverData, // 改名以匹配父組件的期望
     isLoading,
-    showToast,
-    setShowToast,
-    toastType,
-    toastMessage
+    showToast: toast.show, // 解構 toast 物件
+    setShowToast: (show) => setToast((prev) => ({ ...prev, show })),
+    toastType: toast.type,
+    toastMessage: toast.message
+  };
+};
+
+export const useSimulation = () => {
+  const [isSimulating, setIsSimulating] = useState(false);
+  const [simulationToast, setSimulationToast] = useState({
+    show: false,
+    type: '',
+    message: ''
+  });
+
+  const runSimulation = async (handoverUid) => {
+    setIsSimulating(true);
+    try {
+      const response = await postAPI(
+        'simulation_data_mgt/handoverSimJobManager/run_handover_sim_job',
+        {
+          handover_uid: handoverUid
+        }
+      );
+
+      if (
+        response.data.status === 'success' ||
+        response.data.status === 'info'
+      ) {
+        setSimulationToast({
+          show: true,
+          type: 'success',
+          message: response.data.message
+        });
+        return response.data;
+      } else {
+        throw new Error(response.data?.message || '模擬啟動失敗');
+      }
+    } catch (error) {
+      console.error('執行模擬錯誤:', error);
+      setSimulationToast({
+        show: true,
+        type: 'error',
+        message: error.message || '模擬啟動失敗'
+      });
+      throw error;
+    } finally {
+      setIsSimulating(false);
+    }
+  };
+
+  useEffect(() => {
+    if (simulationToast.show) {
+      const timer = setTimeout(() => {
+        setSimulationToast((prev) => ({ ...prev, show: false }));
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [simulationToast.show]);
+
+  return {
+    runSimulation,
+    isSimulating,
+    simulationToast,
+    setSimulationToast
   };
 };
