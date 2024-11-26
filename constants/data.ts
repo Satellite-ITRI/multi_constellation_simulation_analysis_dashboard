@@ -123,8 +123,16 @@ export type Product = {
 
 export const navItems: NavItem[] = [
   {
+    title: 'Home',
+    url: '/constellation_simulation',
+    icon: 'dashboard',
+    isActive: false,
+    shortcut: ['d', 'd'],
+    items: [] // Empty array as there are no child items for Dashboard
+  },
+  {
     title: 'Handover',
-    url: '/constellation_simulation/',
+    url: '/constellation_simulation/handover',
     icon: 'dashboard',
     isActive: false,
     shortcut: ['d', 'd'],

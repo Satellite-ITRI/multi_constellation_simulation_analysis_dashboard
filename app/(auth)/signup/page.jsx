@@ -1,10 +1,15 @@
-// app/signup/page.jsx
 'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardFooter
+} from '@/components/ui/card';
 import { signupService } from './service';
 
 export default function SignupPage() {
@@ -40,64 +45,68 @@ export default function SignupPage() {
 
     const result = await signupService(formData);
     if (result.status === 'success') {
-      router.push('/login');
+      router.push('/');
     } else {
       setError(result.message);
     }
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <div className="w-full max-w-md space-y-8 rounded-lg bg-white p-8 shadow">
-        <h2 className="text-center text-2xl font-bold">註冊帳號</h2>
+    <div className="flex h-screen w-full items-center justify-center">
+      <Card className="mx-4 w-1/2 max-w-sm">
+        <CardHeader>
+          <h2 className="text-center text-2xl font-semibold">註冊帳號</h2>
+        </CardHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <Input
-              name="user_name"
-              type="text"
-              placeholder="使用者名稱"
-              value={formData.user_name}
-              onChange={handleChange}
-              required
-            />
-          </div>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Input
+                name="user_name"
+                type="text"
+                placeholder="使用者名稱"
+                value={formData.user_name}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-          <div>
-            <Input
-              name="user_email"
-              type="email"
-              placeholder="電子郵件"
-              value={formData.user_email}
-              onChange={handleChange}
-              required
-            />
-          </div>
+            <div className="space-y-2">
+              <Input
+                name="user_email"
+                type="email"
+                placeholder="電子郵件"
+                value={formData.user_email}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-          <div>
-            <Input
-              name="user_password"
-              type="password"
-              placeholder="密碼"
-              value={formData.user_password}
-              onChange={handleChange}
-              required
-            />
-          </div>
+            <div className="space-y-2">
+              <Input
+                name="user_password"
+                type="password"
+                placeholder="密碼"
+                value={formData.user_password}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-          {error && <p className="text-sm text-red-500">{error}</p>}
+            {error && <p className="text-sm text-red-500">{error}</p>}
 
-          <Button type="submit" className="w-full">
-            註冊
-          </Button>
-        </form>
+            <Button type="submit" className="w-full">
+              註冊
+            </Button>
+          </form>
+        </CardContent>
 
-        <div className="text-center">
+        <CardFooter className="flex justify-center">
           <Button variant="link" onClick={() => router.push('/')}>
             已有帳號？立即登入
           </Button>
-        </div>
-      </div>
+        </CardFooter>
+      </Card>
     </div>
   );
 }

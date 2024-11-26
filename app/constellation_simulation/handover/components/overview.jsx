@@ -4,9 +4,9 @@ import PageContainer from '@/components/layout/page-container';
 
 import { Button } from '@/components/ui/button';
 
-import { useHandoverData } from '@/app/dashboard/overview/_components/service';
-import ApplicationCard from '@/app/dashboard/overview/_components/applicationCard';
-import HandoverAnalyzeForm from '@/app/dashboard/overview/_components/HandoverAnalyzeForm';
+import { useHandoverData } from '@/app/constellation_simulation/handover/service';
+import HandoverCard from '@/app/constellation_simulation/handover/components/handoverCard';
+import HandoverAnalyzeForm from '@/app/constellation_simulation/handover/components/HandoverAnalyzeForm';
 import CustomToast from '@/components/base/CustomToast';
 import { ToastProvider, ToastViewport } from '@/components/ui/toast';
 import { useState } from 'react';
@@ -28,7 +28,7 @@ export default function OverViewPage() {
         <div className="mx-auto min-h-screen bg-gray-50 px-40 pt-32">
           <div className="mx-auto">
             <div className="mb-6 flex items-center justify-between">
-              <h1 className="text-2xl font-bold">ISL Record</h1>
+              <h1 className="text-2xl font-bold">Handover Record</h1>
               <Button
                 onClick={() => setShowAnalyzeForm(true)}
                 className="bg-primary text-white hover:bg-primary/90"
@@ -44,10 +44,7 @@ export default function OverViewPage() {
               <div className="max-h-[630px] space-y-4 overflow-y-auto">
                 {!isLoading &&
                   applications.map((handover) => (
-                    <ApplicationCard
-                      key={handover.handover_uid}
-                      data={handover}
-                    />
+                    <HandoverCard key={handover.handover_uid} data={handover} />
                   ))}
               </div>
             )}

@@ -1,90 +1,50 @@
 'use client';
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription
+} from '@/components/ui/card';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
-import PageContainer from '@/components/layout/page-container';
+export const metadata = {
+  title: 'Dashboard : Overview'
+};
 
-import { Button } from '@/components/ui/button';
-
-import { useHandoverData } from '@/app/dashboard/overview/_components/service';
-import ApplicationCard from '@/app/dashboard/overview/_components/applicationCard';
-import HandoverAnalyzeForm from '@/app/dashboard/overview/_components/HandoverAnalyzeForm';
-import CustomToast from '@/components/base/CustomToast';
-import { ToastProvider, ToastViewport } from '@/components/ui/toast';
-import { useState } from 'react';
-export default function OverViewPage() {
-  const {
-    applications,
-    isLoading,
-    showToast,
-    setShowToast,
-    toastType,
-    toastMessage
-  } = useHandoverData();
-
-  const [showAnalyzeForm, setShowAnalyzeForm] = useState(false);
+export default function Page() {
   return (
-    <PageContainer scrollable>
-      <ToastProvider>
-        {/* 將所有吐司相關的組件包裹在 ToastProvider 內部 */}
-        <div className="mx-auto min-h-screen bg-gray-50 px-40 pt-32">
-          <div className="mx-auto">
-            <div className="mb-6 flex items-center justify-between">
-              <h1 className="text-2xl font-bold">Handover Record</h1>
-              <Button
-                onClick={() => setShowAnalyzeForm(true)}
-                className="bg-primary text-white hover:bg-primary/90"
-              >
-                Create Handover Analyze
-              </Button>
-            </div>
-            {isLoading ? (
-              <div className="flex min-h-[200px] items-center justify-center">
-                <p>Loading...</p>
-              </div>
-            ) : (
-              <div className="max-h-[630px] space-y-4 overflow-y-auto">
-                {!isLoading &&
-                  applications.map((handover) => (
-                    <ApplicationCard
-                      key={handover.handover_uid}
-                      data={handover}
-                    />
-                  ))}
-              </div>
-            )}
-          </div>
-          {showAnalyzeForm && (
-            <div
-              className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 transition-opacity"
-              onClick={(e) => {
-                if (e.target === e.currentTarget) {
-                  setShowAnalyzeForm(false);
-                }
-              }}
-            >
-              <div
-                className="relative transform transition-all duration-300 ease-in-out"
-                style={{
-                  animation: 'slideIn 0.3s ease-out'
-                }}
-              >
-                <HandoverAnalyzeForm
-                  onClose={() => setShowAnalyzeForm(false)}
-                />
-              </div>
-            </div>
-          )}
+    <div className="container mx-auto p-6">
+      <h1 className="mb-6 text-2xl font-bold">選擇類別</h1>
 
-          {/* 使用封裝的 CustomToast 組件來顯示吐司通知 */}
-          <CustomToast
-            type={toastType}
-            message={toastMessage}
-            showToast={showToast}
-            setShowToast={setShowToast}
-          />
-          {/* 確保包含 ToastViewport 組件 */}
-          <ToastViewport />
-        </div>
-      </ToastProvider>
-    </PageContainer>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <Link href="constellation_simulation/handover">
+          <Card className="cursor-pointer transition-shadow hover:shadow-lg">
+            <CardHeader>
+              <CardTitle>Handover</CardTitle>
+              <CardDescription>處理交接相關事項</CardDescription>
+            </CardHeader>
+          </Card>
+        </Link>
+
+        <Link href="constellation_simulation/isl">
+          <Card className="cursor-pointer transition-shadow hover:shadow-lg">
+            <CardHeader>
+              <CardTitle>ISL</CardTitle>
+              <CardDescription>管理 ISL 相關設定</CardDescription>
+            </CardHeader>
+          </Card>
+        </Link>
+
+        <Link href="constellation_simulation/routing">
+          <Card className="cursor-pointer transition-shadow hover:shadow-lg">
+            <CardHeader>
+              <CardTitle>Routing</CardTitle>
+              <CardDescription>路由設定與管理</CardDescription>
+            </CardHeader>
+          </Card>
+        </Link>
+      </div>
+    </div>
   );
 }

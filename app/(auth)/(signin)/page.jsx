@@ -4,6 +4,12 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardFooter
+} from '@/components/ui/card';
 import { loginService } from './service';
 
 export default function LoginPage() {
@@ -34,46 +40,50 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <div className="w-full max-w-md space-y-8 rounded-lg bg-white p-8 shadow">
-        <h2 className="text-center text-2xl font-bold">登入</h2>
+    <div className="flex h-screen w-full items-center justify-center">
+      <Card className="mx-auto w-1/2 max-w-sm">
+        <CardHeader>
+          <h2 className="text-center text-2xl font-semibold">登入</h2>
+        </CardHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <Input
-              name="user_name"
-              type="text"
-              placeholder="使用者名稱"
-              value={formData.user_name}
-              onChange={handleChange}
-              required
-            />
-          </div>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Input
+                name="user_name"
+                type="text"
+                placeholder="使用者名稱"
+                value={formData.user_name}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-          <div>
-            <Input
-              name="user_password"
-              type="password"
-              placeholder="密碼"
-              value={formData.user_password}
-              onChange={handleChange}
-              required
-            />
-          </div>
+            <div className="space-y-2">
+              <Input
+                name="user_password"
+                type="password"
+                placeholder="密碼"
+                value={formData.user_password}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-          {error && <p className="text-sm text-red-500">{error}</p>}
+            {error && <p className="text-sm text-red-500">{error}</p>}
 
-          <Button type="submit" className="w-full">
-            登入
-          </Button>
-        </form>
+            <Button type="submit" className="w-full">
+              登入
+            </Button>
+          </form>
+        </CardContent>
 
-        <div className="text-center">
+        <CardFooter className="flex justify-center">
           <Button variant="link" onClick={() => router.push('/signup')}>
             還沒有帳號？立即註冊
           </Button>
-        </div>
-      </div>
+        </CardFooter>
+      </Card>
     </div>
   );
 }

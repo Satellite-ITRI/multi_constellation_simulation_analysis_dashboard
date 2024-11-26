@@ -46,9 +46,9 @@ import * as React from 'react';
 import { Icons } from '../icons';
 
 export const company = {
-  name: 'Acme Inc',
+  name: 'ITRI',
   logo: GalleryVerticalEnd,
-  plan: 'Enterprise'
+  plan: 'Multi-Constellation Simulation Platform'
 };
 
 export default function AppSidebar() {

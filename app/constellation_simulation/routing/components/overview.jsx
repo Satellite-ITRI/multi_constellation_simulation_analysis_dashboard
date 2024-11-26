@@ -28,7 +28,7 @@ export default function OverViewPage() {
         <div className="mx-auto min-h-screen bg-gray-50 px-40 pt-32">
           <div className="mx-auto">
             <div className="mb-6 flex items-center justify-between">
-              <h1 className="text-2xl font-bold">Handover Record</h1>
+              <h1 className="text-2xl font-bold">Routing Record</h1>
               <Button
                 onClick={() => setShowAnalyzeForm(true)}
                 className="bg-primary text-white hover:bg-primary/90"
