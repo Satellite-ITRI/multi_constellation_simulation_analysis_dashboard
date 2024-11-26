@@ -182,7 +182,7 @@ export const useDownloadResult = () => {
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = `simulation-result-${handoverUid}.pdf`;
+      link.download = `simulation-result-Routing.pdf`;
 
       // 觸發下載
       document.body.appendChild(link);
