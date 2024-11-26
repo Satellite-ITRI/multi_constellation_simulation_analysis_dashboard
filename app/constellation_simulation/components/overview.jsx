@@ -22,7 +22,7 @@ export default function Page() {
           <Card className="cursor-pointer transition-shadow hover:shadow-lg">
             <CardHeader>
               <CardTitle>Handover</CardTitle>
-              <CardDescription>處理交接相關事項</CardDescription>
+              <CardDescription>Simulation</CardDescription>
             </CardHeader>
           </Card>
         </Link>
@@ -31,7 +31,7 @@ export default function Page() {
           <Card className="cursor-pointer transition-shadow hover:shadow-lg">
             <CardHeader>
               <CardTitle>ISL</CardTitle>
-              <CardDescription>管理 ISL 相關設定</CardDescription>
+              <CardDescription>Simulation</CardDescription>
             </CardHeader>
           </Card>
         </Link>
@@ -40,7 +40,7 @@ export default function Page() {
           <Card className="cursor-pointer transition-shadow hover:shadow-lg">
             <CardHeader>
               <CardTitle>Routing</CardTitle>
-              <CardDescription>路由設定與管理</CardDescription>
+              <CardDescription>Simulation</CardDescription>
             </CardHeader>
           </Card>
         </Link>

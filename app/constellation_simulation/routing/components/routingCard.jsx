@@ -114,7 +114,7 @@ const ISLCard = ({ data, onRefresh }) => {
             )}
 
             {/* 執行模擬按鈕 */}
-            <button
+            {/* <button
               onClick={handleRunSimulation}
               disabled={
                 isSimulating ||
@@ -124,16 +124,16 @@ const ISLCard = ({ data, onRefresh }) => {
               className="transform rounded-lg bg-primary px-4 py-2 font-bold text-white transition-all hover:scale-105 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {isSimulating ? '執行中...' : '執行模擬'}
-            </button>
+            </button> */}
 
             {/* 刪除按鈕 */}
-            <button
+            {/* <button
               onClick={() => setIsDeleteModalOpen(true)}
               disabled={isDeleting || data.routing_status === 'processing'}
               className="transform rounded-lg bg-destructive px-4 py-2 font-bold text-white transition-all hover:scale-105 hover:bg-red-600 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {isDeleting ? '刪除中...' : '刪除'}
-            </button>
+            </button> */}
           </div>
         </div>
 

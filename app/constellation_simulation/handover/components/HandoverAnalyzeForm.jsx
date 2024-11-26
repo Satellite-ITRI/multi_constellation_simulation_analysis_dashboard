@@ -86,7 +86,7 @@ const HandoverAnalyzeForm = ({ onClose, onSuccess }) => {
           constellation: formData.constellation,
           handover_strategy: formData.handover_strategy,
           handover_decision: formData.handover_decision,
-          beam_count: formData.beam_count,
+          beam_counts: formData.beam_count,
           reuse_factor: formData.reuse_factor,
           cell_ut: formData.cell_ut
         },
@@ -172,7 +172,7 @@ const HandoverAnalyzeForm = ({ onClose, onSuccess }) => {
 
         {/* 星系選擇 */}
         <div className="space-y-2">
-          <label className="text-sm font-medium">星系</label>
+          <label className="text-sm font-medium">星系配置</label>
           <Select
             value={formData.constellation}
             onValueChange={(value) =>
@@ -194,7 +194,7 @@ const HandoverAnalyzeForm = ({ onClose, onSuccess }) => {
 
         {/* 策略選擇 */}
         <div className="space-y-2">
-          <label className="text-sm font-medium">策略</label>
+          <label className="text-sm font-medium">換手策略</label>
           <Select
             value={formData.handover_strategy}
             onValueChange={(value) =>
@@ -216,7 +216,7 @@ const HandoverAnalyzeForm = ({ onClose, onSuccess }) => {
 
         {/* 時機選擇 */}
         <div className="space-y-2">
-          <label className="text-sm font-medium">決策時機</label>
+          <label className="text-sm font-medium">換手時機</label>
           <Select
             value={formData.handover_decision}
             onValueChange={(value) =>

@@ -34,12 +34,12 @@ export default function OverViewPage() {
           <div className="mx-auto">
             <div className="mb-6 flex items-center justify-between">
               <h1 className="mb-2 text-2xl font-bold">Routing Record</h1>
-              <Button
+              {/* <Button
                 onClick={() => setShowAnalyzeForm(true)}
                 className="bg-primary text-white hover:bg-primary/90"
               >
                 Create Routing Analyze
-              </Button>
+              </Button> */}
             </div>
             {isLoading ? (
               <div className="flex min-h-[200px] items-center justify-center">

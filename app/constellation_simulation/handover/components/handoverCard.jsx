@@ -116,7 +116,11 @@ const ApplicationCard = ({ data, onRefresh }) => {
             {/* 執行模擬按鈕 */}
             <button
               onClick={handleRunSimulation}
-              disabled={isSimulating || data.handover_status === 'processing'}
+              disabled={
+                isSimulating ||
+                data.handover_status === 'processing' ||
+                data.handover_status === 'completed'
+              }
               className="transform rounded-lg bg-primary px-4 py-2 font-bold text-white transition-all hover:scale-105 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {isSimulating ? '執行中...' : '執行模擬'}
@@ -147,7 +151,7 @@ const ApplicationCard = ({ data, onRefresh }) => {
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">決策時機</p>
+            <p className="text-sm text-gray-500">換手時機</p>
             <p className="font-medium">
               {data.handover_parameter.handover_decision}
             </p>

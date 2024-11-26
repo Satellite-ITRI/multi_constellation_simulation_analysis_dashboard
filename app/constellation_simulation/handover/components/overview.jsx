@@ -38,7 +38,7 @@ export default function OverViewPage() {
                 onClick={() => setShowAnalyzeForm(true)}
                 className="bg-primary text-white hover:bg-primary/90"
               >
-                Create Handover Analyze
+                建立Handover模擬分析
               </Button>
             </div>
             {isLoading ? (
