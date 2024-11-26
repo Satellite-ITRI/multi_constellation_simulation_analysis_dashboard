@@ -3,9 +3,9 @@ import { redirect } from 'next/navigation';
 
 export default async function Dashboard() {
   const session = await auth();
-  console.log(session);
+
   if (!session?.user) {
-    return redirect('/test');
+    return redirect('/');
   } else {
     redirect('/dashboard/overview');
   }

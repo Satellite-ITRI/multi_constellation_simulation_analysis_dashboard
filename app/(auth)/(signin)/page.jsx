@@ -27,7 +27,7 @@ export default function LoginPage() {
 
     const result = await loginService(formData);
     if (result.status === 'success') {
-      router.push('/dashboard');
+      router.push('/constellation_simulation');
     } else {
       setError(result.message);
     }
