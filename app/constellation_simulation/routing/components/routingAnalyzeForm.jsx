@@ -26,9 +26,18 @@ const STRATEGIES = [
 const TIMINGS = ['Preemptive', 'Nonpreemptive'];
 
 const FLEETS = [
-  'TLE_3P_22Sats_29deg_F1',
-  'TLE_6P_22Sats_29deg_F1',
-  'TLE_12P_22Sats_29deg_F7'
+  {
+    value: 'TLE_3P_22Sats_29deg_F1',
+    label: '3 * 22'
+  },
+  {
+    value: 'TLE_6P_22Sats_29deg_F1',
+    label: '6 * 22'
+  },
+  {
+    value: 'TLE_12P_22Sats_29deg_F7',
+    label: '12 * 22'
+  }
 ];
 
 const CELL_UT_OPTIONS = [
@@ -42,9 +51,9 @@ const BEAM_COUNT_OPTIONS = [
 ];
 
 const REUSE_FACTOR_OPTIONS = [
-  { value: 1, label: 'Factor 1' },
-  { value: 3, label: 'Factor 3' },
-  { value: 4, label: 'Factor 4' }
+  { value: 1, label: 'Factor 1' }
+  // { value: 3, label: 'Factor 3' },
+  // { value: 4, label: 'Factor 4' }
 ];
 
 const HandoverAnalyzeForm = ({ onClose, onSuccess }) => {
@@ -53,7 +62,7 @@ const HandoverAnalyzeForm = ({ onClose, onSuccess }) => {
     constellation: '',
     handover_strategy: '',
     handover_decision: '',
-    beam_count: 28,
+    beam_count: 28, // 預設值
     reuse_factor: 1,
     cell_ut: '28Cell_1UT'
   });
@@ -90,8 +99,7 @@ const HandoverAnalyzeForm = ({ onClose, onSuccess }) => {
       );
 
       if (response.data.status === 'success') {
-        onSuccess?.(response.data.data);
-        onClose();
+        onSuccess?.(); // 調用成功回調函數
       } else if (
         response.data.status === 'error' &&
         response.data.existing_handover
@@ -106,7 +114,6 @@ const HandoverAnalyzeForm = ({ onClose, onSuccess }) => {
       setIsLoading(false);
     }
   };
-
   const isFormValid = () => {
     return (
       formData.handover_name &&
@@ -119,7 +126,7 @@ const HandoverAnalyzeForm = ({ onClose, onSuccess }) => {
   return (
     <Card className="mx-auto w-full max-w-2xl">
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle>建立交接班分析</CardTitle>
+        <CardTitle>建立Handover模擬分析</CardTitle>
         <button
           onClick={onClose}
           className="rounded-full p-2 hover:bg-gray-100"
@@ -177,8 +184,8 @@ const HandoverAnalyzeForm = ({ onClose, onSuccess }) => {
             </SelectTrigger>
             <SelectContent>
               {FLEETS.map((fleet) => (
-                <SelectItem key={fleet} value={fleet}>
-                  {fleet}
+                <SelectItem key={fleet.value} value={fleet.value}>
+                  {fleet.label}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -251,7 +258,34 @@ const HandoverAnalyzeForm = ({ onClose, onSuccess }) => {
               </SelectContent>
             </Select>
           </div>
-
+          {/* 新增 Beam Count 顯示 */}
+          <div className="space-y-2">
+            <label className="text-sm font-medium">波束數量</label>
+            <Select
+              value={formData.beam_count.toString()}
+              onValueChange={(value) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  beam_count: parseInt(value)
+                }))
+              }
+              disabled // 設為禁用，因為由 cell_ut 自動決定
+            >
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {BEAM_COUNT_OPTIONS.map((option) => (
+                  <SelectItem
+                    key={option.value}
+                    value={option.value.toString()}
+                  >
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
           <div className="space-y-2">
             <label className="text-sm font-medium">重用因子</label>
             <Select
@@ -262,6 +296,7 @@ const HandoverAnalyzeForm = ({ onClose, onSuccess }) => {
                   reuse_factor: parseInt(value)
                 }))
               }
+              disabled
             >
               <SelectTrigger>
                 <SelectValue placeholder="選擇重用因子" />

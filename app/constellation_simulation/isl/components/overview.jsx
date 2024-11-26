@@ -4,9 +4,9 @@ import PageContainer from '@/components/layout/page-container';
 
 import { Button } from '@/components/ui/button';
 
-import { useHandoverData } from '@/app/dashboard/overview/_components/service';
-import ApplicationCard from '@/app/dashboard/overview/_components/applicationCard';
-import HandoverAnalyzeForm from '@/app/dashboard/overview/_components/HandoverAnalyzeForm';
+import { useISLData } from '@/app/constellation_simulation/isl/service';
+import HandoverCard from '@/app/constellation_simulation/isl/components/islCard';
+import HandoverAnalyzeForm from '@/app/constellation_simulation/isl/components/islAnalyzeForm';
 import CustomToast from '@/components/base/CustomToast';
 import { ToastProvider, ToastViewport } from '@/components/ui/toast';
 import { useState } from 'react';
@@ -17,10 +17,15 @@ export default function OverViewPage() {
     showToast,
     setShowToast,
     toastType,
-    toastMessage
-  } = useHandoverData();
+    toastMessage,
+    fetchHandoverData // 確保 useHandoverData hook 導出這個函數
+  } = useISLData();
 
   const [showAnalyzeForm, setShowAnalyzeForm] = useState(false);
+  const handleAnalyzeFormSuccess = () => {
+    fetchHandoverData(); // 重新獲取資料
+    setShowAnalyzeForm(false); // 關閉表單
+  };
   return (
     <PageContainer scrollable>
       <ToastProvider>
@@ -28,12 +33,12 @@ export default function OverViewPage() {
         <div className="mx-auto min-h-screen bg-gray-50 px-40 pt-32">
           <div className="mx-auto">
             <div className="mb-6 flex items-center justify-between">
-              <h1 className="text-2xl font-bold">ISL Record</h1>
+              <h1 className="mb-2 text-2xl font-bold">ISL Record</h1>
               <Button
                 onClick={() => setShowAnalyzeForm(true)}
                 className="bg-primary text-white hover:bg-primary/90"
               >
-                Create Handover Analyze
+                Create ISL Analyze
               </Button>
             </div>
             {isLoading ? (
@@ -44,9 +49,10 @@ export default function OverViewPage() {
               <div className="max-h-[630px] space-y-4 overflow-y-auto">
                 {!isLoading &&
                   applications.map((handover) => (
-                    <ApplicationCard
+                    <HandoverCard
                       key={handover.handover_uid}
                       data={handover}
+                      onRefresh={fetchHandoverData} // 傳入刷新函數
                     />
                   ))}
               </div>
@@ -69,6 +75,7 @@ export default function OverViewPage() {
               >
                 <HandoverAnalyzeForm
                   onClose={() => setShowAnalyzeForm(false)}
+                  onSuccess={handleAnalyzeFormSuccess} // 傳入成功處理函數
                 />
               </div>
             </div>

@@ -2,25 +2,27 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { postAPI, downloadPDF } from '@/app/api/entrypoint';
-const mockISLData = [
+const mockRoutingData = [
   {
-    isl_uid: '1',
-    isl_name: 'ISL Analysis 1',
-    isl_status: 'completed',
-    isl_create_time: '2024-11-25T10:00:00Z',
-    isl_update_time: '2024-11-25T10:30:00Z',
-    isl_parameter: {
-      constellation: '3x22',
-      isl_link_method: 'minMaxR',
-      execute_function: 'simGroundStationCoverSat',
-      station_location_latitude: 25.049126147527762,
-      station_location_longitude: 121.51379754215354,
-      station_location_altitude: 0.192742
+    routing_uid: '1',
+    routing_name: 'Routing Analysis 1',
+    routing_status: 'completed',
+    routing_create_time: '2024-11-25T10:00:00Z',
+    routing_update_time: '2024-11-25T10:30:00Z',
+    routing_parameter: {
+      energyEvaluate: true,
+      energyEfficiencyFunction: true,
+      energyHarvestingEverySecond: 20,
+      hardwareEnergyConsumption: 4,
+      maximumBatteryCapacity: 11700000,
+      receptionPower: 0,
+      transmissionPower: 0.85,
+      txBufferTimeLimit: 20
     }
   }
 ];
-export const useISLData = () => {
-  const [islData, setISLData] = useState([]);
+export const useRoutingData = () => {
+  const [routingData, setRoutingData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [toast, setToast] = useState({
     show: false,
@@ -28,25 +30,22 @@ export const useISLData = () => {
     message: ''
   });
 
-  const fetchISLData = async () => {
+  const fetchRoutingData = async () => {
     setIsLoading(true);
     try {
-      // 模擬 API 請求延遲
       await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // 使用模擬資料
-      setISLData(mockISLData);
+      setRoutingData(mockRoutingData);
       setToast({
         show: true,
         type: 'success',
-        message: '成功獲取 ISL 資料'
+        message: '成功獲取 Routing 資料'
       });
     } catch (error) {
-      console.error('獲取 ISL 資料錯誤:', error);
+      console.error('獲取 Routing 資料錯誤:', error);
       setToast({
         show: true,
         type: 'error',
-        message: error.message || '獲取 ISL 資料失敗'
+        message: error.message || '獲取 Routing 資料失敗'
       });
     } finally {
       setIsLoading(false);
@@ -54,7 +53,7 @@ export const useISLData = () => {
   };
 
   useEffect(() => {
-    fetchISLData();
+    fetchRoutingData();
   }, []);
 
   useEffect(() => {
@@ -67,13 +66,13 @@ export const useISLData = () => {
   }, [toast.show]);
 
   return {
-    applications: islData,
+    applications: routingData,
     isLoading,
     showToast: toast.show,
     setShowToast: (show) => setToast((prev) => ({ ...prev, show })),
     toastType: toast.type,
     toastMessage: toast.message,
-    fetchISLData
+    fetchRoutingData
   };
 };
 
@@ -168,7 +167,7 @@ export const useDownloadResult = () => {
     setIsDownloading(true);
     try {
       const response = await downloadPDF(
-        'simulation_data_mgt/handoverSimJobManager/download_isl_sim_result_tmp',
+        'simulation_data_mgt/handoverSimJobManager/download_routing_sim_result_tmp',
         {}
       );
 
@@ -183,7 +182,7 @@ export const useDownloadResult = () => {
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = `simulation-result-ISL.pdf`;
+      link.download = `simulation-result-${handoverUid}.pdf`;
 
       // 觸發下載
       document.body.appendChild(link);
