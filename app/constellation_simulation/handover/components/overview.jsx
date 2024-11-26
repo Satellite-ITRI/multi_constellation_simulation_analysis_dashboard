@@ -17,10 +17,15 @@ export default function OverViewPage() {
     showToast,
     setShowToast,
     toastType,
-    toastMessage
+    toastMessage,
+    fetchHandoverData // 確保 useHandoverData hook 導出這個函數
   } = useHandoverData();
 
   const [showAnalyzeForm, setShowAnalyzeForm] = useState(false);
+  const handleAnalyzeFormSuccess = () => {
+    fetchHandoverData(); // 重新獲取資料
+    setShowAnalyzeForm(false); // 關閉表單
+  };
   return (
     <PageContainer scrollable>
       <ToastProvider>
@@ -28,7 +33,7 @@ export default function OverViewPage() {
         <div className="mx-auto min-h-screen bg-gray-50 px-40 pt-32">
           <div className="mx-auto">
             <div className="mb-6 flex items-center justify-between">
-              <h1 className="text-2xl font-bold">Handover Record</h1>
+              <h1 className="mb-2 text-2xl font-bold">Handover Record</h1>
               <Button
                 onClick={() => setShowAnalyzeForm(true)}
                 className="bg-primary text-white hover:bg-primary/90"
@@ -44,7 +49,11 @@ export default function OverViewPage() {
               <div className="max-h-[630px] space-y-4 overflow-y-auto">
                 {!isLoading &&
                   applications.map((handover) => (
-                    <HandoverCard key={handover.handover_uid} data={handover} />
+                    <HandoverCard
+                      key={handover.handover_uid}
+                      data={handover}
+                      onRefresh={fetchHandoverData} // 傳入刷新函數
+                    />
                   ))}
               </div>
             )}
@@ -66,6 +75,7 @@ export default function OverViewPage() {
               >
                 <HandoverAnalyzeForm
                   onClose={() => setShowAnalyzeForm(false)}
+                  onSuccess={handleAnalyzeFormSuccess} // 傳入成功處理函數
                 />
               </div>
             </div>

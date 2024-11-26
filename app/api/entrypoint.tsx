@@ -26,26 +26,45 @@ enum ApiResponseStatus {
 const postAPI = async (
   endpoint: string,
   data: object = {},
-  is_upload: boolean = false,
-  is_download: boolean = false
+  config: {
+    isUpload?: boolean;
+    isDownload?: boolean;
+    responseType?: 'json' | 'blob' | 'arraybuffer';
+  } = {}
 ): Promise<AxiosResponse | Error> => {
-  const responseType = is_download ? 'blob' : 'json';
+  const {
+    isUpload = false,
+    isDownload = false,
+    responseType = 'json'
+  } = config;
   const url = `${API}/${endpoint}`;
 
   try {
     const response = await axios.post(url, data, {
-      responseType: responseType,
+      responseType: isDownload ? 'blob' : responseType,
       headers: {
-        'Content-Type': is_upload ? 'multipart/form-data' : 'application/json'
-        // 其他可能需要的標頭，如授權標頭
-        // 'Authorization': `Bearer ${your_token}`
+        'Content-Type': isUpload ? 'multipart/form-data' : 'application/json'
+        // 其他標頭...
       }
     });
+
+    // 如果是下載檔案，直接返回 response
+    if (isDownload) {
+      return response;
+    }
+
     return handleApiResponse(response);
   } catch (error) {
     handleApiError(error);
     return error;
   }
+};
+
+const downloadPDF = async (
+  endpoint: string,
+  data: object
+): Promise<AxiosResponse | Error> => {
+  return await postAPI(endpoint, data, { isDownload: true });
 };
 
 // 具體的 API 請求
@@ -105,4 +124,13 @@ const handleApiError = (error: any) => {
 };
 
 // 正確導出所有需要的變量和函數
-export { PROTOCAL, HOST, API_PORT, postAPI, login, signup, testAPI };
+export {
+  PROTOCAL,
+  HOST,
+  API_PORT,
+  postAPI,
+  downloadPDF, // 新增導出
+  login,
+  signup,
+  testAPI
+};

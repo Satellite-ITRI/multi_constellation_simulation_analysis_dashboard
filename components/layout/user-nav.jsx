@@ -26,7 +26,7 @@ export function UserNav() {
 
   const handleLogout = () => {
     localStorage.removeItem('userData');
-    router.push('/login');
+    router.push('/');
   };
 
   if (!userData) {

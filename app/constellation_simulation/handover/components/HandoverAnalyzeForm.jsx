@@ -28,15 +28,15 @@ const TIMINGS = ['Preemptive', 'Nonpreemptive'];
 const FLEETS = [
   {
     value: 'TLE_3P_22Sats_29deg_F1',
-    label: '3*22'
+    label: '3 * 22'
   },
   {
     value: 'TLE_6P_22Sats_29deg_F1',
-    label: '6*22'
+    label: '6 * 22'
   },
   {
     value: 'TLE_12P_22Sats_29deg_F7',
-    label: '12*22'
+    label: '12 * 22'
   }
 ];
 
@@ -99,8 +99,7 @@ const HandoverAnalyzeForm = ({ onClose, onSuccess }) => {
       );
 
       if (response.data.status === 'success') {
-        onSuccess?.(response.data.data);
-        onClose();
+        onSuccess?.(); // 調用成功回調函數
       } else if (
         response.data.status === 'error' &&
         response.data.existing_handover
@@ -115,7 +114,6 @@ const HandoverAnalyzeForm = ({ onClose, onSuccess }) => {
       setIsLoading(false);
     }
   };
-
   const isFormValid = () => {
     return (
       formData.handover_name &&
