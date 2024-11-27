@@ -127,60 +127,102 @@ export const navItems: NavItem[] = [
     url: '/constellation_simulation',
     icon: 'dashboard',
     isActive: false,
-    shortcut: ['d', 'd'],
-    items: [] // Empty array as there are no child items for Dashboard
+    shortcut: ['d', 'd']
+  },
+  {
+    title: 'Constellation',
+    url: '/constellation_simulation/constellation',
+    icon: 'kanban',
+    isActive: false,
+    shortcut: ['c', 'c'],
+    items: [
+      {
+        title: '覆蓋率分析',
+        url: '/constellation_simulation/constellation/coverage_analysis',
+        shortcut: ['c', 'a']
+      },
+      {
+        title: '連線時間模擬',
+        url: '/constellation_simulation/constellation/connection_time_simulation',
+        shortcut: ['ct', 's']
+      },
+      {
+        title: '相位參數選擇',
+        url: '/constellation_simulation/constellation/phase_parameter_selection',
+        shortcut: ['pp', 's']
+      },
+      {
+        title: '星系構型與策略',
+        url: '/constellation_simulation/constellation/constellation_configuration_strategy',
+        shortcut: ['cc', 's']
+      }
+    ]
+  },
+  {
+    title: 'ISL',
+    url: '/constellation_simulation/isl',
+    icon: 'kanban',
+    isActive: false,
+    shortcut: ['i', 'i'],
+    items: [
+      {
+        title: '節能連線ISL斷線',
+        url: '/constellation_simulation/isl/energy_saving_connection_isl_disconnection',
+        shortcut: ['i', 'l']
+      },
+      {
+        title: '動態修復與重建',
+        url: '/constellation_simulation/isl/dynamic_recovery_reconstruction',
+        shortcut: ['i', 'c']
+      }
+    ]
+  },
+  {
+    title: 'Routing',
+    url: '/constellation_simulation/routing',
+    icon: 'product',
+    isActive: false,
+    shortcut: ['r', 'r'],
+    items: [
+      {
+        title: '單點對多點傳輸',
+        url: '/constellation_simulation/routing/point_multipoint_transmission',
+        shortcut: ['r', 'p']
+      },
+      {
+        title: '多點對多點傳輸',
+        url: '/constellation_simulation/routing/multipoint_multipoint_transmission',
+        shortcut: ['r', 't']
+      },
+      {
+        title: '節能繞送評估',
+        url: '/constellation_simulation/routing/energy_efficient_routing_evaluation',
+        shortcut: ['r', 't']
+      },
+      {
+        title: '單波束End-to-End繞送評估',
+        url: '/constellation_simulation/routing/single_beam_end_end_routing_evaluation',
+        shortcut: ['r', 't']
+      }
+    ]
   },
   {
     title: 'Handover',
     url: '/constellation_simulation/handover',
     icon: 'dashboard',
     isActive: false,
-    shortcut: ['d', 'd'],
-    items: [] // Empty array as there are no child items for Dashboard
-  },
-  // {
-  //   title: 'Employee',
-  //   url: '/dashboard/employee',
-  //   icon: 'user',
-  //   shortcut: ['e', 'e'],
-  //   isActive: false,
-  //   items: [] // No child items
-  // },
-  {
-    title: 'Routing',
-    url: '/constellation_simulation/routing',
-    icon: 'product',
-    shortcut: ['p', 'p'],
-    isActive: false,
-    items: [] // No child items
-  },
-  // {
-  //   title: 'Account',
-  //   url: '#', // Placeholder as there is no direct link for the parent
-  //   icon: 'billing',
-  //   isActive: true,
-
-  //   items: [
-  //     // {
-  //     //   title: 'Profile',
-  //     //   url: '/dashboard/profile',
-  //     //   icon: 'userPen',
-  //     //   shortcut: ['m', 'm']
-  //     // },
-  //     {
-  //       title: 'Login',
-  //       shortcut: ['l', 'l'],
-  //       url: '/',
-  //       icon: 'login'
-  //     }
-  //   ]
-  // },
-  {
-    title: 'ISL',
-    url: '/constellation_simulation/isl',
-    icon: 'kanban',
-    shortcut: ['k', 'k'],
-    isActive: false,
-    items: [] // No child items
+    shortcut: ['h', 'h'],
+    items: [
+      {
+        title: '多波束換手效能分析',
+        url: '/constellation_simulation/handover/multibeam',
+        shortcut: ['h', 'm']
+      },
+      {
+        title: '單波束換手效能分析',
+        url: '/constellation_simulation/handover/singlebeam',
+        shortcut: ['h', 's']
+      }
+    ]
   }
 ];
