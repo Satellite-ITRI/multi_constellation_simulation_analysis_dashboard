@@ -214,11 +214,6 @@ export const navItems: NavItem[] = [
     shortcut: ['h', 'h'],
     items: [
       {
-        title: '多波束換手效能分析',
-        url: '/constellation_simulation/handover/multibeam',
-        shortcut: ['h', 'm']
-      },
-      {
         title: '單波束換手效能分析',
         url: '/constellation_simulation/handover/singlebeam',
         shortcut: ['h', 's']
@@ -227,6 +222,11 @@ export const navItems: NavItem[] = [
         title: 'GSO Protection',
         url: '/constellation_simulation/handover/gso_protection',
         shortcut: ['h', 's']
+      },
+      {
+        title: '多波束換手效能分析',
+        url: '/constellation_simulation/handover/multibeam',
+        shortcut: ['h', 'm']
       }
     ]
   }

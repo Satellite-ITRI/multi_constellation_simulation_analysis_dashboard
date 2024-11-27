@@ -75,6 +75,7 @@ export default function MultiToMultiPage() {
   };
 
   const handleDownloadResult = async () => {
+    await downloadResult('latestAnalysis.analysis_uid');
     if (!canDownloadResult()) return;
     const latestAnalysis = applications.reduce((prev, current) => {
       return prev.id > current.id ? prev : current;

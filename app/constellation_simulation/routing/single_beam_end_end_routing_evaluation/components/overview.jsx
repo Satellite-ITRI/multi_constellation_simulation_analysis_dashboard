@@ -76,6 +76,7 @@ export default function SingleBeamE2ERoutingPage() {
   };
 
   const handleDownloadResult = async () => {
+    await downloadResult('latestAnalysis.analysis_uid');
     if (!canDownloadResult()) return;
     const latestAnalysis = applications.reduce((prev, current) => {
       return prev.id > current.id ? prev : current;
@@ -97,7 +98,7 @@ export default function SingleBeamE2ERoutingPage() {
               <div className="flex gap-4">
                 <Button
                   onClick={handleDownloadResult}
-                  disabled={!canDownloadResult() || isDownloading}
+                  // disabled={!canDownloadResult() || isDownloading}
                   className="w-32"
                 >
                   {isDownloading ? '下載中...' : '查看結果'}
