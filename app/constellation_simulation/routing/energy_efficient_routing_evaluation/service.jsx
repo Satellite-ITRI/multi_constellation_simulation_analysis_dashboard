@@ -164,7 +164,7 @@ export const useDownloadResult = () => {
     setIsDownloading(true);
     try {
       const response = await downloadPDF(
-        'simulation_data_mgt/handoverSimJobManager/download_handover_sim_result',
+        'simulation_data_mgt/handoverSimJobManager/download_save_er_routing_tmp',
         { handover_uid: handoverUid }
       );
 
@@ -179,7 +179,7 @@ export const useDownloadResult = () => {
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = `simulation-result-Handover.pdf`;
+      link.download = `simulation-result-energy_efficient_routing_evaluation.pdf`;
 
       // 觸發下載
       document.body.appendChild(link);

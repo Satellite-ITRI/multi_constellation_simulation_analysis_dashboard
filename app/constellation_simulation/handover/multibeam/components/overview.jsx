@@ -194,7 +194,7 @@ export default function OverViewPage() {
         <div className="mx-auto min-h-screen bg-gray-50 px-40 pt-32">
           <div className="mx-auto max-w-4xl">
             <div className="mb-6 flex items-center justify-between">
-              <h1 className="text-2xl font-bold">多波束 Handover 模擬分析</h1>
+              <h1 className="text-2xl font-bold">多波束換手效能分析</h1>
               <div className="flex gap-4">
                 {/* 新增 flex container */}
                 <Button

@@ -185,7 +185,7 @@ export default function OverViewPage() {
         <div className="mx-auto min-h-screen bg-gray-50 px-40 pt-32">
           <div className="mx-auto max-w-4xl">
             <div className="mb-6 flex items-center justify-between">
-              <h1 className="text-2xl font-bold">單一波束 Handover 模擬分析</h1>
+              <h1 className="text-2xl font-bold">單波束換手效能分析</h1>
               <div className="flex gap-4">
                 {/* 新增 flex container */}
                 <Button
@@ -284,7 +284,7 @@ export default function OverViewPage() {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium">Cell/UT 配置</label>
+                  <label className="text-sm font-medium">UT 配置</label>
                   <Select
                     value={formData.cell_ut}
                     onValueChange={(value) =>
