@@ -115,18 +115,18 @@ export default function CoverageAnalysisPage() {
   // 處理下載結果的函數
   const handleDownloadResult = async () => {
     await downloadResult('latestHandover.handover_uid');
-    if (!canDownloadResult()) return;
+    // if (!canDownloadResult()) return;
 
-    // 找出 id 最大的記錄`
-    const latestHandover = applications.reduce((prev, current) => {
-      return prev.id > current.id ? prev : current;
-    });
+    // // 找出 id 最大的記錄`
+    // const latestHandover = applications.reduce((prev, current) => {
+    //   return prev.id > current.id ? prev : current;
+    // });
 
-    try {
-      await downloadResult(latestHandover.handover_uid);
-    } catch (error) {
-      setError('下載結果失敗');
-    }
+    // try {
+    //   await downloadResult(latestHandover.handover_uid);
+    // } catch (error) {
+    //   setError('下載結果失敗');
+    // }
   };
 
   return (

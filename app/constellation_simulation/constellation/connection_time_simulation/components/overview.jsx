@@ -106,11 +106,11 @@ export default function ConnectionTimePage() {
 
   const handleDownloadResult = async () => {
     await downloadResult('latestAnalysis.analysis_uid');
-    try {
-      await downloadResult('latestAnalysis.analysis_uid');
-    } catch (error) {
-      setError('下載結果失敗');
-    }
+    // try {
+    //   await downloadResult('latestAnalysis.analysis_uid');
+    // } catch (error) {
+    //   setError('下載結果失敗');
+    // }
   };
 
   return (
