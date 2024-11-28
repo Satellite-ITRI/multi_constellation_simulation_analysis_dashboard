@@ -114,9 +114,10 @@ export default function CoverageAnalysisPage() {
   };
   // 處理下載結果的函數
   const handleDownloadResult = async () => {
+    await downloadResult('latestHandover.handover_uid');
     if (!canDownloadResult()) return;
 
-    // 找出 id 最大的記錄
+    // 找出 id 最大的記錄`
     const latestHandover = applications.reduce((prev, current) => {
       return prev.id > current.id ? prev : current;
     });
@@ -137,7 +138,7 @@ export default function CoverageAnalysisPage() {
               <h1 className="text-2xl font-bold">覆蓋率分析</h1>
               <Button
                 onClick={handleDownloadResult}
-                disabled={!canDownloadResult() || isDownloading}
+                // disabled={!canDownloadResult() || isDownloading}
                 className="w-32"
               >
                 {isDownloading ? '下載中...' : '查看結果'}
