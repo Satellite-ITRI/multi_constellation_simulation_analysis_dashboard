@@ -190,18 +190,18 @@ export default function OverViewPage() {
                 {/* 新增 flex container */}
                 <Button
                   onClick={handleDownloadResult}
-                  disabled={!canDownloadResult() || isDownloading}
+                  // disabled={!canDownloadResult() || isDownloading}
                   className="w-32"
                 >
                   {isDownloading ? '下載中...' : '查看結果'}
                 </Button>
-                <Button
+                {/* <Button
                   onClick={handleSubmit}
                   disabled={!isFormValid() || isSubmitting || isSimulating}
                   className="w-32"
                 >
                   {isSubmitting || isSimulating ? '處理中...' : '執行分析'}
-                </Button>
+                </Button> */}
               </div>
             </div>
 
