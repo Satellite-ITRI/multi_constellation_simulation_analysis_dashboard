@@ -48,7 +48,7 @@ import { Icons } from '../icons';
 export const company = {
   name: 'ITRI',
   logo: GalleryVerticalEnd,
-  plan: 'Multi-Constellation Simulation Platform'
+  plan: 'Simulation'
 };
 
 export default function AppSidebar() {
