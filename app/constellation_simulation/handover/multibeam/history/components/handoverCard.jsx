@@ -58,11 +58,12 @@ const ApplicationCard = ({ data, onRefresh }) => {
     const displayStatus = statusMap[status] || status;
 
     return (
-      <Badge
-        className={`${statusStyles[displayStatus] || statusStyles.None} ml-2`}
-      >
-        {displayStatus}
-      </Badge>
+      // <Badge
+      //   className={`${statusStyles[displayStatus] || statusStyles.None} ml-2`}
+      // >
+      //   {displayStatus}
+      // </Badge>
+      <></>
     );
   };
   const { downloadResult, isDownloading } = useDownloadResult();
@@ -95,7 +96,7 @@ const ApplicationCard = ({ data, onRefresh }) => {
   };
   return (
     <>
-      <div className="relative flex flex-col rounded-lg bg-white p-6 shadow-md">
+      <div className="relative flex flex-col rounded-lg bg-secondary p-6 shadow-md">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <h2 className="text-xl font-semibold">{data.handover_name}</h2>
@@ -116,11 +117,7 @@ const ApplicationCard = ({ data, onRefresh }) => {
             {/* 執行模擬按鈕 */}
             <button
               onClick={handleRunSimulation}
-              disabled={
-                isSimulating ||
-                data.handover_status === 'processing' ||
-                data.handover_status === 'completed'
-              }
+              disabled={isSimulating || data.handover_status === 'processing'}
               className="transform rounded-lg bg-primary px-4 py-2 font-bold text-white transition-all hover:scale-105 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {isSimulating ? '執行中...' : '執行模擬'}

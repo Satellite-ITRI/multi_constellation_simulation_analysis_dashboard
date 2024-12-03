@@ -181,7 +181,6 @@ export default function OverViewPage() {
 
   const GetLastHandoverStatus = () => {
     if (!applications || applications.length === 0) {
-      console.log('沒有可用的交接資料');
       return null;
     }
 
@@ -190,10 +189,29 @@ export default function OverViewPage() {
       return prev.id > current.id ? prev : current;
     });
 
-    // 只在 status 是 processing 時回傳文字
-    return latestHandover.handover_status === 'processing'
-      ? 'processing'
-      : null;
+    // 定義狀態映射
+    const statusMap = {
+      simulation_failed: 'Failed',
+      completed: 'Done',
+      None: 'None',
+      processing: 'Processing'
+    };
+
+    // 使用 Tailwind 預設的顏色系統
+    const statusStyles = {
+      None: 'bg-muted text-muted-foreground',
+      Processing: 'bg-primary text-primary-foreground animate-pulse',
+      Failed: 'bg-destructive text-destructive-foreground',
+      Done: 'bg-accent text-accent-foreground'
+    };
+
+    const status = statusMap[latestHandover.handover_status] || 'None';
+    const statusStyle = statusStyles[status];
+
+    return {
+      status,
+      style: `${statusStyle} px-2 py-1 rounded-sm text-sm font-medium ml-4`
+    };
   };
 
   const isFormValid = () => {
@@ -218,9 +236,13 @@ export default function OverViewPage() {
         <div className="mx-auto min-h-screen bg-gray-50 px-40 pt-32">
           <div className="mx-auto max-w-4xl">
             <div className="mb-6 flex items-center justify-between">
-              <h1 className="text-2xl font-bold">
+              <h1 className="flex items-center text-2xl font-bold">
                 多波束換手效能分析
-                {GetLastHandoverStatus() && <span> (Processing)</span>}
+                {GetLastHandoverStatus() && (
+                  <span className={GetLastHandoverStatus().style}>
+                    {GetLastHandoverStatus().status}
+                  </span>
+                )}
               </h1>
               <div className="flex gap-4">
                 {/* 新增 flex container */}
@@ -232,7 +254,7 @@ export default function OverViewPage() {
                   disabled={!canDownloadResult() || isDownloading}
                   className="w-32"
                 >
-                  {isDownloading ? '下載中...' : '查看結果'}
+                  {isDownloading ? '下載中...' : '查看最新結果'}
                 </Button>
                 <Button
                   onClick={handleSubmit}
