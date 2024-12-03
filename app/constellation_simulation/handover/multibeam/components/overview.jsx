@@ -20,6 +20,7 @@ import {
   useSimulation,
   useDownloadResult
 } from '@/app/constellation_simulation/handover/multibeam/service';
+import { useRouter } from 'next/navigation'; // 引入 useRouter
 
 const STRATEGIES = ['MinRange'];
 
@@ -57,6 +58,12 @@ const REUSE_FACTOR_OPTIONS = [
 ];
 
 export default function OverViewPage() {
+  const router = useRouter(); // 初始化 router
+
+  // 處理歷史紀錄按鈕點擊
+  const handleHistoryClick = () => {
+    router.push('/constellation_simulation/handover/multibeam/history');
+  };
   const {
     isLoading,
     showToast,
@@ -217,6 +224,9 @@ export default function OverViewPage() {
               </h1>
               <div className="flex gap-4">
                 {/* 新增 flex container */}
+                <Button onClick={handleHistoryClick} className="w-32">
+                  歷史紀錄
+                </Button>
                 <Button
                   onClick={handleDownloadResult}
                   disabled={!canDownloadResult() || isDownloading}
