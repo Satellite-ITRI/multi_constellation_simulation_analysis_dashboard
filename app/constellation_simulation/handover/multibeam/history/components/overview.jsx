@@ -2,7 +2,7 @@
 
 import PageContainer from '@/components/layout/page-container';
 import { Button } from '@/components/ui/button';
-// import { Input } from '@/components/ui/input';
+import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
@@ -19,17 +19,9 @@ import {
   useHandoverData,
   useSimulation,
   useDownloadResult
-} from '@/app/constellation_simulation/handover/service';
-import { useRouter } from 'next/navigation'; // 引入 useRouter
-import { useEffect } from 'react'; // 引入 useEffect
-const STRATEGIES = [
-  'MaxVisibleTime',
-  'MinRange',
-  'MinAvrRange',
-  'MaxElevation',
-  'MaxSNR',
-  'MaxPredictedAvgSNR'
-];
+} from '@/app/constellation_simulation/handover/multibeam/service';
+
+const STRATEGIES = ['MinRange'];
 
 const TIMINGS = ['Preemptive', 'Nonpreemptive'];
 
@@ -65,10 +57,6 @@ const REUSE_FACTOR_OPTIONS = [
 ];
 
 export default function OverViewPage() {
-  const router = useRouter(); // 初始化 router
-  useEffect(() => {
-    router.push('/constellation_simulation/handover/singlebeam');
-  }, []); // 空依賴陣列表示只在組件掛載時執行一次
   const {
     isLoading,
     showToast,
@@ -129,7 +117,13 @@ export default function OverViewPage() {
   const handleSubmit = async () => {
     setError('');
     setIsSubmitting(true);
-
+    // 驗證 beam count
+    const beamCount = parseInt(formData.beam_count);
+    if (isNaN(beamCount) || beamCount < 1 || beamCount > 100) {
+      setError('波束數量必須是 1 到 100 之間的數字');
+      setIsSubmitting(false);
+      return;
+    }
     try {
       const userData = JSON.parse(localStorage.getItem('userData'));
       if (!userData?.user_uid) {
@@ -143,7 +137,7 @@ export default function OverViewPage() {
           constellation: formData.constellation,
           handover_strategy: formData.handover_strategy,
           handover_decision: formData.handover_decision,
-          beam_counts: formData.beam_count,
+          beam_counts: beamCount, // 使用驗證過的數值
           reuse_factor: formData.reuse_factor,
           cell_ut: formData.cell_ut
         },
@@ -178,21 +172,49 @@ export default function OverViewPage() {
     }
   };
 
+  const GetLastHandoverStatus = () => {
+    if (!applications || applications.length === 0) {
+      console.log('沒有可用的交接資料');
+      return null;
+    }
+
+    // 找出 id 最大的記錄
+    const latestHandover = applications.reduce((prev, current) => {
+      return prev.id > current.id ? prev : current;
+    });
+
+    // 只在 status 是 processing 時回傳文字
+    return latestHandover.handover_status === 'processing'
+      ? 'processing'
+      : null;
+  };
+
   const isFormValid = () => {
     return (
       formData.constellation &&
       formData.handover_strategy &&
-      formData.handover_decision
+      formData.handover_decision &&
+      formData.beam_count
     );
   };
-
+  // 處理 beam count 變更的函數
+  const handleBeamCountChange = (e) => {
+    const value = e.target.value;
+    setFormData((prev) => ({
+      ...prev,
+      beam_count: value
+    }));
+  };
   return (
     <PageContainer scrollable>
       <ToastProvider>
         <div className="mx-auto min-h-screen bg-gray-50 px-40 pt-32">
           <div className="mx-auto max-w-4xl">
             <div className="mb-6 flex items-center justify-between">
-              <h1 className="text-2xl font-bold">多波束 Handover 模擬分析</h1>
+              <h1 className="text-2xl font-bold">
+                多波束換手效能分析
+                {GetLastHandoverStatus() && <span> (Processing)</span>}
+              </h1>
               <div className="flex gap-4">
                 {/* 新增 flex container */}
                 <Button
@@ -313,30 +335,13 @@ export default function OverViewPage() {
                 {/* 新增 Beam Count 顯示 */}
                 <div className="space-y-2">
                   <label className="text-sm font-medium">波束數量</label>
-                  <Select
-                    value={formData.beam_count.toString()}
-                    onValueChange={(value) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        beam_count: parseInt(value)
-                      }))
-                    }
-                    disabled // 設為禁用，因為由 cell_ut 自動決定
-                  >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {BEAM_COUNT_OPTIONS.map((option) => (
-                        <SelectItem
-                          key={option.value}
-                          value={option.value.toString()}
-                        >
-                          {option.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <Input
+                    type="number"
+                    value={formData.beam_count}
+                    onChange={handleBeamCountChange}
+                    min={1}
+                    max={100}
+                  />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium">重用因子</label>
