@@ -99,7 +99,7 @@ const ApplicationCard = ({ data, onRefresh }) => {
       <div className="relative flex flex-col rounded-lg bg-secondary p-6 shadow-md">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <h2 className="text-xl font-semibold">{data.handover_name}</h2>
+            {/* <h2 className="text-xl font-semibold">{data.handover_name}</h2> */}
             {getStatusBadge(data.handover_status)}
           </div>
           <div className="space-x-2">
@@ -156,6 +156,16 @@ const ApplicationCard = ({ data, onRefresh }) => {
           <div>
             <p className="text-sm text-gray-500">Cell/UT 配置</p>
             <p className="font-medium">{data.handover_parameter.cell_ut}</p>
+          </div>
+          <div>
+            <p className="text-sm text-gray-500">波束數量</p>
+            <p className="font-medium">{data.handover_parameter.beam_counts}</p>
+          </div>
+          <div>
+            <p className="text-sm text-gray-500">重用因子</p>
+            <p className="font-medium">
+              {data.handover_parameter.reuse_factor}
+            </p>
           </div>
         </div>
 
