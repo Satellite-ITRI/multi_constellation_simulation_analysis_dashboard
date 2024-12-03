@@ -172,6 +172,23 @@ export default function OverViewPage() {
     }
   };
 
+  const GetLastHandoverStatus = () => {
+    if (!applications || applications.length === 0) {
+      console.log('沒有可用的交接資料');
+      return null;
+    }
+
+    // 找出 id 最大的記錄
+    const latestHandover = applications.reduce((prev, current) => {
+      return prev.id > current.id ? prev : current;
+    });
+
+    // 只在 status 是 processing 時回傳文字
+    return latestHandover.handover_status === 'processing'
+      ? 'processing'
+      : null;
+  };
+
   const isFormValid = () => {
     return (
       formData.constellation &&
@@ -194,7 +211,10 @@ export default function OverViewPage() {
         <div className="mx-auto min-h-screen bg-gray-50 px-40 pt-32">
           <div className="mx-auto max-w-4xl">
             <div className="mb-6 flex items-center justify-between">
-              <h1 className="text-2xl font-bold">多波束換手效能分析</h1>
+              <h1 className="text-2xl font-bold">
+                多波束換手效能分析
+                {GetLastHandoverStatus() && <span> (Processing)</span>}
+              </h1>
               <div className="flex gap-4">
                 {/* 新增 flex container */}
                 <Button

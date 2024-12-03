@@ -81,15 +81,15 @@ export default function GSOProtectionPage() {
 
   const handleDownloadResult = async () => {
     await downloadResult('latestAnalysis.analysis_uid');
-    if (!canDownloadResult()) return;
-    const latestAnalysis = applications.reduce((prev, current) => {
-      return prev.id > current.id ? prev : current;
-    });
-    try {
-      await downloadResult(latestAnalysis.analysis_uid);
-    } catch (error) {
-      setError('下載結果失敗');
-    }
+    // if (!canDownloadResult()) return;
+    // const latestAnalysis = applications.reduce((prev, current) => {
+    //   return prev.id > current.id ? prev : current;
+    // });
+    // try {
+    //   await downloadResult(latestAnalysis.analysis_uid);
+    // } catch (error) {
+    //   setError('下載結果失敗');
+    // }
   };
 
   return (
