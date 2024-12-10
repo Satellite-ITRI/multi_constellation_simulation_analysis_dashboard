@@ -229,5 +229,19 @@ export const navItems: NavItem[] = [
         shortcut: ['h', 'm']
       }
     ]
+  },
+  {
+    title: 'UT',
+    url: '/constellation_simulation/ut',
+    icon: 'dashboard',
+    isActive: false,
+    shortcut: ['h', 'h'],
+    items: [
+      {
+        title: '星網功能模擬',
+        url: '/constellation_simulation/ut/constellation_system_simulation',
+        shortcut: ['h', 's']
+      }
+    ]
   }
 ];

@@ -11,7 +11,7 @@ import DeleteConfirmModal from './DeleteConfirmModal';
 import CustomToast from '@/components/base/CustomToast';
 import { useDownloadResult } from '../service';
 // import { toast } from '@/components/ui/use-toast';
-const ApplicationCard = ({ data, onRefresh }) => {
+const ISLCard = ({ data, onRefresh }) => {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -58,19 +58,18 @@ const ApplicationCard = ({ data, onRefresh }) => {
     const displayStatus = statusMap[status] || status;
 
     return (
-      // <Badge
-      //   className={`${statusStyles[displayStatus] || statusStyles.None} ml-2`}
-      // >
-      //   {displayStatus}
-      // </Badge>
-      <></>
+      <Badge
+        className={`${statusStyles[displayStatus] || statusStyles.None} ml-2`}
+      >
+        {displayStatus}
+      </Badge>
     );
   };
   const { downloadResult, isDownloading } = useDownloadResult();
 
   // 修改 handleDetailsClick 函數
   const handleDetailsClick = async () => {
-    const success = await downloadResult(data.handover_uid);
+    const success = await downloadResult(data.isl_name);
     if (!success) {
       // 可以加入錯誤處理，例如顯示錯誤提示
       console.error('下載失敗');
@@ -96,15 +95,15 @@ const ApplicationCard = ({ data, onRefresh }) => {
   };
   return (
     <>
-      <div className="relative flex flex-col rounded-lg bg-secondary p-6 shadow-md">
+      <div className="relative flex flex-col rounded-lg bg-white p-6 shadow-md">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <h2 className="text-xl font-semibold">{data.handover_name}</h2>
-            {getStatusBadge(data.handover_status)}
+            <h2 className="text-xl font-semibold">{data.routing_name}</h2>
+            {getStatusBadge(data.routing_status)}
           </div>
           <div className="space-x-2">
             {/* 查看結果按鈕 */}
-            {data.handover_status === 'completed' && (
+            {data.routing_status === 'completed' && (
               <button
                 onClick={handleDetailsClick}
                 disabled={isDownloading}
@@ -115,63 +114,83 @@ const ApplicationCard = ({ data, onRefresh }) => {
             )}
 
             {/* 執行模擬按鈕 */}
-            <button
+            {/* <button
               onClick={handleRunSimulation}
-              disabled={isSimulating || data.handover_status === 'processing'}
+              disabled={
+                isSimulating ||
+                data.routing_status === 'processing' ||
+                data.routing_status === 'completed'
+              }
               className="transform rounded-lg bg-primary px-4 py-2 font-bold text-white transition-all hover:scale-105 disabled:cursor-not-allowed disabled:opacity-50"
             >
-              {isSimulating ? '執行中...' : '重新執行模擬'}
-            </button>
+              {isSimulating ? '執行中...' : '執行模擬'}
+            </button> */}
 
             {/* 刪除按鈕 */}
-            <button
+            {/* <button
               onClick={() => setIsDeleteModalOpen(true)}
-              disabled={isDeleting || data.handover_status === 'processing'}
+              disabled={isDeleting || data.routing_status === 'processing'}
               className="transform rounded-lg bg-destructive px-4 py-2 font-bold text-white transition-all hover:scale-105 hover:bg-red-600 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {isDeleting ? '刪除中...' : '刪除'}
-            </button>
+            </button> */}
           </div>
         </div>
 
         <div className="mt-4 grid grid-cols-2 gap-4">
           <div>
-            <p className="text-sm text-gray-500">星系配置</p>
+            <p className="text-sm text-gray-500">能量評估</p>
             <p className="font-medium">
-              {getConstellationLabel(data.handover_parameter.constellation)}
+              {data.routing_parameter.energyEvaluate ? '是' : '否'}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">換手策略</p>
+            <p className="text-sm text-gray-500">能量效率函數</p>
             <p className="font-medium">
-              {data.handover_parameter.handover_strategy}
+              {data.routing_parameter.energyEfficiencyFunction ? '是' : '否'}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">換手時機</p>
+            <p className="text-sm text-gray-500">每秒能量收集 (瓦)</p>
             <p className="font-medium">
-              {data.handover_parameter.handover_decision}
+              {data.routing_parameter.energyHarvestingEverySecond}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">Cell/UT 配置</p>
-            <p className="font-medium">{data.handover_parameter.cell_ut}</p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">波束數量</p>
-            <p className="font-medium">{data.handover_parameter.beam_counts}</p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">重用因子</p>
+            <p className="text-sm text-gray-500">硬體能量消耗 (瓦)</p>
             <p className="font-medium">
-              {data.handover_parameter.reuse_factor}
+              {data.routing_parameter.hardwareEnergyConsumption}
+            </p>
+          </div>
+          <div>
+            <p className="text-sm text-gray-500">最大電池容量 (焦耳)</p>
+            <p className="font-medium">
+              {data.routing_parameter.maximumBatteryCapacity}
+            </p>
+          </div>
+          <div>
+            <p className="text-sm text-gray-500">接收功率 (焦耳)</p>
+            <p className="font-medium">
+              {data.routing_parameter.receptionPower}
+            </p>
+          </div>
+          <div>
+            <p className="text-sm text-gray-500">傳輸功率 (焦耳)</p>
+            <p className="font-medium">
+              {data.routing_parameter.transmissionPower}
+            </p>
+          </div>
+          <div>
+            <p className="text-sm text-gray-500">傳輸緩衝時間限制 (秒)</p>
+            <p className="font-medium">
+              {data.routing_parameter.txBufferTimeLimit}
             </p>
           </div>
         </div>
 
         <div className="mt-4 flex justify-between text-sm text-gray-500">
-          <span>建立時間: {getTimeAgo(data.handover_create_time)}</span>
-          <span>更新時間: {getTimeAgo(data.handover_update_time)}</span>
+          <span>建立時間: {getTimeAgo(data.routing_create_time)}</span>
+          <span>更新時間: {getTimeAgo(data.routing_update_time)}</span>
         </div>
       </div>
       <div className="h-[1/10]">
@@ -198,4 +217,4 @@ const ApplicationCard = ({ data, onRefresh }) => {
   );
 };
 
-export default ApplicationCard;
+export default ISLCard;

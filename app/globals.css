@@ -73,6 +73,8 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 253 91% 58%%;
+    --warning: 38 92% 50%; /* 橙色警告色 */
+    --warning-foreground: 0 0% 100%; /* 白色文字 */
   }
 }
 

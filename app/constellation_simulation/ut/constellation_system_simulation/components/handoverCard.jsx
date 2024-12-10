@@ -58,12 +58,11 @@ const ApplicationCard = ({ data, onRefresh }) => {
     const displayStatus = statusMap[status] || status;
 
     return (
-      // <Badge
-      //   className={`${statusStyles[displayStatus] || statusStyles.None} ml-2`}
-      // >
-      //   {displayStatus}
-      // </Badge>
-      <></>
+      <Badge
+        className={`${statusStyles[displayStatus] || statusStyles.None} ml-2`}
+      >
+        {displayStatus}
+      </Badge>
     );
   };
   const { downloadResult, isDownloading } = useDownloadResult();
@@ -96,7 +95,7 @@ const ApplicationCard = ({ data, onRefresh }) => {
   };
   return (
     <>
-      <div className="relative flex flex-col rounded-lg bg-secondary p-6 shadow-md">
+      <div className="relative flex flex-col rounded-lg bg-white p-6 shadow-md">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <h2 className="text-xl font-semibold">{data.handover_name}</h2>
@@ -117,10 +116,14 @@ const ApplicationCard = ({ data, onRefresh }) => {
             {/* 執行模擬按鈕 */}
             <button
               onClick={handleRunSimulation}
-              disabled={isSimulating || data.handover_status === 'processing'}
+              disabled={
+                isSimulating ||
+                data.handover_status === 'processing' ||
+                data.handover_status === 'completed'
+              }
               className="transform rounded-lg bg-primary px-4 py-2 font-bold text-white transition-all hover:scale-105 disabled:cursor-not-allowed disabled:opacity-50"
             >
-              {isSimulating ? '執行中...' : '重新執行模擬'}
+              {isSimulating ? '執行中...' : '執行模擬'}
             </button>
 
             {/* 刪除按鈕 */}
@@ -156,16 +159,6 @@ const ApplicationCard = ({ data, onRefresh }) => {
           <div>
             <p className="text-sm text-gray-500">Cell/UT 配置</p>
             <p className="font-medium">{data.handover_parameter.cell_ut}</p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">波束數量</p>
-            <p className="font-medium">{data.handover_parameter.beam_counts}</p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">重用因子</p>
-            <p className="font-medium">
-              {data.handover_parameter.reuse_factor}
-            </p>
           </div>
         </div>
 
