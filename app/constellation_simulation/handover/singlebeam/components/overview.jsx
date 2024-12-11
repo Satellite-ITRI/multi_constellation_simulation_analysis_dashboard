@@ -22,7 +22,7 @@ import {
 
 const STRATEGIES = ['MinRange'];
 
-const TIMINGS = ['Nonpreemptive'];
+const TIMINGS = ['Preemptive', 'Nonpreemptive'];
 
 const FLEETS = [
   {
@@ -88,12 +88,12 @@ export default function OverViewPage() {
   const { runSimulation, isSimulating } = useSimulation();
   const [formData, setFormData] = useState({
     handover_name: 'test',
-    constellation: '3 * 22',
-    handover_strategy: '',
-    handover_decision: '',
+    constellation: FLEETS[0].value,
+    handover_strategy: STRATEGIES[0],
+    handover_decision: TIMINGS[1],
     beam_count: 1,
     reuse_factor: 1,
-    cell_ut: '28Cell_1UT'
+    cell_ut: CELL_UT_OPTIONS[0].value
   });
 
   const [error, setError] = useState('');
@@ -258,7 +258,7 @@ export default function OverViewPage() {
               </div>
               {/* 時機選擇 */}
               <div className="space-y-2">
-                <label className="text-sm font-medium">換手時機</label>
+                <label className="text-sm font-medium">換手決策</label>
                 <Select
                   value={formData.handover_decision}
                   onValueChange={(value) =>

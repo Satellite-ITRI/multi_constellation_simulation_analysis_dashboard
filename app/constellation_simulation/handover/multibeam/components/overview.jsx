@@ -59,9 +59,9 @@ export default function OverViewPage() {
 
   const [formData, setFormData] = useState({
     handover_name: '',
-    constellation: '',
-    handover_strategy: '',
-    handover_decision: '',
+    constellation: FLEETS[0].value,
+    handover_strategy: STRATEGIES[0],
+    handover_decision: TIMINGS[1],
     beam_count: 28,
     reuse_factor: 1,
     cell_ut: '28Cell_1UT'
@@ -270,6 +270,13 @@ export default function OverViewPage() {
       beam_count: value
     }));
   };
+  const handleReuseFactorChange = (e) => {
+    const value = e.target.value;
+    setFormData((prev) => ({
+      ...prev,
+      reuse_factor: value
+    }));
+  };
   // 處理歷史紀錄按鈕點擊
   const handleHistoryClick = () => {
     router.push('/constellation_simulation/handover/multibeam/history');
@@ -423,28 +430,14 @@ export default function OverViewPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium">重用因子</label>
-                  <Select
+                  <label className="text-sm font-medium">頻率數</label>
+                  <Input
+                    type="number"
                     value={formData.reuse_factor}
-                    onValueChange={(value) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        reuse_factor: parseInt(value)
-                      }))
-                    }
-                    disabled
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="選擇重用因子" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {REUSE_FACTOR_OPTIONS.map((option) => (
-                        <SelectItem key={option.value} value={option.value}>
-                          {option.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                    onChange={handleReuseFactorChange}
+                    min={1}
+                    max={100}
+                  />
                 </div>
               </div>
             </div>

@@ -4,7 +4,13 @@ import PageContainer from '@/components/layout/page-container';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Switch } from '@/components/ui/switch';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select';
 import { useState } from 'react';
 import { postAPI } from '@/app/api/entrypoint';
 import { ToastProvider } from '@/components/ui/toast';
@@ -13,12 +19,30 @@ import {
   useSimulation,
   useDownloadResult
 } from '@/app/constellation_simulation/routing/multipoint_multipoint_transmission/service';
-
+const MULTIPATH = [
+  {
+    value: 'None',
+    label: 'None'
+  },
+  {
+    value: 'throughput',
+    label: 'throughput'
+  },
+  {
+    value: 'blcc',
+    label: 'blcc'
+  }
+];
+const ROUTING_ALGO = [
+  { value: 'TLE_3P_22Sats_29deg_F1', label: 'Rtu' },
+  { value: 'TLE_6P_22Sats_29deg_F1', label: 'Afftected' },
+  { value: 'TLE_12P_22Sats_29deg_F7', label: 'IslState' }
+];
 export default function MultiToMultiPage() {
   const [formData, setFormData] = useState({
     simulationFunction: 'simSingleSatCapacity',
-    'routing.algorithm': 3,
-    'routing.multiPath': true,
+    algorithm: ROUTING_ALGO[0].value,
+    multi_path: MULTIPATH[0].value,
     'routing.ratio': 0.001,
     'routing.round': 10,
     'routing.simulationTime': 20,
@@ -114,32 +138,43 @@ export default function MultiToMultiPage() {
             <div className="grid grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label className="text-sm font-medium">路由演算法</label>
-                <Input
-                  type="number"
-                  value={formData['routing.algorithm']}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      'routing.algorithm': parseInt(e.target.value)
-                    }))
+                <Select
+                  value={formData.algorithm}
+                  onValueChange={(value) =>
+                    setFormData((prev) => ({ ...prev, algorithm: value }))
                   }
-                />
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {ROUTING_ALGO.map((fleet) => (
+                      <SelectItem key={fleet.value} value={fleet.value}>
+                        {fleet.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
-
               <div className="space-y-2">
                 <label className="text-sm font-medium">多重路徑</label>
-                <div className="flex items-center space-x-2">
-                  <Switch
-                    checked={formData['routing.multiPath']}
-                    onCheckedChange={(checked) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        'routing.multiPath': checked
-                      }))
-                    }
-                  />
-                  <span>{formData['routing.multiPath'] ? '開啟' : '關閉'}</span>
-                </div>
+                <Select
+                  value={formData.multi_path}
+                  onValueChange={(value) =>
+                    setFormData((prev) => ({ ...prev, multi_path: value }))
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {MULTIPATH.map((fleet) => (
+                      <SelectItem key={fleet.value} value={fleet.value}>
+                        {fleet.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
               <div className="space-y-2">
@@ -185,7 +220,7 @@ export default function MultiToMultiPage() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium">傳輸量</label>
+                <label className="text-sm font-medium">{`傳輸量 (Gbps)`}</label>
                 <Input
                   type="number"
                   value={formData['routing.throughput']}

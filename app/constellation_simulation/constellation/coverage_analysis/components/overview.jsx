@@ -21,8 +21,16 @@ import {
 } from '@/app/constellation_simulation/constellation/coverage_analysis/service';
 const CONSTELLATION_FILES = [
   {
+    value: 'TLE_3P_22Sats_29deg_F1.txt',
+    label: '3 * 22'
+  },
+  {
     value: 'TLE_6P_22Sats_29deg_F1.txt',
     label: '6 * 22'
+  },
+  {
+    value: 'TLE_12P_22Sats_29deg_F7.txt',
+    label: '12 * 22'
   }
 ];
 
@@ -35,8 +43,7 @@ const ISL_METHODS = [
 
 export default function CoverageAnalysisPage() {
   const [formData, setFormData] = useState({
-    TLE_inputFileName: '',
-    ISLLinkMethod: '',
+    TLE_inputFileName: CONSTELLATION_FILES[0].value,
     execute_function: 'simSatCoverageLatitude',
     stationLatitude: 25.049126147527762,
     stationLongitude: 121.51379754215354,
@@ -68,7 +75,6 @@ export default function CoverageAnalysisPage() {
         analysis_name: analysisName,
         analysis_parameter: {
           TLE_inputFileName: formData.TLE_inputFileName,
-          ISLLinkMethod: formData.ISLLinkMethod,
           execute_function: formData.execute_function,
           stationLatitude: formData.stationLatitude,
           stationLongitude: formData.stationLongitude,
@@ -96,7 +102,7 @@ export default function CoverageAnalysisPage() {
   };
 
   const isFormValid = () => {
-    return formData.TLE_inputFileName && formData.ISLLinkMethod;
+    return formData.TLE_inputFileName;
   };
   const { downloadResult, isDownloading } = useDownloadResult();
   const { applications } = useHandoverData(); // 新增這行來獲取 handover 資料
@@ -153,7 +159,7 @@ export default function CoverageAnalysisPage() {
 
             <div className="grid grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-sm font-medium">星系檔案</label>
+                <label className="text-sm font-medium">星系配置</label>
                 <Select
                   value={formData.TLE_inputFileName}
                   onValueChange={(value) =>
@@ -164,33 +170,12 @@ export default function CoverageAnalysisPage() {
                   }
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="選擇星系檔案" />
+                    <SelectValue placeholder="選擇星系配置" />
                   </SelectTrigger>
                   <SelectContent>
                     {CONSTELLATION_FILES.map((file) => (
                       <SelectItem key={file.value} value={file.value}>
                         {file.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-medium">ISL連結方法</label>
-                <Select
-                  value={formData.ISLLinkMethod}
-                  onValueChange={(value) =>
-                    setFormData((prev) => ({ ...prev, ISLLinkMethod: value }))
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="選擇連結方法" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {ISL_METHODS.map((method) => (
-                      <SelectItem key={method.value} value={method.value}>
-                        {method.label}
                       </SelectItem>
                     ))}
                   </SelectContent>

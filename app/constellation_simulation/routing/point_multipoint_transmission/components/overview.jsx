@@ -12,11 +12,37 @@ import {
   useSimulation,
   useDownloadResult
 } from '@/app/constellation_simulation/routing/point_multipoint_transmission/service';
-
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select';
+const ROUTING_ALGO = [
+  { value: 'TLE_3P_22Sats_29deg_F1', label: 'Rtu' },
+  { value: 'TLE_6P_22Sats_29deg_F1', label: 'Afftected' },
+  { value: 'TLE_12P_22Sats_29deg_F7', label: 'IslState' }
+];
+const MULTIPATH = [
+  {
+    value: 'None',
+    label: 'None'
+  },
+  {
+    value: 'throughput',
+    label: 'throughput'
+  },
+  {
+    value: 'blcc',
+    label: 'blcc'
+  }
+];
 export default function SingleToMultiPage() {
   const [formData, setFormData] = useState({
     simulationFunction: 'simSingleSatCapacity',
-    'routing.algorithm': 3,
+    algorithm: ROUTING_ALGO[0].value,
+    multi_path: MULTIPATH[0].value,
     'routing.ratio': 0.001,
     'routing.round': 10,
     'routing.simulationTime': 20,
@@ -112,18 +138,44 @@ export default function SingleToMultiPage() {
             <div className="grid grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label className="text-sm font-medium">路由演算法</label>
-                <Input
-                  type="number"
-                  value={formData['routing.algorithm']}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      'routing.algorithm': parseInt(e.target.value)
-                    }))
+                <Select
+                  value={formData.algorithm}
+                  onValueChange={(value) =>
+                    setFormData((prev) => ({ ...prev, algorithm: value }))
                   }
-                />
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {ROUTING_ALGO.map((fleet) => (
+                      <SelectItem key={fleet.value} value={fleet.value}>
+                        {fleet.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
-
+              <div className="space-y-2">
+                <label className="text-sm font-medium">多重路徑</label>
+                <Select
+                  value={formData.multi_path}
+                  onValueChange={(value) =>
+                    setFormData((prev) => ({ ...prev, multi_path: value }))
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {MULTIPATH.map((fleet) => (
+                      <SelectItem key={fleet.value} value={fleet.value}>
+                        {fleet.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium">路由比例</label>
                 <Input
@@ -167,7 +219,7 @@ export default function SingleToMultiPage() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium">傳輸量</label>
+                <label className="text-sm font-medium">{`傳輸量 (Gbps)`}</label>
                 <Input
                   type="number"
                   value={formData['routing.throughput']}

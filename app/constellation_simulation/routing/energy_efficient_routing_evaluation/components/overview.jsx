@@ -5,6 +5,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Switch } from '@/components/ui/switch';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select';
 import { useState } from 'react';
 import { postAPI } from '@/app/api/entrypoint';
 import { ToastProvider } from '@/components/ui/toast';
@@ -14,6 +21,12 @@ import {
   useDownloadResult
 } from '@/app/constellation_simulation/routing/energy_efficient_routing_evaluation/service';
 
+const EFFICIENCY = [
+  {
+    value: false,
+    label: 'F'
+  }
+];
 export default function EnergyRoutingPage() {
   const [formData, setFormData] = useState({
     'energy.evaluation': true,
@@ -113,38 +126,6 @@ export default function EnergyRoutingPage() {
             )}
 
             <div className="grid grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-sm font-medium">能量評估</label>
-                <div className="flex items-center space-x-2">
-                  <Switch
-                    checked={formData['energy.evaluation']}
-                    onCheckedChange={(checked) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        'energy.evaluation': checked
-                      }))
-                    }
-                  />
-                  <span>{formData['energy.evaluation'] ? '開啟' : '關閉'}</span>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-medium">能量效率函數</label>
-                <div className="flex items-center space-x-2">
-                  <Switch
-                    checked={formData['energy.efficiency']}
-                    onCheckedChange={(checked) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        'energy.efficiency': checked
-                      }))
-                    }
-                  />
-                  <span>{formData['energy.efficiency'] ? '開啟' : '關閉'}</span>
-                </div>
-              </div>
-
               <div className="space-y-2">
                 <label className="text-sm font-medium">每秒能量收集 (瓦)</label>
                 <Input

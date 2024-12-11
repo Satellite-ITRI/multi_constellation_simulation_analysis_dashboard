@@ -19,11 +19,37 @@ import {
   useSimulation,
   useDownloadResult
 } from '@/app/constellation_simulation/routing/single_beam_end_end_routing_evaluation/service';
+const CONSTELLATION_FILES = [
+  {
+    value: 'TLE_3P_22Sats_29deg_F1.txt',
+    label: '3 * 22'
+  },
+  {
+    value: 'TLE_6P_22Sats_29deg_F1.txt',
+    label: '6 * 22'
+  },
+  {
+    value: 'TLE_12P_22Sats_29deg_F7.txt',
+    label: '12 * 22'
+  }
+];
+const TIMINGS = [
+  'Preemptive',
+  'Nonpreemptive',
+  'Load Balancing',
+  'Hybrid Load Balancing',
+  'Satellite Load Balancing',
+  'Nonpreemptive Load Balancing',
+  'Preemptive Load Balancing'
+];
 
 export default function SingleBeamE2ERoutingPage() {
   const [formData, setFormData] = useState({
-    'constellation.config': 'TLE_6P_22Sats_29deg_F1.txt',
-    'handover.timing': 'Nonpreemptive'
+    TLE_inputFileName: CONSTELLATION_FILES[0].value,
+    timing: TIMINGS[0],
+    round: 1,
+    time: 1,
+    'active.user.ratio': 0.5
   });
 
   const [error, setError] = useState('');
@@ -116,43 +142,113 @@ export default function SingleBeamE2ERoutingPage() {
               <div className="space-y-2">
                 <label className="text-sm font-medium">星系配置</label>
                 <Select
-                  value={formData['constellation.config']}
+                  value={formData.TLE_inputFileName}
                   onValueChange={(value) =>
                     setFormData((prev) => ({
                       ...prev,
-                      'constellation.config': value
+                      TLE_inputFileName: value
                     }))
                   }
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="選擇星系配置" />
+                    <SelectValue placeholder="" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="TLE_6P_22Sats_29deg_F1.txt">
-                      TLE_6P_22Sats_29deg_F1.txt
-                    </SelectItem>
+                    {CONSTELLATION_FILES.map((file) => (
+                      <SelectItem key={file.value} value={file.value}>
+                        {file.label}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium">換手時機</label>
+                <label className="text-sm font-medium">換手決策</label>
                 <Select
-                  value={formData['handover.timing']}
+                  value={formData.timing}
                   onValueChange={(value) =>
                     setFormData((prev) => ({
                       ...prev,
-                      'handover.timing': value
+                      timing: value
                     }))
                   }
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="選擇換手時機" />
+                    <SelectValue placeholder="" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Nonpreemptive">Nonpreemptive</SelectItem>
+                    {TIMINGS.map((timing) => (
+                      <SelectItem key={timing} value={timing}>
+                        {timing}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium">路由回合</label>
+                <Input
+                  type="number"
+                  value={formData.round}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      round: parseInt(e.target.value)
+                    }))
+                  }
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium">模擬時間</label>
+                <Input
+                  type="number"
+                  value={formData.time}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      time: parseInt(e.target.value)
+                    }))
+                  }
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium">
+                  當前活躍用戶終端比例
+                </label>
+                <Input
+                  type="number"
+                  min="0"
+                  max="1"
+                  step="0.01" // 設定步進值為0.01，讓使用者可以輸入兩位小數
+                  value={formData['active.user.ratio']}
+                  onChange={(e) => {
+                    const value = parseFloat(e.target.value);
+                    // 確保輸入值在0-1之間
+                    if (value >= 0 && value <= 1) {
+                      setFormData((prev) => ({
+                        ...prev,
+                        'active.user.ratio': value
+                      }));
+                    }
+                  }}
+                  onBlur={(e) => {
+                    // 當離開輸入框時，確保值在有效範圍內
+                    const value = parseFloat(e.target.value);
+                    if (value < 0) {
+                      setFormData((prev) => ({
+                        ...prev,
+                        'active.user.ratio': 0
+                      }));
+                    } else if (value > 1) {
+                      setFormData((prev) => ({
+                        ...prev,
+                        'active.user.ratio': 1
+                      }));
+                    }
+                  }}
+                  placeholder="請輸入0-1之間的數值"
+                />
               </div>
             </div>
           </div>

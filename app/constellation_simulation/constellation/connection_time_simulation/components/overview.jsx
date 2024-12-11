@@ -24,19 +24,20 @@ const CONSTELLATION_FILES = [
   {
     value: 'TLE_3P_22Sats_29deg_F1.txt',
     label: '3 * 22'
-  }
-];
-
-const ISL_METHODS = [
+  },
   {
-    value: 'minMaxR',
-    label: 'Min Max Range'
+    value: 'TLE_6P_22Sats_29deg_F1.txt',
+    label: '6 * 22'
+  },
+  {
+    value: 'TLE_12P_22Sats_29deg_F7.txt',
+    label: '12 * 22'
   }
 ];
 
 export default function ConnectionTimePage() {
   const [formData, setFormData] = useState({
-    TLE_inputFileName: '',
+    TLE_inputFileName: CONSTELLATION_FILES[0].value,
     ISLLinkMethod: '',
     execute_function: 'simGroundStationCoverSat',
     stationLatitude: 25.049126147527762,
@@ -135,7 +136,7 @@ export default function ConnectionTimePage() {
 
             <div className="grid grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-sm font-medium">星系檔案</label>
+                <label className="text-sm font-medium">星系配置</label>
                 <Select
                   value={formData.TLE_inputFileName}
                   onValueChange={(value) =>
@@ -146,7 +147,7 @@ export default function ConnectionTimePage() {
                   }
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="選擇星系檔案" />
+                    <SelectValue placeholder="選擇星系配置" />
                   </SelectTrigger>
                   <SelectContent>
                     {CONSTELLATION_FILES.map((file) => (
@@ -158,7 +159,7 @@ export default function ConnectionTimePage() {
                 </Select>
               </div>
 
-              <div className="space-y-2">
+              {/* <div className="space-y-2">
                 <label className="text-sm font-medium">ISL連結方法</label>
                 <Select
                   value={formData.ISLLinkMethod}
@@ -177,7 +178,7 @@ export default function ConnectionTimePage() {
                     ))}
                   </SelectContent>
                 </Select>
-              </div>
+              </div> */}
 
               <div className="space-y-2">
                 <label className="text-sm font-medium">站點緯度</label>

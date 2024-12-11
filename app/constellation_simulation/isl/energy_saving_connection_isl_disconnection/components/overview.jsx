@@ -24,20 +24,40 @@ const CONSTELLATION_FILES = [
   {
     value: 'TLE_3P_22Sats_29deg_F1.txt',
     label: '3 * 22'
+  },
+  {
+    value: 'TLE_6P_22Sats_29deg_F1.txt',
+    label: '6 * 22'
+  },
+  {
+    value: 'TLE_12P_22Sats_29deg_F7.txt',
+    label: '12 * 22'
   }
 ];
 
 const ISL_METHODS = [
   {
     value: 'minMaxR',
-    label: 'Min Max Range'
+    label: 'minMaxR'
+  },
+  {
+    value: 'minDiffAER',
+    label: 'minDiffAER'
+  },
+  {
+    value: 'relativePhasing',
+    label: 'relativePhasing'
+  },
+  {
+    value: 'minAvgR',
+    label: 'minAvgR'
   }
 ];
 
 export default function ISLBreakPage() {
   const [formData, setFormData] = useState({
-    TLE_inputFileName: '',
-    ISLLinkMethod: '',
+    TLE_inputFileName: CONSTELLATION_FILES[0].value,
+    ISLLinkMethod: ISL_METHODS[0].value,
     execute_function: 'simISLBreakPerformance',
     avgISLPerSat: 2.5,
     degreeConstraint: 3
@@ -141,7 +161,7 @@ export default function ISLBreakPage() {
 
             <div className="grid grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-sm font-medium">星系檔案</label>
+                <label className="text-sm font-medium">星系配置</label>
                 <Select
                   value={formData.TLE_inputFileName}
                   onValueChange={(value) =>
@@ -152,7 +172,7 @@ export default function ISLBreakPage() {
                   }
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="選擇星系檔案" />
+                    <SelectValue placeholder="選擇星系配置" />
                   </SelectTrigger>
                   <SelectContent>
                     {CONSTELLATION_FILES.map((file) => (

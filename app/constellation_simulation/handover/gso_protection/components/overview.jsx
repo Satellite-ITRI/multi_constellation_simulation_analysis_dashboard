@@ -20,14 +20,31 @@ import {
   useDownloadResult
 } from '@/app/constellation_simulation/handover/gso_protection/service';
 
+const FLEETS = [
+  {
+    value: 'TLE_3P_22Sats_29deg_F1',
+    label: '3 * 22'
+  },
+  {
+    value: 'TLE_6P_22Sats_29deg_F1',
+    label: '6 * 22'
+  },
+  {
+    value: 'TLE_12P_22Sats_29deg_F7',
+    label: '12 * 22'
+  }
+];
+
+const TIMINGS = ['Preemptive', 'Nonpreemptive'];
+
 export default function GSOProtectionPage() {
   const [formData, setFormData] = useState({
-    'tle.inputFileName': 'TLE_3P_22Sats_29deg_F1.txt',
+    TLE_inputFileName: FLEETS[0].value,
     'handover.strategy': 'MinRange',
     'station.latitude': 25.05,
     'station.longitude': 121.51,
     'station.altitude': 0.19,
-    'handover.decision': 'Nonpreemptive'
+    handover_decision: 'Nonpreemptive'
   });
 
   const [error, setError] = useState('');
@@ -120,21 +137,23 @@ export default function GSOProtectionPage() {
               <div className="space-y-2">
                 <label className="text-sm font-medium">星系配置檔案</label>
                 <Select
-                  value={formData['tle.inputFileName']}
+                  value={formData.TLE_inputFileName}
                   onValueChange={(value) =>
                     setFormData((prev) => ({
                       ...prev,
-                      'tle.inputFileName': value
+                      TLE_inputFileName: value
                     }))
                   }
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="選擇配置檔案" />
+                    <SelectValue placeholder="" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="TLE_3P_22Sats_29deg_F1.txt">
-                      TLE_3P_22Sats_29deg_F1.txt
-                    </SelectItem>
+                    {FLEETS.map((fleet) => (
+                      <SelectItem key={fleet.value} value={fleet.value}>
+                        {fleet.label}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -158,7 +177,29 @@ export default function GSOProtectionPage() {
                   </SelectContent>
                 </Select>
               </div>
-
+              <div className="space-y-2">
+                <label className="text-sm font-medium">換手決策</label>
+                <Select
+                  value={formData.handover_decision}
+                  onValueChange={(value) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      handover_decision: value
+                    }))
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {TIMINGS.map((timing) => (
+                      <SelectItem key={timing} value={timing}>
+                        {timing}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium">地面站緯度</label>
                 <Input
@@ -204,26 +245,6 @@ export default function GSOProtectionPage() {
                     }))
                   }
                 />
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-medium">換手決策</label>
-                <Select
-                  value={formData['handover.decision']}
-                  onValueChange={(value) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      'handover.decision': value
-                    }))
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="選擇換手決策" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Nonpreemptive">Nonpreemptive</SelectItem>
-                  </SelectContent>
-                </Select>
               </div>
             </div>
           </div>
