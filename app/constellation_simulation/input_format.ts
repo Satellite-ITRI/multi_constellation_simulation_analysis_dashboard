@@ -269,6 +269,55 @@ export const islBreakConfig = {
   }
 };
 
+export const dynamicRepairConfig = {
+  fields: {
+    TLE_inputFileName: {
+      label: '星系配置',
+      type: 'select',
+      options: [
+        { value: 'TLE_3P_22Sats_29deg_F1.txt', label: '3 * 22' },
+        { value: 'TLE_6P_22Sats_29deg_F1.txt', label: '6 * 22' },
+        { value: 'TLE_12P_22Sats_29deg_F7.txt', label: '12 * 22' }
+      ],
+      gridSpan: 1
+    },
+    ISLLinkMethod: {
+      label: 'ISL連結方法',
+      type: 'select',
+      options: [
+        { value: 'minMaxR', label: 'minMaxR' },
+        { value: 'minDiffAER', label: 'minDiffAER' },
+        { value: 'relativePhasing', label: 'relativePhasing' },
+        { value: 'minAvgR', label: 'minAvgR' }
+      ],
+      gridSpan: 1
+    },
+    avgISLPerSat: {
+      label: '平均ISL連結數',
+      type: 'number',
+      validation: {
+        required: true
+      },
+      gridSpan: 1
+    },
+    degreeConstraint: {
+      label: '角度限制',
+      type: 'number',
+      validation: {
+        required: true
+      },
+      gridSpan: 1
+    }
+  },
+  defaultValues: {
+    TLE_inputFileName: 'TLE_3P_22Sats_29deg_F1.txt',
+    ISLLinkMethod: 'minMaxR',
+    execute_function: 'simISLBreakPerformance',
+    avgISLPerSat: 2.5,
+    degreeConstraint: 3
+  }
+};
+
 export const multibeamHandoverConfig = {
   fields: {
     constellation: {
