@@ -1,131 +1,46 @@
+// pages/multibeam-handover.tsx
 'use client';
 
-// 1. 引入
-import { useState, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import PageContainer from '@/components/layout/page-container';
+import { useState, useCallback, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/ui/select';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { postAPI } from '@/app/api/entrypoint';
-import { ToastProvider, ToastViewport } from '@/components/ui/toast';
-import CustomToast from '@/components/base/CustomToast';
+import SimulationForm from '@/components/base/SimulationForm';
+import { multibeamHandoverConfig } from '@/app/constellation_simulation/input_format';
 import {
   useHandoverData,
   useSimulation,
   useDownloadResult
 } from '@/app/constellation_simulation/handover/multibeam/service';
+import PageContainer from '@/components/layout/page-container';
+import { ToastProvider, ToastViewport } from '@/components/ui/toast';
+import CustomToast from '@/components/base/CustomToast';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { postAPI } from '@/app/api/entrypoint';
 
-// 2. 常數定義
-const STRATEGIES = ['MinRange'];
-const TIMINGS = ['Preemptive', 'Nonpreemptive'];
-const FLEETS = [
-  { value: 'TLE_3P_22Sats_29deg_F1', label: '3 * 22' },
-  { value: 'TLE_6P_22Sats_29deg_F1', label: '6 * 22' },
-  { value: 'TLE_12P_22Sats_29deg_F7', label: '12 * 22' }
-];
-const CELL_UT_OPTIONS = [
-  { value: '28Cell_1UT', label: '28 Cells, 1 UT' },
-  { value: '38Cell_1UT', label: '38 Cells, 1 UT' }
-];
-const BEAM_COUNT_OPTIONS = [
-  { value: 28, label: '28 Beams' },
-  { value: 38, label: '37 Beams' }
-];
-const REUSE_FACTOR_OPTIONS = [{ value: 1, label: 'Factor 1' }];
-
-// 3. 主要元件
 export default function OverViewPage() {
-  // 4. Hook 相關邏輯
   const router = useRouter();
   const {
     applications,
     isLoading,
+    toastType,
     showToast,
     setShowToast,
-    toastType,
     toastMessage,
     fetchHandoverData
   } = useHandoverData();
   const { downloadResult, isDownloading } = useDownloadResult();
   const { runSimulation, isSimulating } = useSimulation();
 
-  const [formData, setFormData] = useState({
-    handover_name: '',
-    constellation: FLEETS[0].value,
-    handover_strategy: STRATEGIES[0],
-    handover_decision: TIMINGS[1],
-    beam_count: 28,
-    reuse_factor: 1,
-    cell_ut: '28Cell_1UT'
-  });
+  const [lastHandoverStatus, setLastHandoverStatus] = useState(null);
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [duplicateWarning, setDuplicateWarning] = useState(false);
   const [duplicateHandoverId, setDuplicateHandoverId] = useState(null);
   const [statusKey, setStatusKey] = useState(0);
-  const [lastHandoverStatus, setLastHandoverStatus] = useState(null);
-  const generateHandoverName = (formData) => {
-    // 找到對應的標籤文字
-    const fleetLabel =
-      FLEETS.find((f) => f.value === formData.constellation)?.label?.replace(
-        ' * ',
-        'x'
-      ) || '';
-    const strategyLabel = formData.handover_strategy;
-    const timingLabel = formData.handover_decision;
-    const cellUtLabel =
-      CELL_UT_OPTIONS.find((c) => c.value === formData.cell_ut)?.label?.replace(
-        ' Cells, 1 UT',
-        ''
-      ) || '';
-    const beamCountLabel = formData.beam_count;
-    const reuseFactorLabel =
-      REUSE_FACTOR_OPTIONS.find(
-        (r) => r.value === formData.reuse_factor
-      )?.label?.replace('Factor ', 'F') || '';
-
-    // 組合名稱
-    const name = `${fleetLabel}_${strategyLabel}_${timingLabel}_${cellUtLabel}Cell_1UT_${beamCountLabel}Beam_${reuseFactorLabel}`;
-
-    return name;
-  };
-  // 檢查是否可以下載結果的函數
-  const canDownloadResult = () => {
-    if (!applications || applications.length === 0) return false;
-
-    // 找出 id 最大的記錄
-    const latestHandover = applications.reduce((prev, current) => {
-      return prev.id > current.id ? prev : current;
-    });
-
-    // 檢查是否完成且狀態為 completed
-    return latestHandover.handover_status === 'completed';
-  };
-
-  // 處理下載結果的函數
-  const handleDownloadResult = async () => {
-    if (!canDownloadResult()) return;
-
-    // 找出 id 最大的記錄
-    const latestHandover = applications.reduce((prev, current) => {
-      return prev.id > current.id ? prev : current;
-    });
-
-    try {
-      await downloadResult(latestHandover.handover_uid);
-    } catch (error) {
-      setError('下載結果失敗');
-    }
-  };
-
+  const [formData, setFormData] = useState(
+    multibeamHandoverConfig.defaultValues
+  );
   const handleSubmit = async () => {
     setError('');
     setDuplicateWarning(false);
@@ -208,6 +123,57 @@ export default function OverViewPage() {
       setIsSubmitting(false);
     }
   };
+
+  // 處理下載結果的函數
+  const handleDownloadResult = async () => {
+    if (!canDownloadResult()) return;
+
+    // 找出 id 最大的記錄
+    const latestHandover = applications.reduce((prev, current) => {
+      return prev.id > current.id ? prev : current;
+    });
+
+    try {
+      await downloadResult(latestHandover.handover_uid);
+    } catch (error) {
+      setError('下載結果失敗');
+    }
+  };
+
+  const handleHistoryClick = () => {
+    router.push('/constellation_simulation/handover/multibeam/history');
+  };
+  const generateHandoverName = (formData) => {
+    // 直接從 constellation 值中提取數字
+    const constellationParts = formData.constellation.split('_');
+    const fleetLabel = `${constellationParts[1]}x${constellationParts[2]}`; // 例如 "3x22"
+
+    const strategyLabel = formData.handover_strategy;
+    const timingLabel = formData.handover_decision;
+
+    // 從 cell_ut 中提取數字
+    const cellNumber = formData.cell_ut.split('Cell')[0]; // 例如 "28"
+
+    const beamCountLabel = formData.beam_count;
+    const reuseFactorLabel = `F${formData.reuse_factor}`;
+
+    // 組合名稱
+    const name = `${fleetLabel}_${strategyLabel}_${timingLabel}_${cellNumber}Cell_1UT_${beamCountLabel}Beam_${reuseFactorLabel}`;
+
+    return name;
+  };
+  // 檢查是否可以下載結果的函數
+  const canDownloadResult = () => {
+    if (!applications || applications.length === 0) return false;
+
+    // 找出 id 最大的記錄
+    const latestHandover = applications.reduce((prev, current) => {
+      return prev.id > current.id ? prev : current;
+    });
+
+    // 檢查是否完成且狀態為 completed
+    return latestHandover.handover_status === 'completed';
+  };
   useEffect(() => {
     console.log(applications);
     if (!applications || applications.length === 0) {
@@ -277,16 +243,12 @@ export default function OverViewPage() {
       reuse_factor: value
     }));
   };
-  // 處理歷史紀錄按鈕點擊
-  const handleHistoryClick = () => {
-    router.push('/constellation_simulation/handover/multibeam/history');
-  };
-
   return (
     <PageContainer scrollable>
       <ToastProvider>
-        <div className="mx-auto min-h-screen bg-gray-50 px-40 pt-32">
+        <div className="mx-auto min-h-screen bg-black px-40 pt-32">
           <div className="mx-auto max-w-4xl">
+            {/* 保持原有的標題和按鈕 */}
             <div className="mb-6 flex items-center justify-between">
               <h1 className="flex items-center text-2xl font-bold">
                 多波束換手效能分析
@@ -299,7 +261,6 @@ export default function OverViewPage() {
                 </div>
               </h1>
               <div className="flex gap-4">
-                {/* 新增 flex container */}
                 <Button onClick={handleHistoryClick} className="w-32">
                   歷史紀錄
                 </Button>
@@ -326,121 +287,12 @@ export default function OverViewPage() {
               </Alert>
             )}
 
-            <div className="grid grid-cols-2 gap-6">
-              {/* 星系選擇 */}
-              <div className="space-y-2">
-                <label className="text-sm font-medium">星系配置</label>
-                <Select
-                  value={formData.constellation}
-                  onValueChange={(value) =>
-                    setFormData((prev) => ({ ...prev, constellation: value }))
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="選擇星系" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {FLEETS.map((fleet) => (
-                      <SelectItem key={fleet.value} value={fleet.value}>
-                        {fleet.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* 策略選擇 */}
-              <div className="space-y-2">
-                <label className="text-sm font-medium">換手策略</label>
-                <Select
-                  value={formData.handover_strategy}
-                  onValueChange={(value) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      handover_strategy: value
-                    }))
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="選擇策略" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {STRATEGIES.map((strategy) => (
-                      <SelectItem key={strategy} value={strategy}>
-                        {strategy}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              {/* 時機選擇 */}
-              <div className="space-y-2">
-                <label className="text-sm font-medium">換手時機</label>
-                <Select
-                  value={formData.handover_decision}
-                  onValueChange={(value) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      handover_decision: value
-                    }))
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="選擇決策時機" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {TIMINGS.map((timing) => (
-                      <SelectItem key={timing} value={timing}>
-                        {timing}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Cell/UT 配置</label>
-                  <Select
-                    value={formData.cell_ut}
-                    onValueChange={(value) =>
-                      setFormData((prev) => ({ ...prev, cell_ut: value }))
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="選擇配置" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {CELL_UT_OPTIONS.map((option) => (
-                        <SelectItem key={option.value} value={option.value}>
-                          {option.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                {/* 新增 Beam Count 顯示 */}
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">波束數量</label>
-                  <Input
-                    type="number"
-                    value={formData.beam_count}
-                    onChange={handleBeamCountChange}
-                    min={1}
-                    max={100}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">頻率數</label>
-                  <Input
-                    type="number"
-                    value={formData.reuse_factor}
-                    onChange={handleReuseFactorChange}
-                    min={1}
-                    max={100}
-                  />
-                </div>
-              </div>
-            </div>
+            {/* 使用新的表單組件 */}
+            <SimulationForm
+              formData={formData}
+              setFormData={setFormData}
+              config={multibeamHandoverConfig}
+            />
           </div>
 
           <CustomToast
