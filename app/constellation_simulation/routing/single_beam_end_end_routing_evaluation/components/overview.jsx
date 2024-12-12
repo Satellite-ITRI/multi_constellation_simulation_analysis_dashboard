@@ -33,6 +33,15 @@ const CONSTELLATION_FILES = [
     label: '12 * 22'
   }
 ];
+
+const STRATEGIES = [
+  'MinRange',
+  'MaxVisibleTime',
+  'MinAvrRange',
+  'MaxElevation',
+  'MaxSNR'
+];
+
 const TIMINGS = [
   'Preemptive',
   'Nonpreemptive',
@@ -46,6 +55,7 @@ const TIMINGS = [
 export default function SingleBeamE2ERoutingPage() {
   const [formData, setFormData] = useState({
     TLE_inputFileName: CONSTELLATION_FILES[0].value,
+    handover_strategy: STRATEGIES[0],
     timing: TIMINGS[0],
     round: 1,
     time: 1,
@@ -162,7 +172,29 @@ export default function SingleBeamE2ERoutingPage() {
                   </SelectContent>
                 </Select>
               </div>
-
+              <div className="space-y-2">
+                <label className="text-sm font-medium">換手策略</label>
+                <Select
+                  value={formData.handover_strategy}
+                  onValueChange={(value) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      handover_strategy: value
+                    }))
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {STRATEGIES.map((strategy) => (
+                      <SelectItem key={strategy} value={strategy}>
+                        {strategy}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium">換手決策</label>
                 <Select

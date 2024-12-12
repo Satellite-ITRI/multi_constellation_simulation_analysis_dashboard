@@ -21,14 +21,33 @@ import {
   useDownloadResult
 } from '@/app/constellation_simulation/routing/energy_efficient_routing_evaluation/service';
 
-const EFFICIENCY = [
+const STRATEGIES = [
+  'MinRange',
+  'MaxVisibleTime',
+  'MinAvrRange',
+  'MaxElevation',
+  'MaxSNR'
+];
+const MULTIPATH = [
   {
-    value: false,
-    label: 'F'
+    value: 'None',
+    label: 'None'
+  },
+  {
+    value: 'throughput',
+    label: 'throughput'
+  },
+  {
+    value: 'blcc',
+    label: 'blcc'
   }
 ];
 export default function EnergyRoutingPage() {
   const [formData, setFormData] = useState({
+    multi_path: MULTIPATH[0].value,
+    handover_strategy: STRATEGIES[0],
+    'isl.ratio': 0,
+    'routing.ratio': 0.001,
     'energy.evaluation': true,
     'energy.efficiency': true,
     'energy.collectionRate': 20,
@@ -126,6 +145,52 @@ export default function EnergyRoutingPage() {
             )}
 
             <div className="grid grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="text-sm font-medium">多重路徑</label>
+                <Select
+                  value={formData.multi_path}
+                  onValueChange={(value) =>
+                    setFormData((prev) => ({ ...prev, multi_path: value }))
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {MULTIPATH.map((fleet) => (
+                      <SelectItem key={fleet.value} value={fleet.value}>
+                        {fleet.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium">路由比例</label>
+                <Input
+                  type="number"
+                  value={formData['routing.ratio']}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      'routing.ratio': parseFloat(e.target.value)
+                    }))
+                  }
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium">ISL掉包率</label>
+                <Input
+                  type="number"
+                  value={formData['isl.ratio']}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      'routing.ratio': parseFloat(e.target.value)
+                    }))
+                  }
+                />
+              </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium">每秒能量收集 (瓦)</label>
                 <Input

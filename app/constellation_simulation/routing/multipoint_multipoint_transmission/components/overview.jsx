@@ -33,11 +33,7 @@ const MULTIPATH = [
     label: 'blcc'
   }
 ];
-const ROUTING_ALGO = [
-  { value: 'TLE_3P_22Sats_29deg_F1', label: 'Rtu' },
-  { value: 'TLE_6P_22Sats_29deg_F1', label: 'Afftected' },
-  { value: 'TLE_12P_22Sats_29deg_F7', label: 'IslState' }
-];
+const ROUTING_ALGO = [{ value: 'TLE_12P_22Sats_29deg_F7', label: 'IslState' }];
 export default function MultiToMultiPage() {
   const [formData, setFormData] = useState({
     simulationFunction: 'simSingleSatCapacity',

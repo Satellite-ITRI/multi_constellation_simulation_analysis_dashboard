@@ -19,23 +19,11 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
-const ROUTING_ALGO = [
-  { value: 'TLE_3P_22Sats_29deg_F1', label: 'Rtu' },
-  { value: 'TLE_6P_22Sats_29deg_F1', label: 'Afftected' },
-  { value: 'TLE_12P_22Sats_29deg_F7', label: 'IslState' }
-];
+const ROUTING_ALGO = [{ value: 'TLE_12P_22Sats_29deg_F7', label: 'IslState' }];
 const MULTIPATH = [
   {
     value: 'None',
     label: 'None'
-  },
-  {
-    value: 'throughput',
-    label: 'throughput'
-  },
-  {
-    value: 'blcc',
-    label: 'blcc'
   }
 ];
 export default function SingleToMultiPage() {
