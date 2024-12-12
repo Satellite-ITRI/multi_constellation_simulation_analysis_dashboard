@@ -188,7 +188,7 @@ export default function MultiToMultiPage() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium">路由回合</label>
+                <label className="text-sm font-medium">模擬次數</label>
                 <Input
                   type="number"
                   value={formData['routing.round']}
