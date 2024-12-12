@@ -318,6 +318,64 @@ export const dynamicRepairConfig = {
   }
 };
 
+export const singleToMultiConfig = {
+  fields: {
+    algorithm: {
+      label: '路由演算法',
+      type: 'select',
+      options: [{ value: 'TLE_12P_22Sats_29deg_F7', label: 'IslState' }],
+      gridSpan: 1
+    },
+    multi_path: {
+      label: '多重路徑',
+      type: 'select',
+      options: [{ value: 'None', label: 'None' }],
+      gridSpan: 1
+    },
+    'routing.ratio': {
+      label: '路由比例',
+      type: 'number',
+      validation: {
+        required: true
+      },
+      gridSpan: 1
+    },
+    'routing.round': {
+      label: '模擬次數',
+      type: 'number',
+      validation: {
+        required: true
+      },
+      gridSpan: 1
+    },
+    'routing.simulationTime': {
+      label: '模擬時間',
+      type: 'number',
+      validation: {
+        required: true
+      },
+      gridSpan: 1
+    },
+    'routing.throughput': {
+      label: '傳輸量 (Gbps)',
+      type: 'number',
+      validation: {
+        required: true
+      },
+      gridSpan: 1
+    }
+  },
+  defaultValues: {
+    simulationFunction: 'simSingleSatCapacity',
+    algorithm: 'TLE_12P_22Sats_29deg_F7',
+    multi_path: 'None',
+    'routing.ratio': 0.001,
+    'routing.round': 10,
+    'routing.simulationTime': 20,
+    'routing.throughput': 1
+  }
+};
+
 export const multibeamHandoverConfig = {
   fields: {
     constellation: {
