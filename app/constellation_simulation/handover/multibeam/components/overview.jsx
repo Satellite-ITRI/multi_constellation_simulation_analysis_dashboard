@@ -2,9 +2,8 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import SimulationForm from '@/components/base/SimulationForm';
 import { multibeamHandoverConfig } from '@/app/constellation_simulation/input_format';
 import {
@@ -76,7 +75,6 @@ export default function OverViewPage() {
         }
       }
 
-      // 原有的提交邏輯...
       const userData = JSON.parse(localStorage.getItem('userData'));
       if (!userData?.user_uid) {
         throw new Error('未找到使用者資料');
@@ -175,7 +173,6 @@ export default function OverViewPage() {
     return latestHandover.handover_status === 'completed';
   };
   useEffect(() => {
-    console.log(applications);
     if (!applications || applications.length === 0) {
       setLastHandoverStatus(null);
       return;
@@ -227,21 +224,6 @@ export default function OverViewPage() {
       formData.handover_decision &&
       formData.beam_count
     );
-  };
-  // 處理 beam count 變更的函數
-  const handleBeamCountChange = (e) => {
-    const value = e.target.value;
-    setFormData((prev) => ({
-      ...prev,
-      beam_count: value
-    }));
-  };
-  const handleReuseFactorChange = (e) => {
-    const value = e.target.value;
-    setFormData((prev) => ({
-      ...prev,
-      reuse_factor: value
-    }));
   };
   return (
     <PageContainer scrollable>

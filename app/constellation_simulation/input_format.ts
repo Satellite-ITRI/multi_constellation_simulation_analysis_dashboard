@@ -24,6 +24,84 @@ export interface PageConfig {
   };
 }
 
+export const coverageAnalysisConfig = {
+  fields: {
+    TLE_inputFileName: {
+      label: '星系配置',
+      type: 'select',
+      options: [
+        { value: 'TLE_3P_22Sats_29deg_F1.txt', label: '3 * 22' },
+        { value: 'TLE_6P_22Sats_29deg_F1.txt', label: '6 * 22' },
+        { value: 'TLE_12P_22Sats_29deg_F7.txt', label: '12 * 22' }
+      ],
+      gridSpan: 2
+    },
+    stationLatitude: {
+      label: '站點緯度',
+      type: 'number',
+      validation: {
+        required: true
+      },
+      gridSpan: 1
+    },
+    stationLongitude: {
+      label: '站點經度',
+      type: 'number',
+      validation: {
+        required: true
+      },
+      gridSpan: 1
+    },
+    stationAltitude: {
+      label: '站點高度',
+      type: 'number',
+      validation: {
+        required: true
+      },
+      gridSpan: 1
+    },
+    minLatitude: {
+      label: '最小緯度',
+      type: 'number',
+      validation: {
+        required: true,
+        min: -90,
+        max: 0
+      },
+      gridSpan: 1
+    },
+    maxLatitude: {
+      label: '最大緯度',
+      type: 'number',
+      validation: {
+        required: true,
+        min: 0,
+        max: 90
+      },
+      gridSpan: 1
+    },
+    leastSatCount: {
+      label: '最少衛星數量',
+      type: 'number',
+      validation: {
+        required: true,
+        min: 1
+      },
+      gridSpan: 1
+    }
+  },
+  defaultValues: {
+    TLE_inputFileName: 'TLE_3P_22Sats_29deg_F1.txt',
+    execute_function: 'simSatCoverageLatitude',
+    stationLatitude: 25.049126147527762,
+    stationLongitude: 121.51379754215354,
+    stationAltitude: 0.192742,
+    minLatitude: -50,
+    maxLatitude: 50,
+    leastSatCount: 1
+  }
+};
+
 export const multibeamHandoverConfig = {
   fields: {
     constellation: {
