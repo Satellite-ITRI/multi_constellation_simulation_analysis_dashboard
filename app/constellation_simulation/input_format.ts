@@ -102,6 +102,53 @@ export const coverageAnalysisConfig = {
   }
 };
 
+export const connectionTimeConfig = {
+  fields: {
+    TLE_inputFileName: {
+      label: '星系配置',
+      type: 'select',
+      options: [
+        { value: 'TLE_3P_22Sats_29deg_F1.txt', label: '3 * 22' },
+        { value: 'TLE_6P_22Sats_29deg_F1.txt', label: '6 * 22' },
+        { value: 'TLE_12P_22Sats_29deg_F7.txt', label: '12 * 22' }
+      ],
+      gridSpan: 2
+    },
+    stationLatitude: {
+      label: '站點緯度',
+      type: 'number',
+      validation: {
+        required: true
+      },
+      gridSpan: 1
+    },
+    stationLongitude: {
+      label: '站點經度',
+      type: 'number',
+      validation: {
+        required: true
+      },
+      gridSpan: 1
+    },
+    stationAltitude: {
+      label: '站點高度',
+      type: 'number',
+      validation: {
+        required: true
+      },
+      gridSpan: 1
+    }
+  },
+  defaultValues: {
+    TLE_inputFileName: 'TLE_3P_22Sats_29deg_F1.txt',
+    ISLLinkMethod: '',
+    execute_function: 'simGroundStationCoverSat',
+    stationLatitude: 25.049126147527762,
+    stationLongitude: 121.51379754215354,
+    stationAltitude: 0.192742
+  }
+};
+
 export const multibeamHandoverConfig = {
   fields: {
     constellation: {
