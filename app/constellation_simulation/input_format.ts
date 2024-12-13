@@ -438,6 +438,99 @@ export const multiToMultiConfig = {
   }
 };
 
+export const energyRoutingConfig = {
+  fields: {
+    multi_path: {
+      label: '多重路徑',
+      type: 'select',
+      options: [
+        { value: 'None', label: 'None' },
+        { value: 'throughput', label: 'throughput' },
+        { value: 'blcc', label: 'blcc' }
+      ],
+      gridSpan: 1
+    },
+    'routing.ratio': {
+      label: '路由比例',
+      type: 'number',
+      validation: {
+        required: true
+      },
+      gridSpan: 1
+    },
+    'isl.ratio': {
+      label: 'ISL掉包率',
+      type: 'number',
+      validation: {
+        required: true
+      },
+      gridSpan: 1
+    },
+    'energy.collectionRate': {
+      label: '每秒能量收集 (瓦)',
+      type: 'number',
+      validation: {
+        required: true
+      },
+      gridSpan: 1
+    },
+    'energy.hardwareConsumption': {
+      label: '硬體能量消耗 (瓦)',
+      type: 'number',
+      validation: {
+        required: true
+      },
+      gridSpan: 1
+    },
+    'energy.maxBatteryCapacity': {
+      label: '最大電池容量 (焦耳)',
+      type: 'number',
+      validation: {
+        required: true
+      },
+      gridSpan: 1
+    },
+    'energy.receivePower': {
+      label: '接收功率 (焦耳)',
+      type: 'number',
+      validation: {
+        required: true
+      },
+      gridSpan: 1
+    },
+    'energy.transmitPower': {
+      label: '傳輸功率 (焦耳)',
+      type: 'number',
+      validation: {
+        required: true
+      },
+      gridSpan: 1
+    },
+    'energy.txBufferTimeLimit': {
+      label: '傳輸緩衝時間限制 (秒)',
+      type: 'number',
+      validation: {
+        required: true
+      },
+      gridSpan: 1
+    }
+  },
+  defaultValues: {
+    multi_path: 'None',
+    handover_strategy: 'MinRange',
+    'isl.ratio': 0,
+    'routing.ratio': 0.001,
+    'energy.evaluation': true,
+    'energy.efficiency': true,
+    'energy.collectionRate': 20,
+    'energy.hardwareConsumption': 4,
+    'energy.maxBatteryCapacity': 11700000,
+    'energy.receivePower': 0,
+    'energy.transmitPower': 0.85,
+    'energy.txBufferTimeLimit': 20
+  }
+};
+
 export const multibeamHandoverConfig = {
   fields: {
     constellation: {
