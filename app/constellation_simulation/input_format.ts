@@ -617,6 +617,51 @@ export const singleBeamE2EConfig = {
   }
 };
 
+export const singlebeamHandoverConfig = {
+  fields: {
+    constellation: {
+      label: '星系配置',
+      type: 'select',
+      options: [
+        { value: 'TLE_3P_22Sats_29deg_F1', label: '3 * 22' },
+        { value: 'TLE_6P_22Sats_29deg_F1', label: '6 * 22' },
+        { value: 'TLE_12P_22Sats_29deg_F7', label: '12 * 22' }
+      ],
+      gridSpan: 1
+    },
+    handover_strategy: {
+      label: '換手策略',
+      type: 'select',
+      options: [{ value: 'MinRange', label: 'MinRange' }],
+      gridSpan: 1
+    },
+    handover_decision: {
+      label: '換手決策',
+      type: 'select',
+      options: [
+        { value: 'Preemptive', label: 'Preemptive' },
+        { value: 'Nonpreemptive', label: 'Nonpreemptive' }
+      ],
+      gridSpan: 1
+    },
+    cell_ut: {
+      label: 'UT 配置',
+      type: 'select',
+      options: [{ value: '12', label: '台北車站' }],
+      gridSpan: 1
+    }
+  },
+  defaultValues: {
+    handover_name: 'test',
+    constellation: 'TLE_3P_22Sats_29deg_F1',
+    handover_strategy: 'MinRange',
+    handover_decision: 'Nonpreemptive',
+    beam_count: 1,
+    reuse_factor: 1,
+    cell_ut: '12'
+  }
+};
+
 export const multibeamHandoverConfig = {
   fields: {
     constellation: {
