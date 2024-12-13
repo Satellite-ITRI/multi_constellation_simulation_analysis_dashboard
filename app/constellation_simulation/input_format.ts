@@ -662,6 +662,68 @@ export const singlebeamHandoverConfig = {
   }
 };
 
+export const gsoProtectionConfig = {
+  fields: {
+    TLE_inputFileName: {
+      label: '星系配置檔案',
+      type: 'select',
+      options: [
+        { value: 'TLE_3P_22Sats_29deg_F1', label: '3 * 22' },
+        { value: 'TLE_6P_22Sats_29deg_F1', label: '6 * 22' },
+        { value: 'TLE_12P_22Sats_29deg_F7', label: '12 * 22' }
+      ],
+      gridSpan: 1
+    },
+    'handover.strategy': {
+      label: '換手策略',
+      type: 'select',
+      options: [{ value: 'MinRange', label: 'MinRange' }],
+      gridSpan: 1
+    },
+    handover_decision: {
+      label: '換手決策',
+      type: 'select',
+      options: [
+        { value: 'Preemptive', label: 'Preemptive' },
+        { value: 'Nonpreemptive', label: 'Nonpreemptive' }
+      ],
+      gridSpan: 1
+    },
+    'station.latitude': {
+      label: '地面站緯度',
+      type: 'number',
+      validation: {
+        required: true
+      },
+      gridSpan: 1
+    },
+    'station.longitude': {
+      label: '地面站經度',
+      type: 'number',
+      validation: {
+        required: true
+      },
+      gridSpan: 1
+    },
+    'station.altitude': {
+      label: '地面站海拔高度 (公里)',
+      type: 'number',
+      validation: {
+        required: true
+      },
+      gridSpan: 1
+    }
+  },
+  defaultValues: {
+    TLE_inputFileName: 'TLE_3P_22Sats_29deg_F1',
+    'handover.strategy': 'MinRange',
+    handover_decision: 'Nonpreemptive',
+    'station.latitude': 25.05,
+    'station.longitude': 121.51,
+    'station.altitude': 0.19
+  }
+};
+
 export const multibeamHandoverConfig = {
   fields: {
     constellation: {
