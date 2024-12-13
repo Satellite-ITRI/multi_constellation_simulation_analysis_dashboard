@@ -531,6 +531,92 @@ export const energyRoutingConfig = {
   }
 };
 
+export const singleBeamE2EConfig = {
+  fields: {
+    TLE_inputFileName: {
+      label: '星系配置',
+      type: 'select',
+      options: [
+        { value: 'TLE_3P_22Sats_29deg_F1.txt', label: '3 * 22' },
+        { value: 'TLE_6P_22Sats_29deg_F1.txt', label: '6 * 22' },
+        { value: 'TLE_12P_22Sats_29deg_F7.txt', label: '12 * 22' }
+      ],
+      gridSpan: 1
+    },
+    handover_strategy: {
+      label: '換手策略',
+      type: 'select',
+      options: [
+        { value: 'MinRange', label: 'MinRange' },
+        { value: 'MaxVisibleTime', label: 'MaxVisibleTime' },
+        { value: 'MinAvrRange', label: 'MinAvrRange' },
+        { value: 'MaxElevation', label: 'MaxElevation' },
+        { value: 'MaxSNR', label: 'MaxSNR' }
+      ],
+      gridSpan: 1
+    },
+    timing: {
+      label: '換手決策',
+      type: 'select',
+      options: [
+        { value: 'Preemptive', label: 'Preemptive' },
+        { value: 'Nonpreemptive', label: 'Nonpreemptive' },
+        { value: 'Load Balancing', label: 'Load Balancing' },
+        { value: 'Hybrid Load Balancing', label: 'Hybrid Load Balancing' },
+        {
+          value: 'Satellite Load Balancing',
+          label: 'Satellite Load Balancing'
+        },
+        {
+          value: 'Nonpreemptive Load Balancing',
+          label: 'Nonpreemptive Load Balancing'
+        },
+        {
+          value: 'Preemptive Load Balancing',
+          label: 'Preemptive Load Balancing'
+        }
+      ],
+      gridSpan: 1
+    },
+    round: {
+      label: '模擬次數',
+      type: 'number',
+      validation: {
+        required: true,
+        min: 1
+      },
+      gridSpan: 1
+    },
+    time: {
+      label: '模擬時間',
+      type: 'number',
+      validation: {
+        required: true,
+        min: 1
+      },
+      gridSpan: 1
+    },
+    'active.user.ratio': {
+      label: '當前活躍用戶終端比例',
+      type: 'number',
+      validation: {
+        required: true,
+        min: 0,
+        max: 1
+      },
+      gridSpan: 1
+    }
+  },
+  defaultValues: {
+    TLE_inputFileName: 'TLE_3P_22Sats_29deg_F1.txt',
+    handover_strategy: 'MinRange',
+    timing: 'Preemptive',
+    round: 1,
+    time: 1,
+    'active.user.ratio': 0.5
+  }
+};
+
 export const multibeamHandoverConfig = {
   fields: {
     constellation: {
