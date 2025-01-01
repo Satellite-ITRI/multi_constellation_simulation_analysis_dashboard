@@ -10,7 +10,15 @@ import HandoverAnalyzeForm from '@/app/constellation_simulation/isl/components/i
 import CustomToast from '@/components/base/CustomToast';
 import { ToastProvider, ToastViewport } from '@/components/ui/toast';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation'; // 引入 useRouter
+import { useEffect } from 'react'; // 引入 useEffect
 export default function OverViewPage() {
+  const router = useRouter(); // 初始化 router
+  useEffect(() => {
+    router.push(
+      '/constellation_simulation/isl/energy_saving_connection_isl_disconnection'
+    );
+  }, []);
   const {
     applications,
     isLoading,
