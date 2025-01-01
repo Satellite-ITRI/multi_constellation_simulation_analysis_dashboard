@@ -20,7 +20,8 @@ import {
   useSimulation,
   useDownloadResult
 } from '@/app/constellation_simulation/handover/service';
-
+import { useRouter } from 'next/navigation'; // 引入 useRouter
+import { useEffect } from 'react'; // 引入 useEffect
 const STRATEGIES = [
   'MaxVisibleTime',
   'MinRange',
@@ -64,6 +65,10 @@ const REUSE_FACTOR_OPTIONS = [
 ];
 
 export default function OverViewPage() {
+  const router = useRouter(); // 初始化 router
+  useEffect(() => {
+    router.push('/constellation_simulation/constellation/coverage_analysis');
+  }, []);
   const {
     isLoading,
     showToast,
