@@ -212,7 +212,7 @@ export const constellation_configuration_strategyConstellationStrategyConfig = {
   }
 };
 
-export const islBreakConfig = {
+export const energy_saving_connection_isl_disconnectionIslHoppingConfig = {
   fields: {
     TLE_inputFileName: {
       label: '星系配置',
@@ -261,7 +261,7 @@ export const islBreakConfig = {
   }
 };
 
-export const dynamicRepairConfig = {
+export const dynamic_recovery_reconstructionModifyRegenRoutingConfig = {
   fields: {
     TLE_inputFileName: {
       label: '星系配置',
@@ -310,7 +310,7 @@ export const dynamicRepairConfig = {
   }
 };
 
-export const singleToMultiConfig = {
+export const point_multipoint_transmissionOneToMultiConfig = {
   fields: {
     algorithm: {
       label: '路由演算法',
@@ -368,7 +368,7 @@ export const singleToMultiConfig = {
   }
 };
 
-export const multiToMultiConfig = {
+export const multipoint_multipoint_transmissionMultiToMultiConfig = {
   fields: {
     algorithm: {
       label: '路由演算法',
@@ -430,7 +430,7 @@ export const multiToMultiConfig = {
   }
 };
 
-export const energyRoutingConfig = {
+export const energy_efficient_routing_evaluationSaveErRoutingConfig = {
   fields: {
     multi_path: {
       label: '多重路徑',
@@ -523,7 +523,7 @@ export const energyRoutingConfig = {
   }
 };
 
-export const singleBeamE2EConfig = {
+export const single_beam_end_end_routing_evaluationEndToEndRoutingConfig = {
   fields: {
     TLE_inputFileName: {
       label: '星系配置',
