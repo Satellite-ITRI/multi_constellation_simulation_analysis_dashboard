@@ -131,34 +131,28 @@ const ApplicationCard = ({ data, onRefresh }) => {
           <div>
             <p className="text-sm text-gray-500">星系配置</p>
             <p className="font-medium">
-              {getConstellationLabel(data.coverage_parameter.constellation)}
+              {getConstellationLabel(data.coverage_parameter.TLE_inputFileName)}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">換手策略</p>
+            <p className="text-sm text-gray-500">執行程式</p>
             <p className="font-medium">
-              {data.coverage_parameter.coverage_strategy}
+              {data.coverage_parameter.execute_function}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">換手時機</p>
+            <p className="text-sm text-gray-500">最少衛星數量</p>
             <p className="font-medium">
-              {data.coverage_parameter.coverage_decision}
+              {data.coverage_parameter.leastSatCount}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">Cell/UT 配置</p>
-            <p className="font-medium">{data.coverage_parameter.cell_ut}</p>
+            <p className="text-sm text-gray-500">最大緯度</p>
+            <p className="font-medium">{data.coverage_parameter.maxLatitude}</p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">波束數量</p>
-            <p className="font-medium">{data.coverage_parameter.beam_counts}</p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">重用因子</p>
-            <p className="font-medium">
-              {data.coverage_parameter.reuse_factor}
-            </p>
+            <p className="text-sm text-gray-500">最低緯度</p>
+            <p className="font-medium">{data.coverage_parameter.minLatitude}</p>
           </div>
         </div>
 

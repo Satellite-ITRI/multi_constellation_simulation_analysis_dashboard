@@ -10,14 +10,14 @@ import {
   AlertDialogTitle
 } from '@/components/ui/alert-dialog';
 
-const DeleteConfirmModal = ({ isOpen, onClose, onConfirm, handoverName }) => {
+const DeleteConfirmModal = ({ isOpen, onClose, onConfirm, coverageName }) => {
   return (
     <AlertDialog open={isOpen} onOpenChange={onClose}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>確認刪除</AlertDialogTitle>
           <AlertDialogDescription>
-            您確定要刪除 "{handoverName}" 的 Handover 資料嗎？此操作無法復原。
+            您確定要刪除 "{coverageName}" 的 coverage 資料嗎？此操作無法復原。
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
