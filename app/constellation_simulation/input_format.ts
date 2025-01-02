@@ -145,7 +145,7 @@ export const connection_time_simulationConnectedDurationConfig = {
   }
 };
 
-export const phaseParameterConfig = {
+export const phase_parameter_selectionPhaseConfig = {
   fields: {
     TLE_inputFileName: {
       label: '星系配置',

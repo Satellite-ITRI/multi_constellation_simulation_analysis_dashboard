@@ -10,20 +10,14 @@ import {
   AlertDialogTitle
 } from '@/components/ui/alert-dialog';
 
-const DeleteConfirmModal = ({
-  isOpen,
-  onClose,
-  onConfirm,
-  connectedDurationName
-}) => {
+const DeleteConfirmModal = ({ isOpen, onClose, onConfirm, phaseName }) => {
   return (
     <AlertDialog open={isOpen} onOpenChange={onClose}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>確認刪除</AlertDialogTitle>
           <AlertDialogDescription>
-            您確定要刪除 "{connectedDurationName}" 的 connectedDuration
-            資料嗎？此操作無法復原。
+            您確定要刪除 "{phaseName}" 的 phase 資料嗎？此操作無法復原。
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
