@@ -91,7 +91,6 @@ export const coverage_analysisCoverageConfig: PageConfig = {
   },
   defaultValues: {
     TLE_inputFileName: 'TLE_3P_22Sats_29deg_F1.txt',
-    execute_function: 'simSatCoverageLatitude',
     minLatitude: -50,
     maxLatitude: 50,
     leastSatCount: 1,
@@ -171,12 +170,11 @@ export const phase_parameter_selectionPhaseConfig = {
   },
   defaultValues: {
     TLE_inputFileName: 'TLE_3P_22Sats_29deg_F1.txt',
-    ISLLinkMethod: 'minMaxR',
-    execute_function: 'simMinDistanceBetweenSatellites'
+    ISLLinkMethod: 'minMaxR'
   }
 };
 
-export const constellationStrategyConfig = {
+export const constellation_configuration_strategyConstellationStrategyConfig = {
   fields: {
     TLE_inputFileName: {
       label: '星系配置',
@@ -193,9 +191,7 @@ export const constellationStrategyConfig = {
       type: 'select',
       options: [
         { value: 'minMaxR', label: 'minMaxR' },
-        { value: 'minDiffAER', label: 'minDiffAER' },
-        { value: 'relativePhasing', label: 'relativePhasing' },
-        { value: 'minAvgR', label: 'minAvgR' }
+        { value: 'minAERRange', label: 'minAERRange' }
       ],
       gridSpan: 1
     },
@@ -210,7 +206,7 @@ export const constellationStrategyConfig = {
   },
   defaultValues: {
     TLE_inputFileName: 'TLE_3P_22Sats_29deg_F1.txt',
-    ISLLinkMethod: 'minMaxR',
+    ISLLinkMethod: 'minAERRange',
     execute_function: 'simSatToAllRightSatDistance',
     observerId: 101
   }

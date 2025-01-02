@@ -111,16 +111,6 @@ const ApplicationCard = ({ data, onRefresh }) => {
                 {isDownloading ? '下載中...' : '查看結果'}
               </button>
             )}
-
-            {/* 執行模擬按鈕 */}
-            <button
-              onClick={handleRunSimulation}
-              disabled={isSimulating || data.handover_status === 'processing'}
-              className="transform rounded-lg bg-primary px-4 py-2 font-bold text-white transition-all hover:scale-105 disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              {isSimulating ? '執行中...' : '重新執行模擬'}
-            </button>
-
             {/* 刪除按鈕 */}
             <button
               onClick={() => setIsDeleteModalOpen(true)}
