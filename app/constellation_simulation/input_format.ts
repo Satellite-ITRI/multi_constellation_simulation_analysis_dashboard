@@ -24,7 +24,7 @@ export interface PageConfig {
   };
 }
 
-export const coverageAnalysisConfig = {
+export const coverage_analysisCoverageConfig = {
   fields: {
     TLE_inputFileName: {
       label: '星系配置',

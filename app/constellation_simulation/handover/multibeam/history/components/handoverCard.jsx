@@ -3,10 +3,8 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Badge } from '@/components/ui/badge';
 import { formatDistance } from 'date-fns';
 import { useSimulation, useDeleteHandover } from '../service';
-import ResultModal from './ResultModal';
 import DeleteConfirmModal from './DeleteConfirmModal';
 import CustomToast from '@/components/base/CustomToast';
 import { useDownloadResult } from '../service';
@@ -175,11 +173,6 @@ const ApplicationCard = ({ data, onRefresh }) => {
         </div>
       </div>
       <div className="h-[1/10]">
-        <ResultModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          data={data}
-        />
         <DeleteConfirmModal
           isOpen={isDeleteModalOpen}
           onClose={() => setIsDeleteModalOpen(false)}
