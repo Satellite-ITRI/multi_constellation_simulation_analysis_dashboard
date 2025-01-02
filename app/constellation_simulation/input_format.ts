@@ -139,11 +139,9 @@ export const connection_time_simulationConnectedDurationConfig = {
   },
   defaultValues: {
     TLE_inputFileName: 'TLE_3P_22Sats_29deg_F1.txt',
-    ISLLinkMethod: '',
-    execute_function: 'simGroundStationCoverSat',
-    stationLatitude: 25.049126147527762,
-    stationLongitude: 121.51379754215354,
-    stationAltitude: 0.192742
+    stationLatitude: 26.0,
+    stationLongitude: 122.0,
+    stationAltitude: 101
   }
 };
 

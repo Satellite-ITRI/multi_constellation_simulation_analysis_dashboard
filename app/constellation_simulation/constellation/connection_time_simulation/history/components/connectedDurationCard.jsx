@@ -138,38 +138,26 @@ const ApplicationCard = ({ data, onRefresh }) => {
             <p className="text-sm text-gray-500">星系配置</p>
             <p className="font-medium">
               {getConstellationLabel(
-                data.connectedDuration_parameter.constellation
+                data.connectedDuration_parameter.TLE_inputFileName
               )}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">換手策略</p>
+            <p className="text-sm text-gray-500">站點緯度</p>
             <p className="font-medium">
-              {data.connectedDuration_parameter.connectedDuration_strategy}
+              {data.connectedDuration_parameter.stationLatitude}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">換手時機</p>
+            <p className="text-sm text-gray-500">站點經度</p>
             <p className="font-medium">
-              {data.connectedDuration_parameter.connectedDuration_decision}
+              {data.connectedDuration_parameter.stationLongitude}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">Cell/UT 配置</p>
+            <p className="text-sm text-gray-500">站點高度</p>
             <p className="font-medium">
-              {data.connectedDuration_parameter.cell_ut}
-            </p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">波束數量</p>
-            <p className="font-medium">
-              {data.connectedDuration_parameter.beam_counts}
-            </p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">重用因子</p>
-            <p className="font-medium">
-              {data.connectedDuration_parameter.reuse_factor}
+              {data.connectedDuration_parameter.stationAltitude}
             </p>
           </div>
         </div>

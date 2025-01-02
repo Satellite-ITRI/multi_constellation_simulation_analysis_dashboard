@@ -49,37 +49,25 @@ export default function OverViewPage() {
     setIsSubmitting(true);
 
     try {
-      const beamCount = parseInt(formData.beam_count);
-      if (isNaN(beamCount) || beamCount < 1 || beamCount > 100) {
-        setError('波束數量必須是 1 到 100 之間的數字');
+      // 取得我們想要檢查的鍵值 (可自行排除不想檢查的欄位)
+      const keysToCheck = Object.keys(
+        connection_time_simulationConnectedDurationConfig.defaultValues
+      );
+
+      // 檢查重複實驗
+      const duplicateExperiment = applications?.find((app) => {
+        const params = app.connectedDuration_parameter || {};
+        return keysToCheck.every((key) => {
+          return String(params[key]) === String(formData[key]);
+        });
+      });
+      if (duplicateExperiment) {
+        setDuplicateWarning(true);
+        setDuplicateConnectedDurationId(
+          duplicateExperiment.connectedDuration_uid
+        );
         setIsSubmitting(false);
         return;
-      }
-
-      // 檢查是否有相同的實驗參數
-      if (applications && applications.length > 0) {
-        const duplicateExperiment = applications.find((app) => {
-          const params = app.connectedDuration_parameter;
-          return (
-            params.cell_ut === formData.cell_ut &&
-            params.beam_counts === beamCount &&
-            params.reuse_factor === formData.reuse_factor &&
-            params.constellation === formData.constellation &&
-            params.connectedDuration_decision ===
-              formData.connectedDuration_decision &&
-            params.connectedDuration_strategy ===
-              formData.connectedDuration_strategy
-          );
-        });
-
-        if (duplicateExperiment) {
-          setDuplicateWarning(true);
-          setDuplicateConnectedDurationId(
-            duplicateExperiment.connectedDuration_uid
-          );
-          setIsSubmitting(false);
-          return;
-        }
       }
 
       const userData = JSON.parse(localStorage.getItem('userData'));
@@ -87,18 +75,22 @@ export default function OverViewPage() {
         throw new Error('未找到使用者資料');
       }
 
-      const connectedDurationName = generateConnectedDurationName(formData);
-      // ★ 修正：以字面 key 的方式建立物件 (coverage_name / coverage_parameter ...)
+      // 產生 connectedDuration_xxx 的隨機名稱
+      const connectedDurationName = generateConnectedDurationName();
+
+      // 將 formData 的欄位動態組成 connectedDuration_parameter
+      const connectedDuration_parameter = Object.entries(formData).reduce(
+        (acc, [key, value]) => {
+          acc[key] = String(value);
+          return acc;
+        },
+        {}
+      );
+
+      // 組合最終 payload (不再出現 formData 層)
       const payload = {
         connectedDuration_name: connectedDurationName,
-        connectedDuration_parameter: {
-          constellation: formData.constellation,
-          connectedDuration_strategy: formData.connectedDuration_strategy,
-          connectedDuration_decision: formData.connectedDuration_decision,
-          beam_counts: beamCount,
-          reuse_factor: formData.reuse_factor,
-          cell_ut: formData.cell_ut
-        },
+        connectedDuration_parameter: connectedDuration_parameter,
         f_user_uid: userData.user_uid
       };
 
@@ -152,35 +144,18 @@ export default function OverViewPage() {
     );
   };
 
-  const generateConnectedDurationName = (formData) => {
-    // 直接從 constellation 值中提取數字
-    const constellationParts = formData.constellation.split('_');
-    const fleetLabel = `${constellationParts[1]}x${constellationParts[2]}`;
-
-    const strategyLabel = formData.connectedDuration_strategy;
-    const timingLabel = formData.connectedDuration_decision;
-
-    // 從 cell_ut 中提取數字
-    const cellNumber = formData.cell_ut.split('Cell')[0];
-
-    const beamCountLabel = formData.beam_count;
-    const reuseFactorLabel = `F${formData.reuse_factor}`;
-
-    // 組合名稱
-    const name = `${fleetLabel}_${strategyLabel}_${timingLabel}_${cellNumber}Cell_1UT_${beamCountLabel}Beam_${reuseFactorLabel}`;
-    return name;
+  const generateConnectedDurationName = () => {
+    // 使用 Math.random() 搭配 toString(36) 產生 Base36 字串
+    const randomStr = Math.random().toString(36).substring(2, 8);
+    return `connectedDuration_${randomStr}`;
   };
 
   // 檢查是否可以下載結果
   const canDownloadResult = () => {
     if (!applications || applications.length === 0) return false;
-
-    // 找出 id 最大的記錄
     const latestConnectedDuration = applications.reduce((prev, current) => {
       return prev.id > current.id ? prev : current;
     });
-
-    // 檢查是否完成且狀態為 completed
     return latestConnectedDuration.connectedDuration_status === 'completed';
   };
 
@@ -190,7 +165,6 @@ export default function OverViewPage() {
       return;
     }
 
-    // 如果有重複實驗的警告
     if (duplicateWarning) {
       setLastConnectedDurationStatus({
         status: '發現相同參數的實驗記錄，請先查看歷史紀錄',
@@ -200,12 +174,10 @@ export default function OverViewPage() {
       return;
     }
 
-    // 找出 id 最大的記錄
     const latestConnectedDuration = applications.reduce((prev, current) => {
       return prev.id > current.id ? prev : current;
     });
 
-    // 定義狀態映射
     const statusMap = {
       simulation_failed: 'Failed',
       completed: '',
@@ -213,7 +185,6 @@ export default function OverViewPage() {
       processing: 'Processing'
     };
 
-    // 使用 Tailwind 預設的顏色系統
     const statusStyles = {
       None: 'bg-muted text-muted-foreground',
       Processing: 'bg-primary text-primary-foreground animate-pulse',
@@ -229,15 +200,6 @@ export default function OverViewPage() {
       style: `${statusStyle} px-2 py-1 rounded-sm text-sm font-medium ml-4`
     });
   }, [applications, duplicateWarning]);
-
-  const isFormValid = () => {
-    return (
-      formData.constellation &&
-      formData.connectedDuration_strategy &&
-      formData.connectedDuration_decision &&
-      formData.beam_count
-    );
-  };
 
   return (
     <PageContainer scrollable>
@@ -268,7 +230,7 @@ export default function OverViewPage() {
                 </Button>
                 <Button
                   onClick={handleSubmit}
-                  disabled={!isFormValid() || isSubmitting || isSimulating}
+                  disabled={isSimulating || isSubmitting}
                   className="w-32"
                 >
                   {isSubmitting || isSimulating ? '處理中...' : '執行分析'}
