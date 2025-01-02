@@ -211,12 +211,6 @@ export default function OverViewPage() {
       style: `${statusStyle} px-2 py-1 rounded-sm text-sm font-medium ml-4`
     });
   }, [applications, duplicateWarning]);
-  console.log(
-    'isSimulating, isSubmitting ,duplicateExperiment',
-    isSimulating,
-    isSubmitting,
-    duplicateWarning
-  );
   return (
     <PageContainer scrollable>
       <ToastProvider>

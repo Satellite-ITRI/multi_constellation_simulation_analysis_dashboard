@@ -207,7 +207,6 @@ export const constellation_configuration_strategyConstellationStrategyConfig = {
   defaultValues: {
     TLE_inputFileName: 'TLE_3P_22Sats_29deg_F1.txt',
     ISLLinkMethod: 'minAERRange',
-    execute_function: 'simSatToAllRightSatDistance',
     observerId: 101
   }
 };
@@ -283,14 +282,6 @@ export const dynamic_recovery_reconstructionModifyRegenRoutingConfig = {
       ],
       gridSpan: 1
     },
-    avgISLPerSat: {
-      label: '平均ISL連結數',
-      type: 'number',
-      validation: {
-        required: true
-      },
-      gridSpan: 1
-    },
     Action: {
       label: '動作',
       type: 'select',
@@ -298,6 +289,14 @@ export const dynamic_recovery_reconstructionModifyRegenRoutingConfig = {
         { value: 'Recover', label: 'Recover' },
         { value: 'Regenerate', label: 'Regenerate' }
       ],
+      gridSpan: 1
+    },
+    avgISLPerSat: {
+      label: '平均ISL連結數',
+      type: 'number',
+      validation: {
+        required: true
+      },
       gridSpan: 1
     },
     degreeConstraint: {
@@ -320,12 +319,6 @@ export const dynamic_recovery_reconstructionModifyRegenRoutingConfig = {
 
 export const point_multipoint_transmissionOneToMultiConfig = {
   fields: {
-    algorithm: {
-      label: '路由演算法',
-      type: 'select',
-      options: [{ value: 'IslState', label: 'IslState' }],
-      gridSpan: 1
-    },
     multiPathCriteria: {
       label: '多重路徑',
       type: 'select',
@@ -333,6 +326,12 @@ export const point_multipoint_transmissionOneToMultiConfig = {
         { value: 'throughput', label: 'throughput' },
         { value: 'None', label: 'None' }
       ],
+      gridSpan: 1
+    },
+    algorithm: {
+      label: '路由演算法',
+      type: 'select',
+      options: [{ value: 'IslState', label: 'IslState' }],
       gridSpan: 1
     },
     ratio: {
@@ -370,7 +369,7 @@ export const point_multipoint_transmissionOneToMultiConfig = {
   },
   defaultValues: {
     algorithm: 'IslState',
-    ratio: 0.001,
+    ratio: 0.0001,
     multiPathCriteria: 'throughput',
     round: 10,
     simulationTime: 20,
@@ -431,7 +430,7 @@ export const multipoint_multipoint_transmissionMultiToMultiConfig = {
   defaultValues: {
     algorithm: 'IslState',
     multiPathCriteria: 'throughput',
-    ratio: 0.001,
+    ratio: 0.0001,
     round: 10,
     simulationTime: 20,
     throughput: 1
@@ -594,7 +593,15 @@ export const single_beam_end_end_routing_evaluationEndToEndRoutingConfig = {
       ],
       gridSpan: 1
     },
-
+    beamBandwidth: {
+      label: '波束頻寬',
+      type: 'number',
+      validation: {
+        required: true,
+        min: 1
+      },
+      gridSpan: 1
+    },
     round: {
       label: '模擬次數',
       type: 'number',
@@ -629,15 +636,16 @@ export const single_beam_end_end_routing_evaluationEndToEndRoutingConfig = {
     handover_strategy: 'MinRange',
     handoverDecision: 'LoadBalancing',
     useCaseVersion: '237UTsSatelliteLB',
+    beamBandwidth: 216000000,
     round: 1,
     time: 1,
     ActiveUserRatio: 0.5
   }
 };
 
-export const singlebeamHandoverConfig = {
+export const singlebeamSingleBeamConfig = {
   fields: {
-    constellation: {
+    TLE_inputFileName: {
       label: '星系配置',
       type: 'select',
       options: [
@@ -647,13 +655,13 @@ export const singlebeamHandoverConfig = {
       ],
       gridSpan: 1
     },
-    handover_strategy: {
+    handoverStrategy: {
       label: '換手策略',
       type: 'select',
       options: [{ value: 'MinRange', label: 'MinRange' }],
       gridSpan: 1
     },
-    handover_decision: {
+    handoverDecision: {
       label: '換手決策',
       type: 'select',
       options: [
@@ -662,21 +670,38 @@ export const singlebeamHandoverConfig = {
       ],
       gridSpan: 1
     },
-    cell_ut: {
-      label: 'UT 配置',
-      type: 'select',
-      options: [{ value: '12', label: '台北車站' }],
+    areaStationLatitudes: {
+      label: '站點緯度',
+      type: 'number',
+      validation: {
+        required: true
+      },
+      gridSpan: 1
+    },
+    areaStationLongitudes: {
+      label: '站點經度',
+      type: 'number',
+      validation: {
+        required: true
+      },
+      gridSpan: 1
+    },
+    areaStationAltitudes: {
+      label: '站點高度',
+      type: 'number',
+      validation: {
+        required: true
+      },
       gridSpan: 1
     }
   },
   defaultValues: {
-    handover_name: 'test',
-    constellation: 'TLE_3P_22Sats_29deg_F1',
-    handover_strategy: 'MinRange',
-    handover_decision: 'Nonpreemptive',
-    beam_count: 1,
-    reuse_factor: 1,
-    cell_ut: '12'
+    TLE_inputFileName: 'TLE_3P_22Sats_29deg_F1',
+    handoverStrategy: 'MinRange',
+    handoverDecision: 'Nonpreemptive',
+    areaStationLatitudes: 22.6645,
+    areaStationLongitudes: 120.3012,
+    areaStationAltitudes: 0.01
   }
 };
 
@@ -770,12 +795,13 @@ export const multibeamHandoverConfig = {
       label: 'Cell/UT 配置',
       type: 'select',
       options: [
-        { value: '28Cell_1UT', label: '28 Cells, 1 UT' },
-        { value: '38Cell_1UT', label: '38 Cells, 1 UT' }
+        { value: '28Cell_220UT', label: '28 Cells, 220 UT' },
+        { value: '35Cell_237UT', label: '35 Cells, 237 UT' },
+        { value: '35Cell_300UT', label: '35 Cells, 300 UT' }
       ],
       gridSpan: 1
     },
-    beam_count: {
+    beams_per_satellite: {
       label: '波束數量',
       type: 'number',
       validation: {
@@ -785,8 +811,8 @@ export const multibeamHandoverConfig = {
       },
       gridSpan: 1
     },
-    reuse_factor: {
-      label: '頻率數',
+    frequencies_per_satellite: {
+      label: '衛星頻率數',
       type: 'number',
       validation: {
         min: 1,
@@ -800,8 +826,13 @@ export const multibeamHandoverConfig = {
     constellation: 'TLE_3P_22Sats_29deg_F1',
     handover_strategy: 'MinRange',
     handover_decision: 'Nonpreemptive',
-    beam_count: 28,
-    reuse_factor: 1,
-    cell_ut: '28Cell_1UT'
+    beams_per_satellite: 28,
+    frequencies_per_satellite: 10,
+    cell_ut: '35Cell_300UT',
+    gsoProtectionMode: 'false',
+    simStartTime: '0',
+    simEndTime: '0',
+    cell_topology_mode: 'dynamic',
+    reuse_factor: 'None'
   }
 };
