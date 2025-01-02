@@ -10,14 +10,20 @@ import {
   AlertDialogTitle
 } from '@/components/ui/alert-dialog';
 
-const DeleteConfirmModal = ({ isOpen, onClose, onConfirm, phaseName }) => {
+const DeleteConfirmModal = ({
+  isOpen,
+  onClose,
+  onConfirm,
+  saveErRoutingName
+}) => {
   return (
     <AlertDialog open={isOpen} onOpenChange={onClose}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>確認刪除</AlertDialogTitle>
           <AlertDialogDescription>
-            您確定要刪除 "{phaseName}" 的 phase 資料嗎？此操作無法復原。
+            您確定要刪除 "{saveErRoutingName}" 的 saveErRouting
+            資料嗎？此操作無法復原。
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

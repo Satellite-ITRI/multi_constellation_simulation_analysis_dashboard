@@ -121,35 +121,27 @@ const ApplicationCard = ({ data, onRefresh }) => {
           <div>
             <p className="text-sm text-gray-500">星系配置</p>
             <p className="font-medium">
-              {getConstellationLabel(data.islHopping_parameter.constellation)}
+              {getConstellationLabel(
+                data.islHopping_parameter.TLE_inputFileName
+              )}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">換手策略</p>
+            <p className="text-sm text-gray-500">ISL連結方法</p>
             <p className="font-medium">
-              {data.islHopping_parameter.islHopping_strategy}
+              {data.islHopping_parameter.ISLLinkMethod}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">換手時機</p>
+            <p className="text-sm text-gray-500">平均ISL連結數</p>
             <p className="font-medium">
-              {data.islHopping_parameter.islHopping_decision}
+              {data.islHopping_parameter.avgISLPerSat}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">Cell/UT 配置</p>
-            <p className="font-medium">{data.islHopping_parameter.cell_ut}</p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">波束數量</p>
+            <p className="text-sm text-gray-500">角度限制</p>
             <p className="font-medium">
-              {data.islHopping_parameter.beam_counts}
-            </p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">重用因子</p>
-            <p className="font-medium">
-              {data.islHopping_parameter.reuse_factor}
+              {data.islHopping_parameter.degreeConstraint}
             </p>
           </div>
         </div>

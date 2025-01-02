@@ -209,7 +209,7 @@ export default function OverViewPage() {
           <div className="mx-auto max-w-4xl">
             <div className="mb-6 flex items-center justify-between">
               <h1 className="flex items-center text-2xl font-bold">
-                覆蓋率分析
+                動態修復與重建
                 <div key={statusKey}>
                   {lastModifyRegenRoutingStatus && (
                     <span className={lastModifyRegenRoutingStatus.style}>

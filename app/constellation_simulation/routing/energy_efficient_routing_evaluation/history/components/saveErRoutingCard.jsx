@@ -123,39 +123,59 @@ const ApplicationCard = ({ data, onRefresh }) => {
           <div>
             <p className="text-sm text-gray-500">星系配置</p>
             <p className="font-medium">
-              {getConstellationLabel(
-                data.saveErRouting_parameter.constellation
-              )}
+              {getConstellationLabel(data.saveErRouting_parameter.blccVersion)}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">換手策略</p>
+            <p className="text-sm text-gray-500">多重路徑</p>
             <p className="font-medium">
-              {data.saveErRouting_parameter.saveErRouting_strategy}
+              {data.saveErRouting_parameter.multiPathCriteria}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">換手時機</p>
+            <p className="text-sm text-gray-500">路由比例</p>
+            <p className="font-medium">{data.saveErRouting_parameter.ratio}</p>
+          </div>
+          <div>
+            <p className="text-sm text-gray-500">ISL掉包率</p>
             <p className="font-medium">
-              {data.saveErRouting_parameter.saveErRouting_decision}
+              {data.saveErRouting_parameter.globalIslPacketDropRate}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">Cell/UT 配置</p>
+            <p className="text-sm text-gray-500">每秒能量收集 (瓦)</p>
             <p className="font-medium">
-              {data.saveErRouting_parameter.cell_ut}
+              {data.saveErRouting_parameter.collectionRate}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">波束數量</p>
+            <p className="text-sm text-gray-500">硬體能量消耗 (瓦)</p>
             <p className="font-medium">
-              {data.saveErRouting_parameter.beam_counts}
+              {data.saveErRouting_parameter.hardwareConsumption}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">重用因子</p>
+            <p className="text-sm text-gray-500">最大電池容量 (焦耳)</p>
             <p className="font-medium">
-              {data.saveErRouting_parameter.reuse_factor}
+              {data.saveErRouting_parameter.maxBatteryCapacity}
+            </p>
+          </div>
+          <div>
+            <p className="text-sm text-gray-500">接收功率 (焦耳)</p>
+            <p className="font-medium">
+              {data.saveErRouting_parameter.receivePower}
+            </p>
+          </div>
+          <div>
+            <p className="text-sm text-gray-500">傳輸功率 (焦耳)</p>
+            <p className="font-medium">
+              {data.saveErRouting_parameter.transmitPower}
+            </p>
+          </div>
+          <div>
+            <p className="text-sm text-gray-500">傳輸緩衝時間限制 (秒)</p>
+            <p className="font-medium">
+              {data.saveErRouting_parameter.txBufferTimeLimit}
             </p>
           </div>
         </div>

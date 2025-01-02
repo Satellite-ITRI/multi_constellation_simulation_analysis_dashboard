@@ -119,37 +119,41 @@ const ApplicationCard = ({ data, onRefresh }) => {
 
         <div className="mt-4 grid grid-cols-2 gap-4">
           <div>
-            <p className="text-sm text-gray-500">星系配置</p>
+            <p className="text-sm text-gray-500">路由演算法</p>
             <p className="font-medium">
-              {getConstellationLabel(data.oneToMulti_parameter.constellation)}
+              {getConstellationLabel(data.oneToMulti_parameter.algorithm)}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">換手策略</p>
+            <p className="text-sm text-gray-500">多重路徑</p>
             <p className="font-medium">
-              {data.oneToMulti_parameter.oneToMulti_strategy}
+              {getConstellationLabel(
+                data.oneToMulti_parameter.multiPathCriteria
+              )}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">換手時機</p>
+            <p className="text-sm text-gray-500">路由比例</p>
             <p className="font-medium">
-              {data.oneToMulti_parameter.oneToMulti_decision}
+              {getConstellationLabel(data.oneToMulti_parameter.ratio)}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">Cell/UT 配置</p>
-            <p className="font-medium">{data.oneToMulti_parameter.cell_ut}</p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">波束數量</p>
+            <p className="text-sm text-gray-500">模擬次數</p>
             <p className="font-medium">
-              {data.oneToMulti_parameter.beam_counts}
+              {getConstellationLabel(data.oneToMulti_parameter.round)}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">重用因子</p>
+            <p className="text-sm text-gray-500">模擬時間</p>
             <p className="font-medium">
-              {data.oneToMulti_parameter.reuse_factor}
+              {getConstellationLabel(data.oneToMulti_parameter.simulationTime)}
+            </p>
+          </div>
+          <div>
+            <p className="text-sm text-gray-500">傳輸量 (Gbps)</p>
+            <p className="font-medium">
+              {getConstellationLabel(data.oneToMulti_parameter.throughput)}
             </p>
           </div>
         </div>

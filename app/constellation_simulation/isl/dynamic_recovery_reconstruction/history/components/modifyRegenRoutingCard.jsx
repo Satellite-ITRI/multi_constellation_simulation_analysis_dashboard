@@ -126,38 +126,32 @@ const ApplicationCard = ({ data, onRefresh }) => {
             <p className="text-sm text-gray-500">星系配置</p>
             <p className="font-medium">
               {getConstellationLabel(
-                data.modifyRegenRouting_parameter.constellation
+                data.modifyRegenRouting_parameter.TLE_inputFileName
               )}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">換手策略</p>
+            <p className="text-sm text-gray-500">ISL連結方法</p>
             <p className="font-medium">
-              {data.modifyRegenRouting_parameter.modifyRegenRouting_strategy}
+              {data.modifyRegenRouting_parameter.ISLLinkMethod}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">換手時機</p>
+            <p className="text-sm text-gray-500">平均ISL連結數</p>
             <p className="font-medium">
-              {data.modifyRegenRouting_parameter.modifyRegenRouting_decision}
+              {data.modifyRegenRouting_parameter.avgISLPerSat}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">Cell/UT 配置</p>
+            <p className="text-sm text-gray-500">角度限制</p>
             <p className="font-medium">
-              {data.modifyRegenRouting_parameter.cell_ut}
+              {data.modifyRegenRouting_parameter.degreeConstraint}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">波束數量</p>
+            <p className="text-sm text-gray-500">動作</p>
             <p className="font-medium">
-              {data.modifyRegenRouting_parameter.beam_counts}
-            </p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">重用因子</p>
-            <p className="font-medium">
-              {data.modifyRegenRouting_parameter.reuse_factor}
+              {data.modifyRegenRouting_parameter.Action}
             </p>
           </div>
         </div>

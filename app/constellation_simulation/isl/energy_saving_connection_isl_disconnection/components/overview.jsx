@@ -204,7 +204,7 @@ export default function OverViewPage() {
           <div className="mx-auto max-w-4xl">
             <div className="mb-6 flex items-center justify-between">
               <h1 className="flex items-center text-2xl font-bold">
-                覆蓋率分析
+                節能連線ISL斷線
                 <div key={statusKey}>
                   {lastIslHoppingStatus && (
                     <span className={lastIslHoppingStatus.style}>

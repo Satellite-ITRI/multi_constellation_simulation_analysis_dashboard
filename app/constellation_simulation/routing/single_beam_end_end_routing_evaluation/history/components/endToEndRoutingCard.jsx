@@ -126,38 +126,42 @@ const ApplicationCard = ({ data, onRefresh }) => {
             <p className="text-sm text-gray-500">星系配置</p>
             <p className="font-medium">
               {getConstellationLabel(
-                data.endToEndRouting_parameter.constellation
+                data.endToEndRouting_parameter.TLE_inputFileName
               )}
+            </p>
+          </div>
+          <div>
+            <p className="text-sm text-gray-500">換手決策</p>
+            <p className="font-medium">
+              {data.endToEndRouting_parameter.handoverDecision}
             </p>
           </div>
           <div>
             <p className="text-sm text-gray-500">換手策略</p>
             <p className="font-medium">
-              {data.endToEndRouting_parameter.endToEndRouting_strategy}
+              {data.endToEndRouting_parameter.handover_strategy}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">換手時機</p>
+            <p className="text-sm text-gray-500">評估情境</p>
             <p className="font-medium">
-              {data.endToEndRouting_parameter.endToEndRouting_decision}
+              {data.endToEndRouting_parameter.useCaseVersion}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">Cell/UT 配置</p>
+            <p className="text-sm text-gray-500">模擬次數</p>
             <p className="font-medium">
-              {data.endToEndRouting_parameter.cell_ut}
+              {data.endToEndRouting_parameter.round}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">波束數量</p>
-            <p className="font-medium">
-              {data.endToEndRouting_parameter.beam_counts}
-            </p>
+            <p className="text-sm text-gray-500">模擬時間</p>
+            <p className="font-medium">{data.endToEndRouting_parameter.time}</p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">重用因子</p>
+            <p className="text-sm text-gray-500">當前活躍用戶終端比例</p>
             <p className="font-medium">
-              {data.endToEndRouting_parameter.reuse_factor}
+              {data.endToEndRouting_parameter.ActiveUserRatio}
             </p>
           </div>
         </div>

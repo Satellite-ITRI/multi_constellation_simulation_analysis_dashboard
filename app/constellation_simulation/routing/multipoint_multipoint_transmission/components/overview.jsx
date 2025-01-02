@@ -204,7 +204,7 @@ export default function OverViewPage() {
           <div className="mx-auto max-w-4xl">
             <div className="mb-6 flex items-center justify-between">
               <h1 className="flex items-center text-2xl font-bold">
-                覆蓋率分析
+                多點對多點傳輸
                 <div key={statusKey}>
                   {lastMultiToMultiStatus && (
                     <span className={lastMultiToMultiStatus.style}>

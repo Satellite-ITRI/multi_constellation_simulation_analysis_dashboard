@@ -255,7 +255,6 @@ export const energy_saving_connection_isl_disconnectionIslHoppingConfig = {
   defaultValues: {
     TLE_inputFileName: 'TLE_3P_22Sats_29deg_F1.txt',
     ISLLinkMethod: 'minMaxR',
-    execute_function: 'simISLBreakPerformance',
     avgISLPerSat: 2.5,
     degreeConstraint: 3
   }
@@ -292,6 +291,15 @@ export const dynamic_recovery_reconstructionModifyRegenRoutingConfig = {
       },
       gridSpan: 1
     },
+    Action: {
+      label: '動作',
+      type: 'select',
+      options: [
+        { value: 'Recover', label: 'Recover' },
+        { value: 'Regenerate', label: 'Regenerate' }
+      ],
+      gridSpan: 1
+    },
     degreeConstraint: {
       label: '角度限制',
       type: 'number',
@@ -304,7 +312,7 @@ export const dynamic_recovery_reconstructionModifyRegenRoutingConfig = {
   defaultValues: {
     TLE_inputFileName: 'TLE_3P_22Sats_29deg_F1.txt',
     ISLLinkMethod: 'minMaxR',
-    execute_function: 'simISLBreakPerformance',
+    Action: 'Recover',
     avgISLPerSat: 2.5,
     degreeConstraint: 3
   }
@@ -315,16 +323,19 @@ export const point_multipoint_transmissionOneToMultiConfig = {
     algorithm: {
       label: '路由演算法',
       type: 'select',
-      options: [{ value: 'TLE_12P_22Sats_29deg_F7', label: 'IslState' }],
+      options: [{ value: 'IslState', label: 'IslState' }],
       gridSpan: 1
     },
-    multi_path: {
+    multiPathCriteria: {
       label: '多重路徑',
       type: 'select',
-      options: [{ value: 'None', label: 'None' }],
+      options: [
+        { value: 'throughput', label: 'throughput' },
+        { value: 'None', label: 'None' }
+      ],
       gridSpan: 1
     },
-    'routing.ratio': {
+    ratio: {
       label: '路由比例',
       type: 'number',
       validation: {
@@ -332,7 +343,7 @@ export const point_multipoint_transmissionOneToMultiConfig = {
       },
       gridSpan: 1
     },
-    'routing.round': {
+    round: {
       label: '模擬次數',
       type: 'number',
       validation: {
@@ -340,7 +351,7 @@ export const point_multipoint_transmissionOneToMultiConfig = {
       },
       gridSpan: 1
     },
-    'routing.simulationTime': {
+    simulationTime: {
       label: '模擬時間',
       type: 'number',
       validation: {
@@ -348,7 +359,7 @@ export const point_multipoint_transmissionOneToMultiConfig = {
       },
       gridSpan: 1
     },
-    'routing.throughput': {
+    throughput: {
       label: '傳輸量 (Gbps)',
       type: 'number',
       validation: {
@@ -358,13 +369,12 @@ export const point_multipoint_transmissionOneToMultiConfig = {
     }
   },
   defaultValues: {
-    simulationFunction: 'simSingleSatCapacity',
-    algorithm: 'TLE_12P_22Sats_29deg_F7',
-    multi_path: 'None',
-    'routing.ratio': 0.001,
-    'routing.round': 10,
-    'routing.simulationTime': 20,
-    'routing.throughput': 1
+    algorithm: 'IslState',
+    ratio: 0.001,
+    multiPathCriteria: 'throughput',
+    round: 10,
+    simulationTime: 20,
+    throughput: 1
   }
 };
 
@@ -373,20 +383,19 @@ export const multipoint_multipoint_transmissionMultiToMultiConfig = {
     algorithm: {
       label: '路由演算法',
       type: 'select',
-      options: [{ value: 'TLE_12P_22Sats_29deg_F7', label: 'IslState' }],
+      options: [{ value: 'IslState', label: 'IslState' }],
       gridSpan: 1
     },
-    multi_path: {
+    multiPathCriteria: {
       label: '多重路徑',
       type: 'select',
       options: [
-        { value: 'None', label: 'None' },
         { value: 'throughput', label: 'throughput' },
-        { value: 'blcc', label: 'blcc' }
+        { value: 'None', label: 'None' }
       ],
       gridSpan: 1
     },
-    'routing.ratio': {
+    ratio: {
       label: '路由比例',
       type: 'number',
       validation: {
@@ -394,7 +403,7 @@ export const multipoint_multipoint_transmissionMultiToMultiConfig = {
       },
       gridSpan: 1
     },
-    'routing.round': {
+    round: {
       label: '模擬次數',
       type: 'number',
       validation: {
@@ -402,7 +411,7 @@ export const multipoint_multipoint_transmissionMultiToMultiConfig = {
       },
       gridSpan: 1
     },
-    'routing.simulationTime': {
+    simulationTime: {
       label: '模擬時間',
       type: 'number',
       validation: {
@@ -410,7 +419,7 @@ export const multipoint_multipoint_transmissionMultiToMultiConfig = {
       },
       gridSpan: 1
     },
-    'routing.throughput': {
+    throughput: {
       label: '傳輸量 (Gbps)',
       type: 'number',
       validation: {
@@ -420,29 +429,37 @@ export const multipoint_multipoint_transmissionMultiToMultiConfig = {
     }
   },
   defaultValues: {
-    simulationFunction: 'simSingleSatCapacity',
-    algorithm: 'TLE_12P_22Sats_29deg_F7',
-    multi_path: 'None',
-    'routing.ratio': 0.001,
-    'routing.round': 10,
-    'routing.simulationTime': 20,
-    'routing.throughput': 1
+    algorithm: 'IslState',
+    multiPathCriteria: 'throughput',
+    ratio: 0.001,
+    round: 10,
+    simulationTime: 20,
+    throughput: 1
   }
 };
 
 export const energy_efficient_routing_evaluationSaveErRoutingConfig = {
   fields: {
-    multi_path: {
-      label: '多重路徑',
+    blccVersion: {
+      label: '星系配置',
       type: 'select',
       options: [
-        { value: 'None', label: 'None' },
-        { value: 'throughput', label: 'throughput' },
-        { value: 'blcc', label: 'blcc' }
+        { value: 'blcc3x22', label: '3 * 22' },
+        { value: 'blcc6x22', label: '6 * 22' },
+        { value: 'blcc12x22', label: '12 * 22' }
       ],
       gridSpan: 1
     },
-    'routing.ratio': {
+    multiPathCriteria: {
+      label: '多重路徑',
+      type: 'select',
+      options: [
+        { value: 'blcc', label: 'blcc' },
+        { value: 'None', label: 'None' }
+      ],
+      gridSpan: 1
+    },
+    ratio: {
       label: '路由比例',
       type: 'number',
       validation: {
@@ -450,7 +467,7 @@ export const energy_efficient_routing_evaluationSaveErRoutingConfig = {
       },
       gridSpan: 1
     },
-    'isl.ratio': {
+    globalIslPacketDropRate: {
       label: 'ISL掉包率',
       type: 'number',
       validation: {
@@ -458,7 +475,7 @@ export const energy_efficient_routing_evaluationSaveErRoutingConfig = {
       },
       gridSpan: 1
     },
-    'energy.collectionRate': {
+    collectionRate: {
       label: '每秒能量收集 (瓦)',
       type: 'number',
       validation: {
@@ -466,7 +483,7 @@ export const energy_efficient_routing_evaluationSaveErRoutingConfig = {
       },
       gridSpan: 1
     },
-    'energy.hardwareConsumption': {
+    hardwareConsumption: {
       label: '硬體能量消耗 (瓦)',
       type: 'number',
       validation: {
@@ -474,7 +491,7 @@ export const energy_efficient_routing_evaluationSaveErRoutingConfig = {
       },
       gridSpan: 1
     },
-    'energy.maxBatteryCapacity': {
+    maxBatteryCapacity: {
       label: '最大電池容量 (焦耳)',
       type: 'number',
       validation: {
@@ -482,7 +499,7 @@ export const energy_efficient_routing_evaluationSaveErRoutingConfig = {
       },
       gridSpan: 1
     },
-    'energy.receivePower': {
+    receivePower: {
       label: '接收功率 (焦耳)',
       type: 'number',
       validation: {
@@ -490,7 +507,7 @@ export const energy_efficient_routing_evaluationSaveErRoutingConfig = {
       },
       gridSpan: 1
     },
-    'energy.transmitPower': {
+    transmitPower: {
       label: '傳輸功率 (焦耳)',
       type: 'number',
       validation: {
@@ -498,7 +515,7 @@ export const energy_efficient_routing_evaluationSaveErRoutingConfig = {
       },
       gridSpan: 1
     },
-    'energy.txBufferTimeLimit': {
+    txBufferTimeLimit: {
       label: '傳輸緩衝時間限制 (秒)',
       type: 'number',
       validation: {
@@ -508,18 +525,16 @@ export const energy_efficient_routing_evaluationSaveErRoutingConfig = {
     }
   },
   defaultValues: {
-    multi_path: 'None',
-    handover_strategy: 'MinRange',
-    'isl.ratio': 0,
-    'routing.ratio': 0.001,
-    'energy.evaluation': true,
-    'energy.efficiency': true,
-    'energy.collectionRate': 20,
-    'energy.hardwareConsumption': 4,
-    'energy.maxBatteryCapacity': 11700000,
-    'energy.receivePower': 0,
-    'energy.transmitPower': 0.85,
-    'energy.txBufferTimeLimit': 20
+    multiPathCriteria: 'blcc',
+    ratio: 0.0001,
+    globalIslPacketDropRate: 0,
+    blccVersion: 'blcc3x22',
+    collectionRate: 20,
+    hardwareConsumption: 4,
+    maxBatteryCapacity: 11700000,
+    receivePower: 0,
+    transmitPower: 0.85,
+    txBufferTimeLimit: 20
   }
 };
 
@@ -529,9 +544,41 @@ export const single_beam_end_end_routing_evaluationEndToEndRoutingConfig = {
       label: '星系配置',
       type: 'select',
       options: [
-        { value: 'TLE_3P_22Sats_29deg_F1.txt', label: '3 * 22' },
         { value: 'TLE_6P_22Sats_29deg_F1.txt', label: '6 * 22' },
         { value: 'TLE_12P_22Sats_29deg_F7.txt', label: '12 * 22' }
+      ],
+      gridSpan: 1
+    },
+    handoverDecision: {
+      label: '換手決策',
+      type: 'select',
+      options: [
+        { value: 'LoadBalancing', label: 'Load Balancing' },
+        {
+          value: 'SatelliteLoadBalancing',
+          label: 'Satellite Load Balancing'
+        }
+      ],
+      gridSpan: 1
+    },
+    useCaseVersion: {
+      label: '評估情境',
+      type: 'select',
+      options: [
+        { value: '237UTsSatelliteLB', label: '237UTs' },
+        {
+          value: '150UTsAccessLink',
+          label: '150UTsAccessLink'
+        },
+        { value: '150UTsAccessLinkScale', label: '150UTsAccessLinkScale' },
+        {
+          value: '150UTsAccessLinkLoadBalance',
+          label: '150UTsAccessLinkLoadBalance'
+        },
+        {
+          value: '150UTsAccessLinkLoadBalanceScale',
+          label: '150UTsAccessLinkLoadBalanceScale'
+        }
       ],
       gridSpan: 1
     },
@@ -547,29 +594,7 @@ export const single_beam_end_end_routing_evaluationEndToEndRoutingConfig = {
       ],
       gridSpan: 1
     },
-    timing: {
-      label: '換手決策',
-      type: 'select',
-      options: [
-        { value: 'Preemptive', label: 'Preemptive' },
-        { value: 'Nonpreemptive', label: 'Nonpreemptive' },
-        { value: 'Load Balancing', label: 'Load Balancing' },
-        { value: 'Hybrid Load Balancing', label: 'Hybrid Load Balancing' },
-        {
-          value: 'Satellite Load Balancing',
-          label: 'Satellite Load Balancing'
-        },
-        {
-          value: 'Nonpreemptive Load Balancing',
-          label: 'Nonpreemptive Load Balancing'
-        },
-        {
-          value: 'Preemptive Load Balancing',
-          label: 'Preemptive Load Balancing'
-        }
-      ],
-      gridSpan: 1
-    },
+
     round: {
       label: '模擬次數',
       type: 'number',
@@ -588,7 +613,7 @@ export const single_beam_end_end_routing_evaluationEndToEndRoutingConfig = {
       },
       gridSpan: 1
     },
-    'active.user.ratio': {
+    ActiveUserRatio: {
       label: '當前活躍用戶終端比例',
       type: 'number',
       validation: {
@@ -600,12 +625,13 @@ export const single_beam_end_end_routing_evaluationEndToEndRoutingConfig = {
     }
   },
   defaultValues: {
-    TLE_inputFileName: 'TLE_3P_22Sats_29deg_F1.txt',
+    TLE_inputFileName: 'TLE_6P_22Sats_29deg_F1.txt',
     handover_strategy: 'MinRange',
-    timing: 'Preemptive',
+    handoverDecision: 'LoadBalancing',
+    useCaseVersion: '237UTsSatelliteLB',
     round: 1,
     time: 1,
-    'active.user.ratio': 0.5
+    ActiveUserRatio: 0.5
   }
 };
 

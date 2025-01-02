@@ -119,37 +119,35 @@ const ApplicationCard = ({ data, onRefresh }) => {
 
         <div className="mt-4 grid grid-cols-2 gap-4">
           <div>
-            <p className="text-sm text-gray-500">星系配置</p>
+            <p className="text-sm text-gray-500">路由演算法</p>
             <p className="font-medium">
-              {getConstellationLabel(data.multiToMulti_parameter.constellation)}
+              {getConstellationLabel(data.multiToMulti_parameter.algorithm)}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">換手策略</p>
+            <p className="text-sm text-gray-500">多重路徑</p>
             <p className="font-medium">
-              {data.multiToMulti_parameter.multiToMulti_strategy}
+              {data.multiToMulti_parameter.multiPathCriteria}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">換手時機</p>
+            <p className="text-sm text-gray-500">路由比例</p>
+            <p className="font-medium">{data.multiToMulti_parameter.ratio}</p>
+          </div>
+          <div>
+            <p className="text-sm text-gray-500">模擬次數</p>
+            <p className="font-medium">{data.multiToMulti_parameter.round}</p>
+          </div>
+          <div>
+            <p className="text-sm text-gray-500">模擬時間</p>
+            <p className="font-medium">
+              {data.multiToMulti_parameter.simulationTime}
+            </p>
+          </div>
+          <div>
+            <p className="text-sm text-gray-500">傳輸量 (Gbps)</p>
             <p className="font-medium">
               {data.multiToMulti_parameter.multiToMulti_decision}
-            </p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">Cell/UT 配置</p>
-            <p className="font-medium">{data.multiToMulti_parameter.cell_ut}</p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">波束數量</p>
-            <p className="font-medium">
-              {data.multiToMulti_parameter.beam_counts}
-            </p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">重用因子</p>
-            <p className="font-medium">
-              {data.multiToMulti_parameter.reuse_factor}
             </p>
           </div>
         </div>
