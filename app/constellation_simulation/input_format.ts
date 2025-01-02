@@ -102,7 +102,7 @@ export const coverage_analysisCoverageConfig = {
   }
 };
 
-export const connectionTimeConfig = {
+export const connection_time_simulationConnectedDurationConfig = {
   fields: {
     TLE_inputFileName: {
       label: '星系配置',
