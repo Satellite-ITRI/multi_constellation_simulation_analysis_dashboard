@@ -93,7 +93,6 @@ export const useSimulation = () => {
       console.error('模擬執行錯誤:', error);
       throw error;
     } finally {
-      setIsSimulating(false);
     }
   };
 

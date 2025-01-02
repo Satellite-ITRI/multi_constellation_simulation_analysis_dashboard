@@ -20,6 +20,11 @@ export default function SimulationForm({
   config
 }: SimulationFormProps) {
   const renderField = (fieldName: string, fieldConfig: any) => {
+    // 關鍵：如果 show 明確是 false，就直接不渲染
+    if (fieldConfig.show === false) {
+      return null;
+    }
+
     switch (fieldConfig.type) {
       case 'select':
         return (
@@ -35,7 +40,7 @@ export default function SimulationForm({
                 <SelectValue placeholder={`選擇${fieldConfig.label}`} />
               </SelectTrigger>
               <SelectContent>
-                {fieldConfig.options.map((option: any) => (
+                {fieldConfig.options?.map((option: any) => (
                   <SelectItem key={option.value} value={option.value}>
                     {option.label}
                   </SelectItem>

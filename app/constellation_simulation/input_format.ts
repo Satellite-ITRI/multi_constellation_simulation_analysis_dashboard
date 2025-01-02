@@ -1,30 +1,35 @@
 // input_format.ts
+
 export interface InputOption {
   value: string | number;
   label: string;
 }
 
+export interface PageConfigField {
+  label: string;
+  type: 'select' | 'number' | 'text';
+  options?: InputOption[];
+  validation?: {
+    min?: number;
+    max?: number;
+    required?: boolean;
+  };
+  gridSpan?: number;
+
+  show?: boolean;
+}
+
 export interface PageConfig {
-  title: string;
+  title?: string;
   fields: {
-    [key: string]: {
-      label: string;
-      type: 'select' | 'number' | 'text';
-      options?: InputOption[];
-      validation?: {
-        min?: number;
-        max?: number;
-        required?: boolean;
-      };
-      gridSpan?: number; // 控制欄位寬度
-    };
+    [key: string]: PageConfigField;
   };
   defaultValues: {
     [key: string]: any;
   };
 }
 
-export const coverage_analysisCoverageConfig = {
+export const coverage_analysisCoverageConfig: PageConfig = {
   fields: {
     TLE_inputFileName: {
       label: '星系配置',
@@ -35,30 +40,6 @@ export const coverage_analysisCoverageConfig = {
         { value: 'TLE_12P_22Sats_29deg_F7.txt', label: '12 * 22' }
       ],
       gridSpan: 2
-    },
-    stationLatitude: {
-      label: '站點緯度',
-      type: 'number',
-      validation: {
-        required: true
-      },
-      gridSpan: 1
-    },
-    stationLongitude: {
-      label: '站點經度',
-      type: 'number',
-      validation: {
-        required: true
-      },
-      gridSpan: 1
-    },
-    stationAltitude: {
-      label: '站點高度',
-      type: 'number',
-      validation: {
-        required: true
-      },
-      gridSpan: 1
     },
     minLatitude: {
       label: '最小緯度',
@@ -88,17 +69,34 @@ export const coverage_analysisCoverageConfig = {
         min: 1
       },
       gridSpan: 1
+    },
+    simStartTime: {
+      label: '模擬開始時間',
+      type: 'number',
+      validation: {
+        required: true
+      },
+      gridSpan: 2,
+      show: false
+    },
+    simEndTime: {
+      label: '模擬開始時間',
+      type: 'number',
+      validation: {
+        required: true
+      },
+      gridSpan: 2,
+      show: false
     }
   },
   defaultValues: {
     TLE_inputFileName: 'TLE_3P_22Sats_29deg_F1.txt',
     execute_function: 'simSatCoverageLatitude',
-    stationLatitude: 25.049126147527762,
-    stationLongitude: 121.51379754215354,
-    stationAltitude: 0.192742,
     minLatitude: -50,
     maxLatitude: 50,
-    leastSatCount: 1
+    leastSatCount: 1,
+    simStartTime: 0,
+    simEndTime: 600
   }
 };
 
