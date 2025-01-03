@@ -121,35 +121,39 @@ const ApplicationCard = ({ data, onRefresh }) => {
           <div>
             <p className="text-sm text-gray-500">星系配置</p>
             <p className="font-medium">
-              {getConstellationLabel(data.singleBeam_parameter.constellation)}
+              {getConstellationLabel(
+                data.singleBeam_parameter.TLE_inputFileName
+              )}
             </p>
           </div>
           <div>
             <p className="text-sm text-gray-500">換手策略</p>
             <p className="font-medium">
-              {data.singleBeam_parameter.singleBeam_strategy}
+              {data.singleBeam_parameter.handoverStrategy}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">換手時機</p>
+            <p className="text-sm text-gray-500">換手決策</p>
             <p className="font-medium">
-              {data.singleBeam_parameter.singleBeam_decision}
+              {data.singleBeam_parameter.handoverDecision}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">Cell/UT 配置</p>
-            <p className="font-medium">{data.singleBeam_parameter.cell_ut}</p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">波束數量</p>
+            <p className="text-sm text-gray-500">站點緯度</p>
             <p className="font-medium">
-              {data.singleBeam_parameter.beam_counts}
+              {data.singleBeam_parameter.areaStationLatitudes}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">重用因子</p>
+            <p className="text-sm text-gray-500">站點經度</p>
             <p className="font-medium">
-              {data.singleBeam_parameter.reuse_factor}
+              {data.singleBeam_parameter.areaStationLongitudes}
+            </p>
+          </div>
+          <div>
+            <p className="text-sm text-gray-500">站點高度</p>
+            <p className="font-medium">
+              {data.singleBeam_parameter.areaStationAltitudes}
             </p>
           </div>
         </div>

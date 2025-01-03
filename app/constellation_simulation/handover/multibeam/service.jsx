@@ -1,4 +1,4 @@
-// service.jsx
+// service_template.jsx
 'use client';
 import { useEffect, useState } from 'react';
 import { postAPI, downloadPDF } from '@/app/api/entrypoint';
@@ -21,7 +21,7 @@ export const useHandoverData = () => {
       }
 
       const response = await postAPI(
-        'meta_data_mgt/handoverManager/query_handoverData_by_user',
+        `meta_data_mgt/handoverManager/query_handoverData_by_user`,
         {
           user_uid: userData.user_uid
         }
@@ -32,17 +32,17 @@ export const useHandoverData = () => {
         setToast({
           show: true,
           type: 'success',
-          message: '成功獲取Handover資料'
+          message: `成功獲取Handover資料`
         });
       } else {
         throw new Error(response.data?.message || '獲取資料失敗');
       }
     } catch (error) {
-      console.error('獲取Handover資料錯誤:', error);
+      console.error(`獲取Handover資料錯誤:`, error);
       setToast({
         show: true,
         type: 'error',
-        message: error.message || '獲取Handover資料失敗'
+        message: error.message || `獲取Handover資料失敗`
       });
     } finally {
       setIsLoading(false);
@@ -80,7 +80,7 @@ export const useSimulation = () => {
     setIsSimulating(true);
     try {
       const response = await postAPI(
-        'simulation_data_mgt/handoverSimJobManager/run_handover_sim_job',
+        `simulation_data_mgt/handoverSimJobManager/run_handover_sim_job`,
         { handover_uid: handoverUid }
       );
 
@@ -93,12 +93,12 @@ export const useSimulation = () => {
       console.error('模擬執行錯誤:', error);
       throw error;
     } finally {
-      setIsSimulating(false);
     }
   };
 
   return { runSimulation, isSimulating };
 };
+
 export const useDeleteHandover = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [deleteToast, setDeleteToast] = useState({
@@ -111,7 +111,7 @@ export const useDeleteHandover = () => {
     setIsDeleting(true);
     try {
       const response = await postAPI(
-        'meta_data_mgt/handoverManager/delete_handover',
+        `meta_data_mgt/handoverManager/delete_handover`,
         {
           handover_uid: handoverUid
         }
@@ -121,7 +121,7 @@ export const useDeleteHandover = () => {
         setDeleteToast({
           show: true,
           type: 'success',
-          message: '成功刪除 Handover 資料'
+          message: `成功刪除 Handover 資料`
         });
         return true;
       } else {
@@ -157,6 +157,7 @@ export const useDeleteHandover = () => {
     toastMessage: deleteToast.message
   };
 };
+
 export const useDownloadResult = () => {
   const [isDownloading, setIsDownloading] = useState(false);
 
@@ -164,7 +165,7 @@ export const useDownloadResult = () => {
     setIsDownloading(true);
     try {
       const response = await downloadPDF(
-        'simulation_data_mgt/handoverSimJobManager/download_handover_sim_result',
+        `simulation_data_mgt/handoverSimJobManager/download_handover_sim_result`,
         { handover_uid: handoverUid }
       );
 
@@ -172,20 +173,16 @@ export const useDownloadResult = () => {
         throw response;
       }
 
-      // 建立 Blob 物件
       const blob = new Blob([response.data], { type: 'application/pdf' });
 
-      // 建立下載連結
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = `simulation-result-multibeam.pdf`;
+      link.download = `simulation-result-handover.pdf`;
 
-      // 觸發下載
       document.body.appendChild(link);
       link.click();
 
-      // 清理
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
 

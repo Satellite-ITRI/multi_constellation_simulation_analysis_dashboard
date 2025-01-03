@@ -137,6 +137,12 @@ const ApplicationCard = ({ data, onRefresh }) => {
             </p>
           </div>
           <div>
+            <p className="text-sm text-gray-500">動作</p>
+            <p className="font-medium">
+              {data.modifyRegenRouting_parameter.Action}
+            </p>
+          </div>
+          <div>
             <p className="text-sm text-gray-500">平均ISL連結數</p>
             <p className="font-medium">
               {data.modifyRegenRouting_parameter.avgISLPerSat}
@@ -146,12 +152,6 @@ const ApplicationCard = ({ data, onRefresh }) => {
             <p className="text-sm text-gray-500">角度限制</p>
             <p className="font-medium">
               {data.modifyRegenRouting_parameter.degreeConstraint}
-            </p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">動作</p>
-            <p className="font-medium">
-              {data.modifyRegenRouting_parameter.Action}
             </p>
           </div>
         </div>

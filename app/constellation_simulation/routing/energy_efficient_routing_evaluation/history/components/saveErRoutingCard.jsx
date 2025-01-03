@@ -142,42 +142,6 @@ const ApplicationCard = ({ data, onRefresh }) => {
               {data.saveErRouting_parameter.globalIslPacketDropRate}
             </p>
           </div>
-          <div>
-            <p className="text-sm text-gray-500">每秒能量收集 (瓦)</p>
-            <p className="font-medium">
-              {data.saveErRouting_parameter.collectionRate}
-            </p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">硬體能量消耗 (瓦)</p>
-            <p className="font-medium">
-              {data.saveErRouting_parameter.hardwareConsumption}
-            </p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">最大電池容量 (焦耳)</p>
-            <p className="font-medium">
-              {data.saveErRouting_parameter.maxBatteryCapacity}
-            </p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">接收功率 (焦耳)</p>
-            <p className="font-medium">
-              {data.saveErRouting_parameter.receivePower}
-            </p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">傳輸功率 (焦耳)</p>
-            <p className="font-medium">
-              {data.saveErRouting_parameter.transmitPower}
-            </p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">傳輸緩衝時間限制 (秒)</p>
-            <p className="font-medium">
-              {data.saveErRouting_parameter.txBufferTimeLimit}
-            </p>
-          </div>
         </div>
 
         <div className="mt-4 flex justify-between text-sm text-gray-500">

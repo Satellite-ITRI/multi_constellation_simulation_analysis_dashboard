@@ -40,39 +40,28 @@ export default function OverViewPage() {
   const [formData, setFormData] = useState(
     multibeamHandoverConfig.defaultValues
   );
+
   const handleSubmit = async () => {
     setError('');
     setDuplicateWarning(false);
     setIsSubmitting(true);
 
     try {
-      const beamCount = parseInt(formData.beam_count);
-      if (isNaN(beamCount) || beamCount < 1 || beamCount > 100) {
-        setError('波束數量必須是 1 到 100 之間的數字');
+      // 取得我們想要檢查的鍵值 (可自行排除不想檢查的欄位)
+      const keysToCheck = Object.keys(multibeamHandoverConfig.defaultValues);
+
+      // 檢查重複實驗
+      const duplicateExperiment = applications?.find((app) => {
+        const params = app.handover_parameter || {};
+        return keysToCheck.every((key) => {
+          return String(params[key]) === String(formData[key]);
+        });
+      });
+      if (duplicateExperiment) {
+        setDuplicateWarning(true);
+        setDuplicateHandoverId(duplicateExperiment.handover_uid);
         setIsSubmitting(false);
         return;
-      }
-
-      // 檢查是否有相同的實驗參數
-      if (applications && applications.length > 0) {
-        const duplicateExperiment = applications.find((app) => {
-          const params = app.handover_parameter;
-          return (
-            params.cell_ut === formData.cell_ut &&
-            params.beam_counts === beamCount &&
-            params.reuse_factor === formData.reuse_factor &&
-            params.constellation === formData.constellation &&
-            params.handover_decision === formData.handover_decision &&
-            params.handover_strategy === formData.handover_strategy
-          );
-        });
-
-        if (duplicateExperiment) {
-          setDuplicateWarning(true);
-          setDuplicateHandoverId(duplicateExperiment.handover_uid);
-          setIsSubmitting(false);
-          return;
-        }
       }
 
       const userData = JSON.parse(localStorage.getItem('userData'));
@@ -80,23 +69,28 @@ export default function OverViewPage() {
         throw new Error('未找到使用者資料');
       }
 
-      const handoverName = generateHandoverName(formData);
+      // 產生 handover_xxx 的隨機名稱
+      const handoverName = generateHandoverName();
+
+      // 將 formData 的欄位動態組成 handover_parameter
+      const handover_parameter = Object.entries(formData).reduce(
+        (acc, [key, value]) => {
+          acc[key] = String(value);
+          return acc;
+        },
+        {}
+      );
+
+      // 組合最終 payload (不再出現 formData 層)
       const payload = {
         handover_name: handoverName,
-        handover_parameter: {
-          constellation: formData.constellation,
-          handover_strategy: formData.handover_strategy,
-          handover_decision: formData.handover_decision,
-          beam_counts: beamCount,
-          reuse_factor: formData.reuse_factor,
-          cell_ut: formData.cell_ut
-        },
+        handover_parameter: handover_parameter,
         f_user_uid: userData.user_uid
       };
 
       // 建立 handover
       const response = await postAPI(
-        'meta_data_mgt/handoverManager/create_handover',
+        `meta_data_mgt/handoverManager/create_handover`,
         payload
       );
 
@@ -105,8 +99,7 @@ export default function OverViewPage() {
         // 立即執行模擬
         try {
           await runSimulation(response.data.data.handover_uid);
-          // 可以在這裡加入模擬成功的提示
-          // 開始輪詢更新狀態
+          // 重新抓取 handover 資料
           await fetchHandoverData();
           setShowToast(true);
         } catch (simError) {
@@ -139,46 +132,31 @@ export default function OverViewPage() {
   };
 
   const handleHistoryClick = () => {
-    router.push('/constellation_simulation/handover/multibeam/history');
+    // 前往歷史紀錄頁面
+    router.push(`/constellation_simulation/handover/multibeam/history`);
   };
-  const generateHandoverName = (formData) => {
-    // 直接從 constellation 值中提取數字
-    const constellationParts = formData.constellation.split('_');
-    const fleetLabel = `${constellationParts[1]}x${constellationParts[2]}`; // 例如 "3x22"
 
-    const strategyLabel = formData.handover_strategy;
-    const timingLabel = formData.handover_decision;
-
-    // 從 cell_ut 中提取數字
-    const cellNumber = formData.cell_ut.split('Cell')[0]; // 例如 "28"
-
-    const beamCountLabel = formData.beam_count;
-    const reuseFactorLabel = `F${formData.reuse_factor}`;
-
-    // 組合名稱
-    const name = `${fleetLabel}_${strategyLabel}_${timingLabel}_${cellNumber}Cell_1UT_${beamCountLabel}Beam_${reuseFactorLabel}`;
-
-    return name;
+  const generateHandoverName = () => {
+    // 使用 Math.random() 搭配 toString(36) 產生 Base36 字串
+    const randomStr = Math.random().toString(36).substring(2, 8);
+    return `handover_${randomStr}`;
   };
-  // 檢查是否可以下載結果的函數
+
+  // 檢查是否可以下載結果
   const canDownloadResult = () => {
     if (!applications || applications.length === 0) return false;
-
-    // 找出 id 最大的記錄
     const latestHandover = applications.reduce((prev, current) => {
       return prev.id > current.id ? prev : current;
     });
-
-    // 檢查是否完成且狀態為 completed
     return latestHandover.handover_status === 'completed';
   };
+
   useEffect(() => {
     if (!applications || applications.length === 0) {
       setLastHandoverStatus(null);
       return;
     }
 
-    // 如果有重複實驗的警告
     if (duplicateWarning) {
       setLastHandoverStatus({
         status: '發現相同參數的實驗記錄，請先查看歷史紀錄',
@@ -188,12 +166,10 @@ export default function OverViewPage() {
       return;
     }
 
-    // 找出 id 最大的記錄
     const latestHandover = applications.reduce((prev, current) => {
       return prev.id > current.id ? prev : current;
     });
 
-    // 定義狀態映射
     const statusMap = {
       simulation_failed: 'Failed',
       completed: '',
@@ -201,7 +177,6 @@ export default function OverViewPage() {
       processing: 'Processing'
     };
 
-    // 使用 Tailwind 預設的顏色系統
     const statusStyles = {
       None: 'bg-muted text-muted-foreground',
       Processing: 'bg-primary text-primary-foreground animate-pulse',
@@ -217,20 +192,12 @@ export default function OverViewPage() {
       style: `${statusStyle} px-2 py-1 rounded-sm text-sm font-medium ml-4`
     });
   }, [applications, duplicateWarning]);
-  const isFormValid = () => {
-    return (
-      formData.constellation &&
-      formData.handover_strategy &&
-      formData.handover_decision &&
-      formData.beam_count
-    );
-  };
+
   return (
     <PageContainer scrollable>
       <ToastProvider>
         <div className="mx-auto min-h-screen bg-black px-40 pt-32">
           <div className="mx-auto max-w-4xl">
-            {/* 保持原有的標題和按鈕 */}
             <div className="mb-6 flex items-center justify-between">
               <h1 className="flex items-center text-2xl font-bold">
                 多波束換手效能分析
@@ -255,7 +222,7 @@ export default function OverViewPage() {
                 </Button>
                 <Button
                   onClick={handleSubmit}
-                  disabled={!isFormValid() || isSubmitting || isSimulating}
+                  disabled={isSimulating || isSubmitting}
                   className="w-32"
                 >
                   {isSubmitting || isSimulating ? '處理中...' : '執行分析'}
@@ -269,7 +236,6 @@ export default function OverViewPage() {
               </Alert>
             )}
 
-            {/* 使用新的表單組件 */}
             <SimulationForm
               formData={formData}
               setFormData={setFormData}

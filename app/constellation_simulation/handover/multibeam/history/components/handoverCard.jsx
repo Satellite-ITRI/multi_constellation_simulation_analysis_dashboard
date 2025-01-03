@@ -2,16 +2,13 @@
 // applicationCard.jsx
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { formatDistance } from 'date-fns';
 import { useSimulation, useDeleteHandover } from '../service';
 import DeleteConfirmModal from './DeleteConfirmModal';
 import CustomToast from '@/components/base/CustomToast';
 import { useDownloadResult } from '../service';
-// import { toast } from '@/components/ui/use-toast';
+
 const ApplicationCard = ({ data, onRefresh }) => {
-  const router = useRouter();
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const {
     deleteHandover,
@@ -29,6 +26,7 @@ const ApplicationCard = ({ data, onRefresh }) => {
     }
     setIsDeleteModalOpen(false);
   };
+
   const getConstellationLabel = (constellation) => {
     const constellationMap = {
       TLE_3P_22Sats_29deg_F1: '3*22',
@@ -37,6 +35,7 @@ const ApplicationCard = ({ data, onRefresh }) => {
     };
     return constellationMap[constellation] || constellation;
   };
+
   const getStatusBadge = (status) => {
     // 修改狀態映射
     const statusMap = {
@@ -55,15 +54,9 @@ const ApplicationCard = ({ data, onRefresh }) => {
 
     const displayStatus = statusMap[status] || status;
 
-    return (
-      // <Badge
-      //   className={`${statusStyles[displayStatus] || statusStyles.None} ml-2`}
-      // >
-      //   {displayStatus}
-      // </Badge>
-      <></>
-    );
+    return <></>;
   };
+
   const { downloadResult, isDownloading } = useDownloadResult();
 
   // 修改 handleDetailsClick 函數
@@ -74,6 +67,7 @@ const ApplicationCard = ({ data, onRefresh }) => {
       console.error('下載失敗');
     }
   };
+
   const getTimeAgo = (dateString) => {
     return formatDistance(new Date(dateString), new Date(), {
       addSuffix: true
@@ -92,6 +86,7 @@ const ApplicationCard = ({ data, onRefresh }) => {
       console.error('模擬執行失敗:', error);
     }
   };
+
   return (
     <>
       <div className="relative flex flex-col rounded-lg bg-secondary p-6 shadow-md">
@@ -147,12 +142,14 @@ const ApplicationCard = ({ data, onRefresh }) => {
           </div>
           <div>
             <p className="text-sm text-gray-500">波束數量</p>
-            <p className="font-medium">{data.handover_parameter.beam_counts}</p>
+            <p className="font-medium">
+              {data.handover_parameter.beams_per_satellite}
+            </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">重用因子</p>
+            <p className="text-sm text-gray-500">衛星頻率數</p>
             <p className="font-medium">
-              {data.handover_parameter.reuse_factor}
+              {data.handover_parameter.frequencies_per_satellite}
             </p>
           </div>
         </div>

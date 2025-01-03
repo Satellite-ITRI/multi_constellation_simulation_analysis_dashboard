@@ -1,4 +1,5 @@
 // components/SimulationForm.tsx
+
 import { Input } from '@/components/ui/input';
 import {
   Select,
@@ -20,7 +21,7 @@ export default function SimulationForm({
   config
 }: SimulationFormProps) {
   const renderField = (fieldName: string, fieldConfig: any) => {
-    // 關鍵：如果 show 明確是 false，就直接不渲染
+    // 如果 show === false，就直接不渲染
     if (fieldConfig.show === false) {
       return null;
     }
@@ -49,6 +50,7 @@ export default function SimulationForm({
             </Select>
           </div>
         );
+
       case 'number':
         return (
           <div className="space-y-2">
@@ -67,6 +69,28 @@ export default function SimulationForm({
             />
           </div>
         );
+
+      // 新增 decimal case：允許輸入浮點數，但在 state 中儲存為字串
+      case 'decimal':
+        return (
+          <div className="space-y-2">
+            <label className="text-sm font-medium">{fieldConfig.label}</label>
+            <Input
+              type="number"
+              step="any" // 允許輸入小數
+              value={formData[fieldName]}
+              onChange={(e) =>
+                setFormData((prev: any) => ({
+                  ...prev,
+                  [fieldName]: e.target.value // 直接存字串
+                }))
+              }
+              min={fieldConfig.validation?.min}
+              max={fieldConfig.validation?.max}
+            />
+          </div>
+        );
+
       default:
         return null;
     }

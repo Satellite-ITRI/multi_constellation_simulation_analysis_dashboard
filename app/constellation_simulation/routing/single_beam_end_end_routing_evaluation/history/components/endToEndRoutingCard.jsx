@@ -149,19 +149,9 @@ const ApplicationCard = ({ data, onRefresh }) => {
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">模擬次數</p>
+            <p className="text-sm text-gray-500">波束頻寬</p>
             <p className="font-medium">
-              {data.endToEndRouting_parameter.round}
-            </p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">模擬時間</p>
-            <p className="font-medium">{data.endToEndRouting_parameter.time}</p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">當前活躍用戶終端比例</p>
-            <p className="font-medium">
-              {data.endToEndRouting_parameter.ActiveUserRatio}
+              {data.endToEndRouting_parameter.beamBandwidth}
             </p>
           </div>
         </div>

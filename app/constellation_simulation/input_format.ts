@@ -7,7 +7,7 @@ export interface InputOption {
 
 export interface PageConfigField {
   label: string;
-  type: 'select' | 'number' | 'text';
+  type: 'select' | 'number' | 'text' | 'decimal'; // 新增 'decimal'
   options?: InputOption[];
   validation?: {
     min?: number;
@@ -15,7 +15,6 @@ export interface PageConfigField {
     required?: boolean;
   };
   gridSpan?: number;
-
   show?: boolean;
 }
 
@@ -43,7 +42,7 @@ export const coverage_analysisCoverageConfig: PageConfig = {
     },
     minLatitude: {
       label: '最小緯度',
-      type: 'number',
+      type: 'decimal',
       validation: {
         required: true,
         min: -90,
@@ -53,7 +52,7 @@ export const coverage_analysisCoverageConfig: PageConfig = {
     },
     maxLatitude: {
       label: '最大緯度',
-      type: 'number',
+      type: 'decimal',
       validation: {
         required: true,
         min: 0,
@@ -63,7 +62,7 @@ export const coverage_analysisCoverageConfig: PageConfig = {
     },
     leastSatCount: {
       label: '最少衛星數量',
-      type: 'number',
+      type: 'decimal',
       validation: {
         required: true,
         min: 1
@@ -72,7 +71,7 @@ export const coverage_analysisCoverageConfig: PageConfig = {
     },
     simStartTime: {
       label: '模擬開始時間',
-      type: 'number',
+      type: 'decimal',
       validation: {
         required: true
       },
@@ -81,7 +80,7 @@ export const coverage_analysisCoverageConfig: PageConfig = {
     },
     simEndTime: {
       label: '模擬開始時間',
-      type: 'number',
+      type: 'decimal',
       validation: {
         required: true
       },
@@ -91,11 +90,11 @@ export const coverage_analysisCoverageConfig: PageConfig = {
   },
   defaultValues: {
     TLE_inputFileName: 'TLE_3P_22Sats_29deg_F1.txt',
-    minLatitude: -50,
-    maxLatitude: 50,
-    leastSatCount: 1,
-    simStartTime: 0,
-    simEndTime: 600
+    minLatitude: '-50',
+    maxLatitude: '50',
+    leastSatCount: '1',
+    simStartTime: '0',
+    simEndTime: '600'
   }
 };
 
@@ -113,23 +112,27 @@ export const connection_time_simulationConnectedDurationConfig = {
     },
     stationLatitude: {
       label: '站點緯度',
-      type: 'number',
+      type: 'decimal',
       validation: {
+        min: 0,
+        max: 30,
         required: true
       },
       gridSpan: 1
     },
     stationLongitude: {
       label: '站點經度',
-      type: 'number',
+      type: 'decimal',
       validation: {
+        min: 0,
+        max: 130,
         required: true
       },
       gridSpan: 1
     },
     stationAltitude: {
       label: '站點高度',
-      type: 'number',
+      type: 'decimal',
       validation: {
         required: true
       },
@@ -138,9 +141,9 @@ export const connection_time_simulationConnectedDurationConfig = {
   },
   defaultValues: {
     TLE_inputFileName: 'TLE_3P_22Sats_29deg_F1.txt',
-    stationLatitude: 26.0,
-    stationLongitude: 122.0,
-    stationAltitude: 101
+    stationLatitude: '26.0',
+    stationLongitude: '122.0',
+    stationAltitude: '0.01'
   }
 };
 
@@ -199,6 +202,8 @@ export const constellation_configuration_strategyConstellationStrategyConfig = {
       label: '觀測者ID',
       type: 'number',
       validation: {
+        min: 101,
+        max: 1222,
         required: true
       },
       gridSpan: 1
@@ -207,7 +212,7 @@ export const constellation_configuration_strategyConstellationStrategyConfig = {
   defaultValues: {
     TLE_inputFileName: 'TLE_3P_22Sats_29deg_F1.txt',
     ISLLinkMethod: 'minAERRange',
-    observerId: 101
+    observerId: '101'
   }
 };
 
@@ -236,8 +241,10 @@ export const energy_saving_connection_isl_disconnectionIslHoppingConfig = {
     },
     avgISLPerSat: {
       label: '平均ISL連結數',
-      type: 'number',
+      type: 'decimal',
       validation: {
+        min: 0,
+        max: 3,
         required: true
       },
       gridSpan: 1
@@ -246,6 +253,8 @@ export const energy_saving_connection_isl_disconnectionIslHoppingConfig = {
       label: '角度限制',
       type: 'number',
       validation: {
+        min: 0,
+        max: 3,
         required: true
       },
       gridSpan: 1
@@ -254,8 +263,8 @@ export const energy_saving_connection_isl_disconnectionIslHoppingConfig = {
   defaultValues: {
     TLE_inputFileName: 'TLE_3P_22Sats_29deg_F1.txt',
     ISLLinkMethod: 'minMaxR',
-    avgISLPerSat: 2.5,
-    degreeConstraint: 3
+    avgISLPerSat: '2.5',
+    degreeConstraint: '3'
   }
 };
 
@@ -293,8 +302,10 @@ export const dynamic_recovery_reconstructionModifyRegenRoutingConfig = {
     },
     avgISLPerSat: {
       label: '平均ISL連結數',
-      type: 'number',
+      type: 'decimal',
       validation: {
+        min: 0,
+        max: 3,
         required: true
       },
       gridSpan: 1
@@ -303,6 +314,8 @@ export const dynamic_recovery_reconstructionModifyRegenRoutingConfig = {
       label: '角度限制',
       type: 'number',
       validation: {
+        min: 0,
+        max: 3,
         required: true
       },
       gridSpan: 1
@@ -312,8 +325,8 @@ export const dynamic_recovery_reconstructionModifyRegenRoutingConfig = {
     TLE_inputFileName: 'TLE_3P_22Sats_29deg_F1.txt',
     ISLLinkMethod: 'minMaxR',
     Action: 'Recover',
-    avgISLPerSat: 2.5,
-    degreeConstraint: 3
+    avgISLPerSat: '2.5',
+    degreeConstraint: '3'
   }
 };
 
@@ -328,63 +341,25 @@ export const point_multipoint_transmissionOneToMultiConfig = {
       ],
       gridSpan: 1
     },
-    algorithm: {
-      label: '路由演算法',
-      type: 'select',
-      options: [{ value: 'IslState', label: 'IslState' }],
-      gridSpan: 1
-    },
     ratio: {
       label: '路由比例',
-      type: 'number',
+      type: 'decimal',
       validation: {
-        required: true
-      },
-      gridSpan: 1
-    },
-    round: {
-      label: '模擬次數',
-      type: 'number',
-      validation: {
-        required: true
-      },
-      gridSpan: 1
-    },
-    simulationTime: {
-      label: '模擬時間',
-      type: 'number',
-      validation: {
-        required: true
-      },
-      gridSpan: 1
-    },
-    throughput: {
-      label: '傳輸量 (Gbps)',
-      type: 'number',
-      validation: {
+        min: 0,
+        max: 1,
         required: true
       },
       gridSpan: 1
     }
   },
   defaultValues: {
-    algorithm: 'IslState',
-    ratio: 0.0001,
-    multiPathCriteria: 'throughput',
-    round: 10,
-    simulationTime: 20,
-    throughput: 1
+    ratio: '0.0001',
+    multiPathCriteria: 'throughput'
   }
 };
 
 export const multipoint_multipoint_transmissionMultiToMultiConfig = {
   fields: {
-    algorithm: {
-      label: '路由演算法',
-      type: 'select',
-      options: [{ value: 'IslState', label: 'IslState' }],
-      gridSpan: 1
-    },
     multiPathCriteria: {
       label: '多重路徑',
       type: 'select',
@@ -396,44 +371,18 @@ export const multipoint_multipoint_transmissionMultiToMultiConfig = {
     },
     ratio: {
       label: '路由比例',
-      type: 'number',
+      type: 'decimal',
       validation: {
-        required: true
-      },
-      gridSpan: 1
-    },
-    round: {
-      label: '模擬次數',
-      type: 'number',
-      validation: {
-        required: true
-      },
-      gridSpan: 1
-    },
-    simulationTime: {
-      label: '模擬時間',
-      type: 'number',
-      validation: {
-        required: true
-      },
-      gridSpan: 1
-    },
-    throughput: {
-      label: '傳輸量 (Gbps)',
-      type: 'number',
-      validation: {
+        min: 0,
+        max: 1,
         required: true
       },
       gridSpan: 1
     }
   },
   defaultValues: {
-    algorithm: 'IslState',
     multiPathCriteria: 'throughput',
-    ratio: 0.0001,
-    round: 10,
-    simulationTime: 20,
-    throughput: 1
+    ratio: '0.0001'
   }
 };
 
@@ -460,8 +409,10 @@ export const energy_efficient_routing_evaluationSaveErRoutingConfig = {
     },
     ratio: {
       label: '路由比例',
-      type: 'number',
+      type: 'decimal',
       validation: {
+        min: 0,
+        max: 1,
         required: true
       },
       gridSpan: 1
@@ -470,54 +421,8 @@ export const energy_efficient_routing_evaluationSaveErRoutingConfig = {
       label: 'ISL掉包率',
       type: 'number',
       validation: {
-        required: true
-      },
-      gridSpan: 1
-    },
-    collectionRate: {
-      label: '每秒能量收集 (瓦)',
-      type: 'number',
-      validation: {
-        required: true
-      },
-      gridSpan: 1
-    },
-    hardwareConsumption: {
-      label: '硬體能量消耗 (瓦)',
-      type: 'number',
-      validation: {
-        required: true
-      },
-      gridSpan: 1
-    },
-    maxBatteryCapacity: {
-      label: '最大電池容量 (焦耳)',
-      type: 'number',
-      validation: {
-        required: true
-      },
-      gridSpan: 1
-    },
-    receivePower: {
-      label: '接收功率 (焦耳)',
-      type: 'number',
-      validation: {
-        required: true
-      },
-      gridSpan: 1
-    },
-    transmitPower: {
-      label: '傳輸功率 (焦耳)',
-      type: 'number',
-      validation: {
-        required: true
-      },
-      gridSpan: 1
-    },
-    txBufferTimeLimit: {
-      label: '傳輸緩衝時間限制 (秒)',
-      type: 'number',
-      validation: {
+        min: 0,
+        max: 1,
         required: true
       },
       gridSpan: 1
@@ -525,15 +430,9 @@ export const energy_efficient_routing_evaluationSaveErRoutingConfig = {
   },
   defaultValues: {
     multiPathCriteria: 'blcc',
-    ratio: 0.0001,
-    globalIslPacketDropRate: 0,
-    blccVersion: 'blcc3x22',
-    collectionRate: 20,
-    hardwareConsumption: 4,
-    maxBatteryCapacity: 11700000,
-    receivePower: 0,
-    transmitPower: 0.85,
-    txBufferTimeLimit: 20
+    ratio: '0.0001',
+    globalIslPacketDropRate: '0',
+    blccVersion: 'blcc3x22'
   }
 };
 
@@ -577,19 +476,8 @@ export const single_beam_end_end_routing_evaluationEndToEndRoutingConfig = {
         {
           value: '150UTsAccessLinkLoadBalanceScale',
           label: '150UTsAccessLinkLoadBalanceScale'
-        }
-      ],
-      gridSpan: 1
-    },
-    handover_strategy: {
-      label: '換手策略',
-      type: 'select',
-      options: [
-        { value: 'MinRange', label: 'MinRange' },
-        { value: 'MaxVisibleTime', label: 'MaxVisibleTime' },
-        { value: 'MinAvrRange', label: 'MinAvrRange' },
-        { value: 'MaxElevation', label: 'MaxElevation' },
-        { value: 'MaxSNR', label: 'MaxSNR' }
+        },
+        { value: '300UTs', label: '300UTs' }
       ],
       gridSpan: 1
     },
@@ -597,49 +485,18 @@ export const single_beam_end_end_routing_evaluationEndToEndRoutingConfig = {
       label: '波束頻寬',
       type: 'number',
       validation: {
-        required: true,
-        min: 1
-      },
-      gridSpan: 1
-    },
-    round: {
-      label: '模擬次數',
-      type: 'number',
-      validation: {
-        required: true,
-        min: 1
-      },
-      gridSpan: 1
-    },
-    time: {
-      label: '模擬時間',
-      type: 'number',
-      validation: {
-        required: true,
-        min: 1
-      },
-      gridSpan: 1
-    },
-    ActiveUserRatio: {
-      label: '當前活躍用戶終端比例',
-      type: 'number',
-      validation: {
-        required: true,
-        min: 0,
-        max: 1
+        min: 1,
+        max: 9999999999999,
+        required: true
       },
       gridSpan: 1
     }
   },
   defaultValues: {
     TLE_inputFileName: 'TLE_6P_22Sats_29deg_F1.txt',
-    handover_strategy: 'MinRange',
-    handoverDecision: 'LoadBalancing',
+    handoverDecision: 'SatelliteLoadBalancing',
     useCaseVersion: '237UTsSatelliteLB',
-    beamBandwidth: 216000000,
-    round: 1,
-    time: 1,
-    ActiveUserRatio: 0.5
+    beamBandwidth: '216000000'
   }
 };
 
@@ -649,9 +506,9 @@ export const singlebeamSingleBeamConfig = {
       label: '星系配置',
       type: 'select',
       options: [
-        { value: 'TLE_3P_22Sats_29deg_F1', label: '3 * 22' },
-        { value: 'TLE_6P_22Sats_29deg_F1', label: '6 * 22' },
-        { value: 'TLE_12P_22Sats_29deg_F7', label: '12 * 22' }
+        { value: 'TLE_3P_22Sats_29deg_F1.txt', label: '3 * 22' },
+        { value: 'TLE_6P_22Sats_29deg_F1.txt', label: '6 * 22' },
+        { value: 'TLE_12P_22Sats_29deg_F7.txt', label: '12 * 22' }
       ],
       gridSpan: 1
     },
@@ -674,6 +531,8 @@ export const singlebeamSingleBeamConfig = {
       label: '站點緯度',
       type: 'number',
       validation: {
+        min: 0,
+        max: 30,
         required: true
       },
       gridSpan: 1
@@ -682,6 +541,8 @@ export const singlebeamSingleBeamConfig = {
       label: '站點經度',
       type: 'number',
       validation: {
+        min: 0,
+        max: 130,
         required: true
       },
       gridSpan: 1
@@ -690,25 +551,27 @@ export const singlebeamSingleBeamConfig = {
       label: '站點高度',
       type: 'number',
       validation: {
+        min: 0,
+        max: 1,
         required: true
       },
       gridSpan: 1
     }
   },
   defaultValues: {
-    TLE_inputFileName: 'TLE_3P_22Sats_29deg_F1',
+    TLE_inputFileName: 'TLE_3P_22Sats_29deg_F1.txt',
     handoverStrategy: 'MinRange',
     handoverDecision: 'Nonpreemptive',
-    areaStationLatitudes: 22.6645,
-    areaStationLongitudes: 120.3012,
-    areaStationAltitudes: 0.01
+    areaStationLatitudes: '22.6645',
+    areaStationLongitudes: '120.3012',
+    areaStationAltitudes: '0.01'
   }
 };
 
 export const gsoProtectionConfig = {
   fields: {
     TLE_inputFileName: {
-      label: '星系配置檔案',
+      label: '星系配置',
       type: 'select',
       options: [
         { value: 'TLE_3P_22Sats_29deg_F1', label: '3 * 22' },
@@ -724,7 +587,7 @@ export const gsoProtectionConfig = {
       gridSpan: 1
     },
     handover_decision: {
-      label: '換手決策',
+      label: '換手時機',
       type: 'select',
       options: [
         { value: 'Preemptive', label: 'Preemptive' },
@@ -796,8 +659,8 @@ export const multibeamHandoverConfig = {
       type: 'select',
       options: [
         { value: '28Cell_220UT', label: '28 Cells, 220 UT' },
-        { value: '35Cell_237UT', label: '35 Cells, 237 UT' },
-        { value: '35Cell_300UT', label: '35 Cells, 300 UT' }
+        { value: '35Cell_237UT', label: '38 Cells, 237 UT' },
+        { value: '35Cell_300UT', label: '38 Cells, 300 UT' }
       ],
       gridSpan: 1
     },
@@ -806,7 +669,7 @@ export const multibeamHandoverConfig = {
       type: 'number',
       validation: {
         min: 1,
-        max: 100,
+        max: 50,
         required: true
       },
       gridSpan: 1
@@ -816,7 +679,7 @@ export const multibeamHandoverConfig = {
       type: 'number',
       validation: {
         min: 1,
-        max: 100,
+        max: 10,
         required: true
       },
       gridSpan: 1
@@ -826,12 +689,12 @@ export const multibeamHandoverConfig = {
     constellation: 'TLE_3P_22Sats_29deg_F1',
     handover_strategy: 'MinRange',
     handover_decision: 'Nonpreemptive',
-    beams_per_satellite: 28,
-    frequencies_per_satellite: 10,
-    cell_ut: '35Cell_300UT',
     gsoProtectionMode: 'false',
+    beams_per_satellite: '28',
+    frequencies_per_satellite: '10',
+    cell_ut: '35Cell_300UT',
     simStartTime: '0',
-    simEndTime: '0',
+    simEndTime: '600',
     cell_topology_mode: 'dynamic',
     reuse_factor: 'None'
   }
