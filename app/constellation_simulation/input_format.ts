@@ -568,23 +568,21 @@ export const singlebeamSingleBeamConfig = {
   }
 };
 
-export const gsoProtectionConfig = {
+export const gso_protectionGsoConfig = {
   fields: {
-    TLE_inputFileName: {
+    constellation: {
       label: '星系配置',
       type: 'select',
       options: [
         { value: 'TLE_3P_22Sats_29deg_F1', label: '3 * 22' },
         { value: 'TLE_6P_22Sats_29deg_F1', label: '6 * 22' },
         { value: 'TLE_12P_22Sats_29deg_F7', label: '12 * 22' }
-      ],
-      gridSpan: 1
+      ]
     },
-    'handover.strategy': {
+    handover_strategy: {
       label: '換手策略',
       type: 'select',
-      options: [{ value: 'MinRange', label: 'MinRange' }],
-      gridSpan: 1
+      options: [{ value: 'MinRange', label: 'MinRange' }]
     },
     handover_decision: {
       label: '換手時機',
@@ -592,41 +590,51 @@ export const gsoProtectionConfig = {
       options: [
         { value: 'Preemptive', label: 'Preemptive' },
         { value: 'Nonpreemptive', label: 'Nonpreemptive' }
+      ]
+    },
+    cell_ut: {
+      label: 'Cell/UT 配置',
+      type: 'select',
+      options: [
+        { value: '28Cell_220UT', label: '28 Cells, 220 UT' },
+        { value: '35Cell_237UT', label: '38 Cells, 237 UT' },
+        { value: '35Cell_300UT', label: '38 Cells, 300 UT' }
       ],
       gridSpan: 1
     },
-    'station.latitude': {
-      label: '地面站緯度',
+    beams_per_satellite: {
+      label: '波束數量',
       type: 'number',
       validation: {
+        min: 1,
+        max: 50,
         required: true
       },
       gridSpan: 1
     },
-    'station.longitude': {
-      label: '地面站經度',
+    frequencies_per_satellite: {
+      label: '衛星頻率數',
       type: 'number',
       validation: {
-        required: true
-      },
-      gridSpan: 1
-    },
-    'station.altitude': {
-      label: '地面站海拔高度 (公里)',
-      type: 'number',
-      validation: {
+        min: 1,
+        max: 10,
         required: true
       },
       gridSpan: 1
     }
   },
   defaultValues: {
-    TLE_inputFileName: 'TLE_3P_22Sats_29deg_F1',
-    'handover.strategy': 'MinRange',
+    constellation: 'TLE_3P_22Sats_29deg_F1',
+    handover_strategy: 'MinRange',
     handover_decision: 'Nonpreemptive',
-    'station.latitude': 25.05,
-    'station.longitude': 121.51,
-    'station.altitude': 0.19
+    gsoProtectionMode: '1',
+    beams_per_satellite: '28',
+    frequencies_per_satellite: '10',
+    cell_ut: '35Cell_300UT',
+    simStartTime: '0',
+    simEndTime: '600',
+    cell_topology_mode: 'dynamic',
+    reuse_factor: 'None'
   }
 };
 
@@ -689,7 +697,7 @@ export const multibeamHandoverConfig = {
     constellation: 'TLE_3P_22Sats_29deg_F1',
     handover_strategy: 'MinRange',
     handover_decision: 'Nonpreemptive',
-    gsoProtectionMode: 'false',
+    gsoProtectionMode: '0',
     beams_per_satellite: '28',
     frequencies_per_satellite: '10',
     cell_ut: '35Cell_300UT',

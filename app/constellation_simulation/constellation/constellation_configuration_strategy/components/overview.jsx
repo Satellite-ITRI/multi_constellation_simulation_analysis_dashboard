@@ -10,7 +10,7 @@ import {
   useConstellationStrategyData,
   useSimulation,
   useDownloadResult
-} from '@/app/constellation_simulation/constellation/constellation_configuration_strategy/service';
+} from '@/app/constellation_simulation/constellation/constellation_configuration_strategy/history/service';
 import PageContainer from '@/components/layout/page-container';
 import { ToastProvider, ToastViewport } from '@/components/ui/toast';
 import CustomToast from '@/components/base/CustomToast';

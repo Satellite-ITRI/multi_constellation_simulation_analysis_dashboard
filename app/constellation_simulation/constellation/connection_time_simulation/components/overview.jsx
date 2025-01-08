@@ -10,7 +10,7 @@ import {
   useConnectedDurationData,
   useSimulation,
   useDownloadResult
-} from '@/app/constellation_simulation/constellation/connection_time_simulation/service';
+} from '@/app/constellation_simulation/constellation/connection_time_simulation/history/service';
 import PageContainer from '@/components/layout/page-container';
 import { ToastProvider, ToastViewport } from '@/components/ui/toast';
 import CustomToast from '@/components/base/CustomToast';
