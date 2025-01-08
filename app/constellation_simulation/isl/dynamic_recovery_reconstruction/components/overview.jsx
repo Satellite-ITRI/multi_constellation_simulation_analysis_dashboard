@@ -10,7 +10,7 @@ import {
   useModifyRegenRoutingData,
   useSimulation,
   useDownloadResult
-} from '@/app/constellation_simulation/isl/dynamic_recovery_reconstruction/service';
+} from '@/app/constellation_simulation/isl/dynamic_recovery_reconstruction/history/service';
 import PageContainer from '@/components/layout/page-container';
 import { ToastProvider, ToastViewport } from '@/components/ui/toast';
 import CustomToast from '@/components/base/CustomToast';

@@ -10,7 +10,7 @@ import {
   useSaveErRoutingData,
   useSimulation,
   useDownloadResult
-} from '@/app/constellation_simulation/routing/energy_efficient_routing_evaluation/service';
+} from '@/app/constellation_simulation/routing/energy_efficient_routing_evaluation/history/service';
 import PageContainer from '@/components/layout/page-container';
 import { ToastProvider, ToastViewport } from '@/components/ui/toast';
 import CustomToast from '@/components/base/CustomToast';

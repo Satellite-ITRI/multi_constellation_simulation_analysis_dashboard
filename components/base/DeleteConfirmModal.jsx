@@ -14,7 +14,8 @@ const DeleteConfirmModal = ({
   isOpen,
   onClose,
   onConfirm,
-  connectedDurationName
+  connectedDurationName,
+  typeName
 }) => {
   return (
     <AlertDialog open={isOpen} onOpenChange={onClose}>
@@ -22,7 +23,7 @@ const DeleteConfirmModal = ({
         <AlertDialogHeader>
           <AlertDialogTitle>確認刪除</AlertDialogTitle>
           <AlertDialogDescription>
-            您確定要刪除 "{connectedDurationName}" 的 connectedDuration
+            您確定要刪除 "{connectedDurationName}" 的 {typeName}
             資料嗎？此操作無法復原。
           </AlertDialogDescription>
         </AlertDialogHeader>

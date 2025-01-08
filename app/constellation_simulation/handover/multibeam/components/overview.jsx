@@ -10,7 +10,7 @@ import {
   useHandoverData,
   useSimulation,
   useDownloadResult
-} from '@/app/constellation_simulation/handover/multibeam/service';
+} from '@/app/constellation_simulation/handover/multibeam/history/service';
 import PageContainer from '@/components/layout/page-container';
 import { ToastProvider, ToastViewport } from '@/components/ui/toast';
 import CustomToast from '@/components/base/CustomToast';

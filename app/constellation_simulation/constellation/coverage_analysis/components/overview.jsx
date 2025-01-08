@@ -10,7 +10,7 @@ import {
   useCoverageData,
   useSimulation,
   useDownloadResult
-} from '@/app/constellation_simulation/constellation/coverage_analysis/service';
+} from '@/app/constellation_simulation/constellation/coverage_analysis/history/service';
 import PageContainer from '@/components/layout/page-container';
 import { ToastProvider, ToastViewport } from '@/components/ui/toast';
 import CustomToast from '@/components/base/CustomToast';

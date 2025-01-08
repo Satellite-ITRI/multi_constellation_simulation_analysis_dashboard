@@ -10,7 +10,7 @@ import {
   useGsoData,
   useSimulation,
   useDownloadResult
-} from '@/app/constellation_simulation/handover/gso_protection/service';
+} from '@/app/constellation_simulation/handover/gso_protection/history/service';
 import PageContainer from '@/components/layout/page-container';
 import { ToastProvider, ToastViewport } from '@/components/ui/toast';
 import CustomToast from '@/components/base/CustomToast';

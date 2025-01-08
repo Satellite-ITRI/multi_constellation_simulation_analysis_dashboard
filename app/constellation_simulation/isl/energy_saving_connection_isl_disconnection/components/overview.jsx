@@ -10,7 +10,7 @@ import {
   useIslHoppingData,
   useSimulation,
   useDownloadResult
-} from '@/app/constellation_simulation/isl/energy_saving_connection_isl_disconnection/service';
+} from '@/app/constellation_simulation/isl/energy_saving_connection_isl_disconnection/history/service';
 import PageContainer from '@/components/layout/page-container';
 import { ToastProvider, ToastViewport } from '@/components/ui/toast';
 import CustomToast from '@/components/base/CustomToast';

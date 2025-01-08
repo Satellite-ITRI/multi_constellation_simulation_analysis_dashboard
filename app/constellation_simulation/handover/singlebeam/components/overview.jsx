@@ -10,7 +10,7 @@ import {
   useSingleBeamData,
   useSimulation,
   useDownloadResult
-} from '@/app/constellation_simulation/handover/singlebeam/service';
+} from '@/app/constellation_simulation/handover/singlebeam/history/service';
 import PageContainer from '@/components/layout/page-container';
 import { ToastProvider, ToastViewport } from '@/components/ui/toast';
 import CustomToast from '@/components/base/CustomToast';
