@@ -574,7 +574,6 @@ export const gso_protectionGsoConfig = {
       label: '星系配置',
       type: 'select',
       options: [
-        { value: 'TLE_3P_22Sats_29deg_F1', label: '3 * 22' },
         { value: 'TLE_6P_22Sats_29deg_F1', label: '6 * 22' },
         { value: 'TLE_12P_22Sats_29deg_F7', label: '12 * 22' }
       ]
@@ -624,7 +623,7 @@ export const gso_protectionGsoConfig = {
     }
   },
   defaultValues: {
-    constellation: 'TLE_3P_22Sats_29deg_F1',
+    constellation: 'TLE_6P_22Sats_29deg_F1',
     handover_strategy: 'MinRange',
     handover_decision: 'Nonpreemptive',
     gsoProtectionMode: '1',
