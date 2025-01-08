@@ -154,7 +154,7 @@ const ApplicationCard = ({ data, onRefresh }) => {
           isOpen={isDeleteModalOpen}
           onClose={() => setIsDeleteModalOpen(false)}
           onConfirm={handleDeleteConfirm}
-          saveErRoutingName={data.saveErRouting_name}
+          objectName={data.saveErRouting_name}
           typeName="saveErRouting"
         />
 

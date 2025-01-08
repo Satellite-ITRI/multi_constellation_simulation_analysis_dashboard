@@ -144,7 +144,7 @@ const ApplicationCard = ({ data, onRefresh }) => {
           isOpen={isDeleteModalOpen}
           onClose={() => setIsDeleteModalOpen(false)}
           onConfirm={handleDeleteConfirm}
-          oneToMultiName={data.oneToMulti_name}
+          objectName={data.oneToMulti_name}
           typeName="oneToMulti"
         />
 

@@ -170,7 +170,7 @@ const ApplicationCard = ({ data, onRefresh }) => {
           isOpen={isDeleteModalOpen}
           onClose={() => setIsDeleteModalOpen(false)}
           onConfirm={handleDeleteConfirm}
-          modifyRegenRoutingName={data.modifyRegenRouting_name}
+          objectName={data.modifyRegenRouting_name}
           typeName="modifyRegenRouting"
         />
 

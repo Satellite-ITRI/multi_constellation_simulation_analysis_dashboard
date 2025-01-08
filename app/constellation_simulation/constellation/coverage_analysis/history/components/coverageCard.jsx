@@ -156,7 +156,7 @@ const ApplicationCard = ({ data, onRefresh }) => {
           isOpen={isDeleteModalOpen}
           onClose={() => setIsDeleteModalOpen(false)}
           onConfirm={handleDeleteConfirm}
-          coverageName={data.coverage_name}
+          objectName={data.coverage_name}
           typeName="coverage"
         />
 

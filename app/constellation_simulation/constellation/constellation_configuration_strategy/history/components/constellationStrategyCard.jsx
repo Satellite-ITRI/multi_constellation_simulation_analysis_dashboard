@@ -160,7 +160,7 @@ const ApplicationCard = ({ data, onRefresh }) => {
           isOpen={isDeleteModalOpen}
           onClose={() => setIsDeleteModalOpen(false)}
           onConfirm={handleDeleteConfirm}
-          constellationStrategyName={data.constellationStrategy_name}
+          objectName={data.constellationStrategy_name}
           typeName="constellationStrategy"
         />
 

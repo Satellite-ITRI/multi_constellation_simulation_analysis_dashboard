@@ -166,7 +166,7 @@ const ApplicationCard = ({ data, onRefresh }) => {
           isOpen={isDeleteModalOpen}
           onClose={() => setIsDeleteModalOpen(false)}
           onConfirm={handleDeleteConfirm}
-          endToEndRoutingName={data.endToEndRouting_name}
+          objectName={data.endToEndRouting_name}
           typeName="endToEndRouting"
         />
 

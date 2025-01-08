@@ -156,7 +156,7 @@ const ApplicationCard = ({ data, onRefresh }) => {
           isOpen={isDeleteModalOpen}
           onClose={() => setIsDeleteModalOpen(false)}
           onConfirm={handleDeleteConfirm}
-          islHoppingName={data.islHopping_name}
+          objectName={data.islHopping_name}
           typeName="islHopping"
         />
 

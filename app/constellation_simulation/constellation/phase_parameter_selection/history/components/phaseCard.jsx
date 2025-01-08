@@ -140,7 +140,7 @@ const ApplicationCard = ({ data, onRefresh }) => {
           isOpen={isDeleteModalOpen}
           onClose={() => setIsDeleteModalOpen(false)}
           onConfirm={handleDeleteConfirm}
-          phaseName={data.phase_name}
+          objectName={data.phase_name}
           typeName="phase"
         />
 

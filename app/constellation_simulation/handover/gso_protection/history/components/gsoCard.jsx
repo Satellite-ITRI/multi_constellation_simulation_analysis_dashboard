@@ -164,7 +164,7 @@ const ApplicationCard = ({ data, onRefresh }) => {
           isOpen={isDeleteModalOpen}
           onClose={() => setIsDeleteModalOpen(false)}
           onConfirm={handleDeleteConfirm}
-          gsoName={data.gso_name}
+          objectName={data.gso_name}
           typeName="gso"
         />
 

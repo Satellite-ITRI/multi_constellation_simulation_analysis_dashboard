@@ -164,7 +164,7 @@ const ApplicationCard = ({ data, onRefresh }) => {
           isOpen={isDeleteModalOpen}
           onClose={() => setIsDeleteModalOpen(false)}
           onConfirm={handleDeleteConfirm}
-          connectedDurationName={data.connectedDuration_name}
+          objectName={data.connectedDuration_name}
           typeName="connectedDuration"
         />
 

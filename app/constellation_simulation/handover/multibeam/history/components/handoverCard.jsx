@@ -164,7 +164,7 @@ const ApplicationCard = ({ data, onRefresh }) => {
           isOpen={isDeleteModalOpen}
           onClose={() => setIsDeleteModalOpen(false)}
           onConfirm={handleDeleteConfirm}
-          handoverName={data.handover_name}
+          objectName={data.handover_name}
           typeName="handover"
         />
 

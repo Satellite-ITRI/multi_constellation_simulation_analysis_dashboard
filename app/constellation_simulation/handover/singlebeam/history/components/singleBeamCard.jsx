@@ -168,7 +168,7 @@ const ApplicationCard = ({ data, onRefresh }) => {
           isOpen={isDeleteModalOpen}
           onClose={() => setIsDeleteModalOpen(false)}
           onConfirm={handleDeleteConfirm}
-          singleBeamName={data.singleBeam_name}
+          objectName={data.singleBeam_name}
           typeName="singleBeam"
         />
 
