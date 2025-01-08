@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import { formatDistance } from 'date-fns';
 import { useSimulation, useDeleteModifyRegenRouting } from '../service';
-import DeleteConfirmModal from './DeleteConfirmModal';
+import DeleteConfirmModal from '@/components/base/DeleteConfirmModal';
 import CustomToast from '@/components/base/CustomToast';
 import { useDownloadResult } from '../service';
 
@@ -171,6 +171,7 @@ const ApplicationCard = ({ data, onRefresh }) => {
           onClose={() => setIsDeleteModalOpen(false)}
           onConfirm={handleDeleteConfirm}
           modifyRegenRoutingName={data.modifyRegenRouting_name}
+          typeName="modifyRegenRouting"
         />
 
         <CustomToast

@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import { formatDistance } from 'date-fns';
 import { useSimulation, useDeleteCoverage } from '../service';
-import DeleteConfirmModal from './DeleteConfirmModal';
+import DeleteConfirmModal from '@/components/base/DeleteConfirmModal';
 import CustomToast from '@/components/base/CustomToast';
 import { useDownloadResult } from '../service';
 
@@ -157,6 +157,7 @@ const ApplicationCard = ({ data, onRefresh }) => {
           onClose={() => setIsDeleteModalOpen(false)}
           onConfirm={handleDeleteConfirm}
           coverageName={data.coverage_name}
+          typeName="coverage"
         />
 
         <CustomToast
