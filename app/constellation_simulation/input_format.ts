@@ -250,7 +250,7 @@ export const energy_saving_connection_isl_disconnectionIslHoppingConfig = {
       gridSpan: 1
     },
     degreeConstraint: {
-      label: '角度限制',
+      label: 'ISL最大連線數',
       type: 'number',
       validation: {
         min: 0,
@@ -311,7 +311,7 @@ export const dynamic_recovery_reconstructionModifyRegenRoutingConfig = {
       gridSpan: 1
     },
     degreeConstraint: {
-      label: '角度限制',
+      label: 'ISL最大連線數',
       type: 'number',
       validation: {
         min: 0,

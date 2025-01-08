@@ -149,7 +149,7 @@ const ApplicationCard = ({ data, onRefresh }) => {
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">角度限制</p>
+            <p className="text-sm text-gray-500">ISL最大連線數</p>
             <p className="font-medium">
               {data.modifyRegenRouting_parameter.degreeConstraint}
             </p>
