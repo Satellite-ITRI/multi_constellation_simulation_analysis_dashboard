@@ -127,13 +127,13 @@ const ApplicationCard = ({ data, onRefresh }) => {
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">多重路徑</p>
+            <p className="text-sm text-gray-500">傳輸路徑決策</p>
             <p className="font-medium">
               {data.saveErRouting_parameter.multiPathCriteria}
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">路由比例</p>
+            <p className="text-sm text-gray-500">傳輸數量比例</p>
             <p className="font-medium">{data.saveErRouting_parameter.ratio}</p>
           </div>
           <div>

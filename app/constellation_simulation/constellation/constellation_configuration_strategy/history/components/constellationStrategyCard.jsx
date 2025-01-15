@@ -133,13 +133,7 @@ const ApplicationCard = ({ data, onRefresh }) => {
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">ISL連結方法</p>
-            <p className="font-medium">
-              {data.constellationStrategy_parameter.ISLLinkMethod}
-            </p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">觀察者ID</p>
+            <p className="text-sm text-gray-500">觀察者衛星ID</p>
             <p className="font-medium">
               {data.constellationStrategy_parameter.observerId}
             </p>

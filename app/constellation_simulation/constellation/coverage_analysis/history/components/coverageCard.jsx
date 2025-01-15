@@ -131,12 +131,6 @@ const ApplicationCard = ({ data, onRefresh }) => {
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">最少衛星數量</p>
-            <p className="font-medium">
-              {data.coverage_parameter.leastSatCount}
-            </p>
-          </div>
-          <div>
             <p className="text-sm text-gray-500">最大緯度</p>
             <p className="font-medium">{data.coverage_parameter.maxLatitude}</p>
           </div>

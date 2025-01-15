@@ -67,7 +67,8 @@ export const coverage_analysisCoverageConfig: PageConfig = {
         required: true,
         min: 1
       },
-      gridSpan: 1
+      gridSpan: 1,
+      show: false
     },
     simStartTime: {
       label: '模擬開始時間',
@@ -168,7 +169,8 @@ export const phase_parameter_selectionPhaseConfig = {
         { value: 'relativePhasing', label: 'relativePhasing' },
         { value: 'minAvgR', label: 'minAvgR' }
       ],
-      gridSpan: 1
+      gridSpan: 1,
+      show: false
     }
   },
   defaultValues: {
@@ -189,17 +191,9 @@ export const constellation_configuration_strategyConstellationStrategyConfig = {
       ],
       gridSpan: 1
     },
-    ISLLinkMethod: {
-      label: 'ISL連結方法',
-      type: 'select',
-      options: [
-        { value: 'minMaxR', label: 'minMaxR' },
-        { value: 'minAERRange', label: 'minAERRange' }
-      ],
-      gridSpan: 1
-    },
+
     observerId: {
-      label: '觀測者ID',
+      label: '觀察者衛星ID',
       type: 'number',
       validation: {
         min: 101,
@@ -207,6 +201,16 @@ export const constellation_configuration_strategyConstellationStrategyConfig = {
         required: true
       },
       gridSpan: 1
+    },
+    ISLLinkMethod: {
+      label: 'ISL連結方法',
+      type: 'select',
+      options: [
+        { value: 'minMaxR', label: 'minMaxR' },
+        { value: 'minAERRange', label: 'minAERRange' }
+      ],
+      gridSpan: 1,
+      show: false
     }
   },
   defaultValues: {
@@ -333,7 +337,7 @@ export const dynamic_recovery_reconstructionModifyRegenRoutingConfig = {
 export const point_multipoint_transmissionOneToMultiConfig = {
   fields: {
     multiPathCriteria: {
-      label: '多重路徑',
+      label: '傳輸路徑決策',
       type: 'select',
       options: [
         { value: 'throughput', label: 'throughput' },
@@ -342,7 +346,7 @@ export const point_multipoint_transmissionOneToMultiConfig = {
       gridSpan: 1
     },
     ratio: {
-      label: '路由比例',
+      label: '傳輸數量比例',
       type: 'decimal',
       validation: {
         min: 0,
@@ -361,7 +365,7 @@ export const point_multipoint_transmissionOneToMultiConfig = {
 export const multipoint_multipoint_transmissionMultiToMultiConfig = {
   fields: {
     multiPathCriteria: {
-      label: '多重路徑',
+      label: '傳輸路徑決策',
       type: 'select',
       options: [
         { value: 'throughput', label: 'throughput' },
@@ -370,7 +374,7 @@ export const multipoint_multipoint_transmissionMultiToMultiConfig = {
       gridSpan: 1
     },
     ratio: {
-      label: '路由比例',
+      label: '傳輸數量比例',
       type: 'decimal',
       validation: {
         min: 0,
@@ -399,7 +403,7 @@ export const energy_efficient_routing_evaluationSaveErRoutingConfig = {
       gridSpan: 1
     },
     multiPathCriteria: {
-      label: '多重路徑',
+      label: '傳輸路徑決策',
       type: 'select',
       options: [
         { value: 'blcc', label: 'blcc' },
@@ -408,7 +412,7 @@ export const energy_efficient_routing_evaluationSaveErRoutingConfig = {
       gridSpan: 1
     },
     ratio: {
-      label: '路由比例',
+      label: '傳輸數量比例',
       type: 'decimal',
       validation: {
         min: 0,
@@ -466,16 +470,7 @@ export const single_beam_end_end_routing_evaluationEndToEndRoutingConfig = {
         { value: '237UTsSatelliteLB', label: '237UTs' },
         {
           value: '150UTsAccessLink',
-          label: '150UTsAccessLink'
-        },
-        { value: '150UTsAccessLinkScale', label: '150UTsAccessLinkScale' },
-        {
-          value: '150UTsAccessLinkLoadBalance',
-          label: '150UTsAccessLinkLoadBalance'
-        },
-        {
-          value: '150UTsAccessLinkLoadBalanceScale',
-          label: '150UTsAccessLinkLoadBalanceScale'
+          label: '150UTs'
         },
         { value: '300UTs', label: '300UTs' }
       ],

@@ -124,10 +124,6 @@ const ApplicationCard = ({ data, onRefresh }) => {
               {getConstellationLabel(data.phase_parameter.TLE_inputFileName)}
             </p>
           </div>
-          <div>
-            <p className="text-sm text-gray-500">ISL連結方法</p>
-            <p className="font-medium">{data.phase_parameter.ISLLinkMethod}</p>
-          </div>
         </div>
 
         <div className="mt-4 flex justify-between text-sm text-gray-500">

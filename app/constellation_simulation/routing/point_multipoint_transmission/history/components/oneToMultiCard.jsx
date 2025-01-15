@@ -119,7 +119,7 @@ const ApplicationCard = ({ data, onRefresh }) => {
 
         <div className="mt-4 grid grid-cols-2 gap-4">
           <div>
-            <p className="text-sm text-gray-500">多重路徑</p>
+            <p className="text-sm text-gray-500">傳輸路徑決策</p>
             <p className="font-medium">
               {getConstellationLabel(
                 data.oneToMulti_parameter.multiPathCriteria
@@ -127,7 +127,7 @@ const ApplicationCard = ({ data, onRefresh }) => {
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">路由比例</p>
+            <p className="text-sm text-gray-500">傳輸數量比例</p>
             <p className="font-medium">
               {getConstellationLabel(data.oneToMulti_parameter.ratio)}
             </p>
