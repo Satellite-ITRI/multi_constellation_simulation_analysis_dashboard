@@ -26,14 +26,18 @@ const ApplicationCard = ({ data, onRefresh }) => {
     }
     setIsDeleteModalOpen(false);
   };
-
+  const getUseCaseVersionLabel = (useCaseVersion) => {
+    if (!useCaseVersion) return '';
+    // 只保留前 6 碼
+    return useCaseVersion.substring(0, 6);
+  };
   const getConstellationLabel = (constellation) => {
-    const constellationMap = {
-      TLE_3P_22Sats_29deg_F1: '3*22',
-      TLE_6P_22Sats_29deg_F1: '6*22',
-      TLE_12P_22Sats_29deg_F7: '12*22'
-    };
-    return constellationMap[constellation] || constellation;
+    const match = constellation.match(/TLE_(\d+)P_22Sats/);
+    if (match && match[1]) {
+      return `${match[1]} * 22`;
+    }
+    // 如果沒匹配到，就直接回傳原字串
+    return constellation;
   };
 
   const getStatusBadge = (status) => {
@@ -137,15 +141,11 @@ const ApplicationCard = ({ data, onRefresh }) => {
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">換手策略</p>
-            <p className="font-medium">
-              {data.endToEndRouting_parameter.handover_strategy}
-            </p>
-          </div>
-          <div>
             <p className="text-sm text-gray-500">評估情境</p>
             <p className="font-medium">
-              {data.endToEndRouting_parameter.useCaseVersion}
+              {getUseCaseVersionLabel(
+                data.endToEndRouting_parameter.useCaseVersion
+              )}
             </p>
           </div>
           <div>

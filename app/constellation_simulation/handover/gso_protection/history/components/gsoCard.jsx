@@ -26,14 +26,18 @@ const ApplicationCard = ({ data, onRefresh }) => {
     }
     setIsDeleteModalOpen(false);
   };
-
+  const getCellUtLabel = (cellUt) => {
+    if (!cellUt) return '';
+    // 將 "35Cell_" 字串換成 "38Cell_"
+    return cellUt.replace('35Cell_', '38Cell_');
+  };
   const getConstellationLabel = (constellation) => {
-    const constellationMap = {
-      TLE_3P_22Sats_29deg_F1: '3*22',
-      TLE_6P_22Sats_29deg_F1: '6*22',
-      TLE_12P_22Sats_29deg_F7: '12*22'
-    };
-    return constellationMap[constellation] || constellation;
+    const match = constellation.match(/TLE_(\d+)P_22Sats/);
+    if (match && match[1]) {
+      return `${match[1]} * 22`;
+    }
+    // 如果沒匹配到，就直接回傳原字串
+    return constellation;
   };
 
   const getStatusBadge = (status) => {
@@ -138,7 +142,9 @@ const ApplicationCard = ({ data, onRefresh }) => {
           </div>
           <div>
             <p className="text-sm text-gray-500">Cell/UT 配置</p>
-            <p className="font-medium">{data.gso_parameter.cell_ut}</p>
+            <p className="font-medium">
+              {getCellUtLabel(data.gso_parameter.cell_ut)}
+            </p>
           </div>
           <div>
             <p className="text-sm text-gray-500">波束數量</p>
