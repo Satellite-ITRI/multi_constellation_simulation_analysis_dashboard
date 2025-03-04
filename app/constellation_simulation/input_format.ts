@@ -464,12 +464,12 @@ export const single_beam_end_end_routing_evaluationEndToEndRoutingConfig = {
       label: '評估情境',
       type: 'select',
       options: [
-        { value: '237UTsSatelliteLB', label: '31 Cell 237UT' },
+        { value: '237UTsSatelliteLB', label: '31 Cell' },
         // {
         //   value: '150UTsAccessLink',
         //   label: '150UTs'
         // },
-        { value: '300UTs', label: '38 Cell 300UT' }
+        { value: '300UTs', label: '38 Cell' }
       ],
       gridSpan: 1
     },
@@ -692,11 +692,11 @@ export const multibeamHandoverConfig = {
       ]
     },
     cell_ut: {
-      label: 'Cell/UT 配置',
+      label: '評估情境',
       type: 'select',
       options: [
-        { value: '31Cell_220UT', label: '31 Cells, 220 UT' },
-        { value: '38Cell_300UT', label: '38 Cells, 300 UT' }
+        { value: '31Cell_220UT', label: '31 Cells' },
+        { value: '38Cell_300UT', label: '38 Cells' }
       ],
       gridSpan: 1
     },
