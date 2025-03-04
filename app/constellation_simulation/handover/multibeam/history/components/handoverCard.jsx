@@ -159,6 +159,34 @@ const ApplicationCard = ({ data, onRefresh }) => {
               {data.handover_parameter.frequencies_per_satellite}
             </p>
           </div>
+          {/* 新增：頻率規劃 */}
+          <div>
+            <p className="text-sm text-gray-500">頻率規劃</p>
+            <p className="font-medium">
+              {data.handover_parameter.cell_topology_mode === 'dynamic'
+                ? '動態'
+                : '靜態'}
+            </p>
+          </div>
+          {/* 新增：GSO Protection */}
+          <div>
+            <p className="text-sm text-gray-500">GSO Protection</p>
+            <p className="font-medium">
+              {data.handover_parameter.gsoProtectionMode === '1'
+                ? 'open'
+                : 'close'}
+            </p>
+          </div>
+
+          {/* 新增：波束交換 */}
+          <div>
+            <p className="text-sm text-gray-500">波束交換</p>
+            <p className="font-medium">
+              {data.handover_parameter.replacement_mode === '1'
+                ? 'open'
+                : 'close'}
+            </p>
+          </div>
         </div>
 
         <div className="mt-4 flex justify-between text-sm text-gray-500">

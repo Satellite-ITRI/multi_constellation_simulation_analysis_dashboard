@@ -667,12 +667,12 @@ export const multibeamHandoverConfig = {
         { value: 'Nonpreemptive', label: 'Nonpreemptive' }
       ]
     },
-    freqArrangeMode: {
+    cell_topology_mode: {
       label: '頻率規劃',
       type: 'select',
       options: [
-        { value: '1', label: '動態' },
-        { value: '0', label: '靜態' }
+        { value: 'dynamic', label: '動態' },
+        { value: 'static', label: '靜態' }
       ]
     },
     gsoProtectionMode: {
@@ -683,7 +683,7 @@ export const multibeamHandoverConfig = {
         { value: '0', label: 'close' }
       ]
     },
-    beamSwitchMode: {
+    replacement_mode: {
       label: '波束交換',
       type: 'select',
       options: [
@@ -695,9 +695,8 @@ export const multibeamHandoverConfig = {
       label: 'Cell/UT 配置',
       type: 'select',
       options: [
-        { value: '28Cell_220UT', label: '28 Cells, 220 UT' },
-        { value: '35Cell_237UT', label: '38 Cells, 237 UT' },
-        { value: '35Cell_300UT', label: '38 Cells, 300 UT' }
+        { value: '31Cell_220UT', label: '31 Cells, 220 UT' },
+        { value: '38Cell_300UT', label: '38 Cells, 300 UT' }
       ],
       gridSpan: 1
     },
@@ -720,21 +719,27 @@ export const multibeamHandoverConfig = {
         required: true
       },
       gridSpan: 1
+    },
+    gso_protection_csv: {
+      label: 'GSO 保護 CSV',
+      type: 'text',
+      gridSpan: 1,
+      show: false
     }
   },
   defaultValues: {
     constellation: 'TLE_3P_22Sats_29deg_F1',
     handover_strategy: 'MinRange',
     handover_decision: 'Nonpreemptive',
-    freqArrangeMode: '0',
     gsoProtectionMode: '0',
-    beamSwitchMode: '0',
+    replacement_mode: '0',
     beams_per_satellite: '28',
     frequencies_per_satellite: '10',
-    cell_ut: '35Cell_300UT',
+    cell_ut: '31Cell_220UT',
     simStartTime: '0',
-    simEndTime: '86399',
+    simEndTime: '1',
     cell_topology_mode: 'dynamic',
-    reuse_factor: 'None'
+    reuse_factor: 'None',
+    gso_protection_csv: ''
   }
 };

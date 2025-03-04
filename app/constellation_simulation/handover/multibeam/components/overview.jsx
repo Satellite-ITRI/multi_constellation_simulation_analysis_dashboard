@@ -192,7 +192,44 @@ export default function OverViewPage() {
       style: `${statusStyle} px-2 py-1 rounded-sm text-sm font-medium ml-4`
     });
   }, [applications, duplicateWarning]);
+  useEffect(() => {
+    // 先準備一個要更新的新物件
+    const updated = { ...formData };
 
+    switch (formData.constellation) {
+      case 'TLE_6P_22Sats_29deg_F1':
+        // 設定 gso_protection_csv
+        updated.gso_protection_csv = '38cell_6x22.csv';
+
+        // 顯示 gsoProtectionMode 按鈕
+        multibeamHandoverConfig.fields.gsoProtectionMode.show = true;
+        break;
+
+      case 'TLE_12P_22Sats_29deg_F7':
+        // 設定 gso_protection_csv
+        updated.gso_protection_csv = '38cell_12x22.csv';
+
+        // 顯示 gsoProtectionMode 按鈕
+        multibeamHandoverConfig.fields.gsoProtectionMode.show = true;
+        break;
+
+      case 'TLE_3P_22Sats_29deg_F1':
+        // 不需要設定 gso_protection_csv 或可設為空白
+        updated.gso_protection_csv = '';
+
+        // 隱藏 gsoProtectionMode 按鈕
+        multibeamHandoverConfig.fields.gsoProtectionMode.show = false;
+        break;
+
+      default:
+        // 其它情況就給個空值或預設值
+        updated.gso_protection_csv = '';
+        multibeamHandoverConfig.fields.gsoProtectionMode.show = true;
+        break;
+    }
+
+    setFormData(updated);
+  }, [formData.constellation]);
   return (
     <PageContainer scrollable>
       <ToastProvider>
