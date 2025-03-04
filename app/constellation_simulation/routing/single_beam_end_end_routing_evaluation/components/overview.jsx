@@ -206,7 +206,7 @@ export default function OverViewPage() {
           <div className="mx-auto max-w-4xl">
             <div className="mb-6 flex items-center justify-between">
               <h1 className="flex items-center text-2xl font-bold">
-                單波束End-to-End繞送評估
+                End-to-End繞送整合評估
                 <div key={statusKey}>
                   {lastEndToEndRoutingStatus && (
                     <span className={lastEndToEndRoutingStatus.style}>

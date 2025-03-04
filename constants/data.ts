@@ -200,7 +200,7 @@ export const navItems: NavItem[] = [
         shortcut: ['r', 't']
       },
       {
-        title: '單波束End-to-End繞送評估',
+        title: 'End-to-End繞送整合評估',
         url: '/constellation_simulation/routing/single_beam_end_end_routing_evaluation',
         shortcut: ['r', 't']
       }
@@ -218,11 +218,11 @@ export const navItems: NavItem[] = [
         url: '/constellation_simulation/handover/singlebeam',
         shortcut: ['h', 's']
       },
-      {
-        title: 'GSO Protection',
-        url: '/constellation_simulation/handover/gso_protection',
-        shortcut: ['h', 's']
-      },
+      // {
+      //   title: 'GSO Protection',
+      //   url: '/constellation_simulation/handover/gso_protection',
+      //   shortcut: ['h', 's']
+      // },
       {
         title: '多波束換手效能分析',
         url: '/constellation_simulation/handover/multibeam',

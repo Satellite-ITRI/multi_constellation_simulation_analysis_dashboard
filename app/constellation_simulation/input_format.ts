@@ -445,10 +445,7 @@ export const single_beam_end_end_routing_evaluationEndToEndRoutingConfig = {
     TLE_inputFileName: {
       label: '星系配置',
       type: 'select',
-      options: [
-        { value: 'TLE_6P_22Sats_29deg_F1.txt', label: '6 * 22' },
-        { value: 'TLE_12P_22Sats_29deg_F7.txt', label: '12 * 22' }
-      ],
+      options: [{ value: 'TLE_12P_22Sats_29deg_F7.txt', label: '12 * 22' }],
       gridSpan: 1
     },
     handoverDecision: {
@@ -467,17 +464,28 @@ export const single_beam_end_end_routing_evaluationEndToEndRoutingConfig = {
       label: '評估情境',
       type: 'select',
       options: [
-        { value: '237UTsSatelliteLB', label: '237UTs' },
-        {
-          value: '150UTsAccessLink',
-          label: '150UTs'
-        },
-        { value: '300UTs', label: '300UTs' }
+        { value: '237UTsSatelliteLB', label: '31 Cell 237UT' },
+        // {
+        //   value: '150UTsAccessLink',
+        //   label: '150UTs'
+        // },
+        { value: '300UTs', label: '38 Cell 300UT' }
+      ],
+      gridSpan: 1
+    },
+    ft_beam_count: {
+      label: 'FT波束數量',
+      type: 'select',
+      options: [
+        { value: '1', label: '1' },
+        { value: '2', label: '2' },
+        { value: '3', label: '3' },
+        { value: '4', label: '4' }
       ],
       gridSpan: 1
     },
     beamBandwidth: {
-      label: '波束頻寬',
+      label: 'ISL頻寬',
       type: 'number',
       validation: {
         min: 1,
@@ -488,10 +496,13 @@ export const single_beam_end_end_routing_evaluationEndToEndRoutingConfig = {
     }
   },
   defaultValues: {
-    TLE_inputFileName: 'TLE_6P_22Sats_29deg_F1.txt',
+    TLE_inputFileName: 'TLE_12P_22Sats_29deg_F7.txt',
     handoverDecision: 'SatelliteLoadBalancing',
     useCaseVersion: '237UTsSatelliteLB',
-    beamBandwidth: '216000000'
+    beamBandwidth: '1000000000',
+    ft_beam_count: '1',
+    simStartTime: '0',
+    simEndTime: '60'
   }
 };
 
@@ -656,6 +667,30 @@ export const multibeamHandoverConfig = {
         { value: 'Nonpreemptive', label: 'Nonpreemptive' }
       ]
     },
+    freqArrangeMode: {
+      label: '頻率規劃',
+      type: 'select',
+      options: [
+        { value: '1', label: '動態' },
+        { value: '0', label: '靜態' }
+      ]
+    },
+    gsoProtectionMode: {
+      label: 'GSO Protection',
+      type: 'select',
+      options: [
+        { value: '1', label: 'open' },
+        { value: '0', label: 'close' }
+      ]
+    },
+    beamSwitchMode: {
+      label: '波束交換',
+      type: 'select',
+      options: [
+        { value: '1', label: 'open' },
+        { value: '0', label: 'close' }
+      ]
+    },
     cell_ut: {
       label: 'Cell/UT 配置',
       type: 'select',
@@ -691,12 +726,14 @@ export const multibeamHandoverConfig = {
     constellation: 'TLE_3P_22Sats_29deg_F1',
     handover_strategy: 'MinRange',
     handover_decision: 'Nonpreemptive',
+    freqArrangeMode: '0',
     gsoProtectionMode: '0',
+    beamSwitchMode: '0',
     beams_per_satellite: '28',
     frequencies_per_satellite: '10',
     cell_ut: '35Cell_300UT',
     simStartTime: '0',
-    simEndTime: '600',
+    simEndTime: '86399',
     cell_topology_mode: 'dynamic',
     reuse_factor: 'None'
   }
