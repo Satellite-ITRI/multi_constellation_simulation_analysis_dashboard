@@ -49,16 +49,25 @@ export default function OverViewPage() {
     setIsSubmitting(true);
 
     try {
-      // 取得我們想要檢查的鍵值 (可自行排除不想檢查的欄位)
+      // ❶ 在送出前，先把 beamBandwidth 乘上 0.1 後，再用 toFixed + parseFloat 處理多餘小數
+      const rawValue = Number(formData.islBandwidth) * 0.1;
+      const fixedValue = parseFloat(rawValue.toFixed(1));
+      // 例如保留 6 位小數 (你可改成 1, 2, 或其他需要的位數)
+
+      const updatedFormData = {
+        ...formData,
+        islBandwidth: fixedValue
+      };
+      // 檢查重複實驗
       const keysToCheck = Object.keys(
         single_beam_end_end_routing_evaluationEndToEndRoutingConfig.defaultValues
       );
-
-      // 檢查重複實驗
       const duplicateExperiment = applications?.find((app) => {
         const params = app.endToEndRouting_parameter || {};
         return keysToCheck.every((key) => {
-          return String(params[key]) === String(formData[key]);
+          // 因為 updatedFormData 中已經把 beamBandwidth 改成乘以 0.1 的值了
+          // 這裡會去比對更新後的數值
+          return String(params[key]) === String(updatedFormData[key]);
         });
       });
       if (duplicateExperiment) {
@@ -68,16 +77,17 @@ export default function OverViewPage() {
         return;
       }
 
+      // 取得使用者資訊
       const userData = JSON.parse(localStorage.getItem('userData'));
       if (!userData?.user_uid) {
         throw new Error('未找到使用者資料');
       }
 
-      // 產生 endToEndRouting_xxx 的隨機名稱
+      // 產生實驗名稱
       const endToEndRoutingName = generateEndToEndRoutingName();
 
-      // 將 formData 的欄位動態組成 endToEndRouting_parameter
-      const endToEndRouting_parameter = Object.entries(formData).reduce(
+      // 組合參數
+      const endToEndRouting_parameter = Object.entries(updatedFormData).reduce(
         (acc, [key, value]) => {
           acc[key] = String(value);
           return acc;
@@ -85,10 +95,10 @@ export default function OverViewPage() {
         {}
       );
 
-      // 組合最終 payload (不再出現 formData 層)
+      // 最終要送往後端的 payload
       const payload = {
         endToEndRouting_name: endToEndRoutingName,
-        endToEndRouting_parameter: endToEndRouting_parameter,
+        endToEndRouting_parameter,
         f_user_uid: userData.user_uid
       };
 
@@ -103,7 +113,6 @@ export default function OverViewPage() {
         // 立即執行模擬
         try {
           await runSimulation(response.data.data.endToEndRouting_uid);
-          // 重新抓取 endToEndRouting 資料
           await fetchEndToEndRoutingData();
           setShowToast(true);
         } catch (simError) {
@@ -123,7 +132,6 @@ export default function OverViewPage() {
   const handleDownloadResult = async () => {
     if (!canDownloadResult()) return;
 
-    // 找出 id 最大的記錄
     const latestEndToEndRouting = applications.reduce((prev, current) => {
       return prev.id > current.id ? prev : current;
     });
@@ -136,19 +144,16 @@ export default function OverViewPage() {
   };
 
   const handleHistoryClick = () => {
-    // 前往歷史紀錄頁面
     router.push(
       `/constellation_simulation/routing/single_beam_end_end_routing_evaluation/history`
     );
   };
 
   const generateEndToEndRoutingName = () => {
-    // 使用 Math.random() 搭配 toString(36) 產生 Base36 字串
     const randomStr = Math.random().toString(36).substring(2, 8);
     return `endToEndRouting_${randomStr}`;
   };
 
-  // 檢查是否可以下載結果
   const canDownloadResult = () => {
     if (!applications || applications.length === 0) return false;
     const latestEndToEndRouting = applications.reduce((prev, current) => {
@@ -190,8 +195,9 @@ export default function OverViewPage() {
       Done: 'bg-accent text-accent-foreground'
     };
 
-    const status = statusMap[latestEndToEndRouting.endToEndRouting_status];
-    const statusStyle = statusStyles[status];
+    const status =
+      statusMap[latestEndToEndRouting.endToEndRouting_status] || 'None';
+    const statusStyle = statusStyles[status] || statusStyles.None;
 
     setLastEndToEndRoutingStatus({
       status,

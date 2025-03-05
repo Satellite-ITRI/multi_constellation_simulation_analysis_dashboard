@@ -460,20 +460,20 @@ export const single_beam_end_end_routing_evaluationEndToEndRoutingConfig = {
       ],
       gridSpan: 1
     },
-    useCaseVersion: {
+    cell_ut: {
       label: '評估情境',
       type: 'select',
       options: [
-        { value: '237UTsSatelliteLB', label: '31 Cell' },
+        { value: '31Cell', label: '31 Cell' },
         // {
         //   value: '150UTsAccessLink',
         //   label: '150UTs'
         // },
-        { value: '300UTs', label: '38 Cell' }
+        { value: '38Cell', label: '38 Cell' }
       ],
       gridSpan: 1
     },
-    ft_beam_count: {
+    flBeamCount: {
       label: 'FT波束數量',
       type: 'select',
       options: [
@@ -484,12 +484,12 @@ export const single_beam_end_end_routing_evaluationEndToEndRoutingConfig = {
       ],
       gridSpan: 1
     },
-    beamBandwidth: {
-      label: 'ISL頻寬',
+    islBandwidth: {
+      label: 'ISL頻寬(Gbps)',
       type: 'number',
       validation: {
         min: 1,
-        max: 9999999999999,
+        max: 10,
         required: true
       },
       gridSpan: 1
@@ -498,11 +498,15 @@ export const single_beam_end_end_routing_evaluationEndToEndRoutingConfig = {
   defaultValues: {
     TLE_inputFileName: 'TLE_12P_22Sats_29deg_F7.txt',
     handoverDecision: 'SatelliteLoadBalancing',
-    useCaseVersion: '237UTsSatelliteLB',
-    beamBandwidth: '1000000000',
-    ft_beam_count: '1',
+    cell_ut: '31Cell',
+    islBandwidth: '1',
+    flBeamCount: '1',
+    gsoProtection: '1',
+    beamCount: '16',
+    handoverStrategy: 'MaxVisibleTimeCoverage',
     simStartTime: '0',
-    simEndTime: '60'
+    simEndTime: '60',
+    trafficDirection: '2'
   }
 };
 
