@@ -458,6 +458,7 @@ export const single_beam_end_end_routing_evaluationEndToEndRoutingConfig = {
           label: 'Satellite Load Balancing'
         }
       ],
+      show: false,
       gridSpan: 1
     },
     cell_ut: {
@@ -497,15 +498,13 @@ export const single_beam_end_end_routing_evaluationEndToEndRoutingConfig = {
   },
   defaultValues: {
     TLE_inputFileName: 'TLE_12P_22Sats_29deg_F7.txt',
-    handoverDecision: 'SatelliteLoadBalancing',
+    handoverDecision: 'HybridLoadBalancing',
     cell_ut: '31Cell',
     islBandwidth: '1',
     flBeamCount: '1',
     gsoProtection: '1',
     beamCount: '16',
     handoverStrategy: 'MaxVisibleTimeCoverage',
-    simStartTime: '0',
-    simEndTime: '60',
     trafficDirection: '2'
   }
 };

@@ -135,12 +135,6 @@ const ApplicationCard = ({ data, onRefresh }) => {
             </p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">換手決策</p>
-            <p className="font-medium">
-              {data.endToEndRouting_parameter.handoverDecision}
-            </p>
-          </div>
-          <div>
             <p className="text-sm text-gray-500">評估情境</p>
             <p className="font-medium">
               {getUseCaseVersionLabel(data.endToEndRouting_parameter.cell_ut)}
