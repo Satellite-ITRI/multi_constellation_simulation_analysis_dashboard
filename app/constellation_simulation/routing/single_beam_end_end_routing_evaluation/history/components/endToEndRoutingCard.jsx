@@ -143,15 +143,19 @@ const ApplicationCard = ({ data, onRefresh }) => {
           <div>
             <p className="text-sm text-gray-500">評估情境</p>
             <p className="font-medium">
-              {getUseCaseVersionLabel(
-                data.endToEndRouting_parameter.useCaseVersion
-              )}
+              {getUseCaseVersionLabel(data.endToEndRouting_parameter.cell_ut)}
             </p>
           </div>
           <div>
             <p className="text-sm text-gray-500">波束頻寬</p>
             <p className="font-medium">
-              {data.endToEndRouting_parameter.beamBandwidth}
+              {data.endToEndRouting_parameter.islBandwidth}
+            </p>
+          </div>
+          <div>
+            <p className="text-sm text-gray-500">FT波束數量</p>
+            <p className="font-medium">
+              {data.endToEndRouting_parameter.flBeamCount}
             </p>
           </div>
         </div>
