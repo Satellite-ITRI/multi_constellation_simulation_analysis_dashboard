@@ -119,6 +119,12 @@ const ApplicationCard = ({ data, onRefresh }) => {
 
         <div className="mt-4 grid grid-cols-2 gap-4">
           <div>
+            <p className="text-sm text-gray-500">星系配置</p>
+            <p className="font-medium">
+              {data.multiToMulti_parameter.constellation}
+            </p>
+          </div>
+          <div>
             <p className="text-sm text-gray-500">傳輸路徑決策</p>
             <p className="font-medium">
               {data.multiToMulti_parameter.multiPathCriteria}

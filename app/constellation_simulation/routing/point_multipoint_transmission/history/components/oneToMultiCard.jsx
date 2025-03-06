@@ -28,7 +28,7 @@ const ApplicationCard = ({ data, onRefresh }) => {
   };
 
   const getConstellationLabel = (constellation) => {
-    const match = constellation.match(/TLE_(\d+)P_22Sats/);
+    const match = constellation.match(/(\d+)x22/);
     if (match && match[1]) {
       return `${match[1]} * 22`;
     }
@@ -118,6 +118,12 @@ const ApplicationCard = ({ data, onRefresh }) => {
         </div>
 
         <div className="mt-4 grid grid-cols-2 gap-4">
+          <div>
+            <p className="text-sm text-gray-500">星系配置</p>
+            <p className="font-medium">
+              {getConstellationLabel(data.oneToMulti_parameter.constellation)}
+            </p>
+          </div>
           <div>
             <p className="text-sm text-gray-500">傳輸路徑決策</p>
             <p className="font-medium">

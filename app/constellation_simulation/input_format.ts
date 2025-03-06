@@ -336,6 +336,16 @@ export const dynamic_recovery_reconstructionModifyRegenRoutingConfig = {
 
 export const point_multipoint_transmissionOneToMultiConfig = {
   fields: {
+    constellation: {
+      label: '星系配置',
+      type: 'select',
+      options: [
+        { value: '3x22', label: '3 * 22' },
+        { value: '6x22', label: '6 * 22' },
+        { value: '12x22', label: '12 * 22' }
+      ],
+      gridSpan: 1
+    },
     multiPathCriteria: {
       label: '傳輸路徑決策',
       type: 'select',
@@ -357,6 +367,7 @@ export const point_multipoint_transmissionOneToMultiConfig = {
     }
   },
   defaultValues: {
+    constellation: '3x22',
     ratio: '0.0001',
     multiPathCriteria: 'throughput'
   }
@@ -364,6 +375,16 @@ export const point_multipoint_transmissionOneToMultiConfig = {
 
 export const multipoint_multipoint_transmissionMultiToMultiConfig = {
   fields: {
+    constellation: {
+      label: '星系配置',
+      type: 'select',
+      options: [
+        { value: '3x22', label: '3 * 22' },
+        { value: '6x22', label: '6 * 22' },
+        { value: '12x22', label: '12 * 22' }
+      ],
+      gridSpan: 1
+    },
     multiPathCriteria: {
       label: '傳輸路徑決策',
       type: 'select',
@@ -385,6 +406,7 @@ export const multipoint_multipoint_transmissionMultiToMultiConfig = {
     }
   },
   defaultValues: {
+    constellation: '3x22',
     multiPathCriteria: 'throughput',
     ratio: '0.0001'
   }
