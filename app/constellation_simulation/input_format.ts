@@ -762,7 +762,7 @@ export const multibeamHandoverConfig = {
     frequencies_per_satellite: '10',
     cell_ut: '31Cell_220UT',
     simStartTime: '0',
-    simEndTime: '1',
+    simEndTime: '86399',
     cell_topology_mode: 'dynamic',
     reuse_factor: 'None',
     gso_protection_csv: ''
