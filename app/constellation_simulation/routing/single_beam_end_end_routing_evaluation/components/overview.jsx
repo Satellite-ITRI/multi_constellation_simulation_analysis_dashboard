@@ -51,7 +51,7 @@ export default function OverViewPage() {
     try {
       // ❶ 在送出前，先把 beamBandwidth 乘上 0.1 後，再用 toFixed + parseFloat 處理多餘小數
       const rawValue = Number(formData.islBandwidth) * 0.1;
-      const fixedValue = parseFloat(rawValue.toFixed(1));
+      const fixedValue = parseFloat(rawValue.toFixed(4));
       // 例如保留 6 位小數 (你可改成 1, 2, 或其他需要的位數)
 
       const updatedFormData = {

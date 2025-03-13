@@ -47,6 +47,14 @@ export default function OverViewPage() {
     setIsSubmitting(true);
 
     try {
+      const rawValue = Number(formData.avgISLPerSat);
+      const fixedValue = parseFloat(rawValue.toFixed(1));
+      // 例如保留 6 位小數 (你可改成 1, 2, 或其他需要的位數)
+
+      const updatedFormData = {
+        ...formData,
+        avgISLPerSat: fixedValue
+      };
       // 取得我們想要檢查的鍵值 (可自行排除不想檢查的欄位)
       const keysToCheck = Object.keys(
         energy_saving_connection_isl_disconnectionIslHoppingConfig.defaultValues
@@ -56,7 +64,7 @@ export default function OverViewPage() {
       const duplicateExperiment = applications?.find((app) => {
         const params = app.islHopping_parameter || {};
         return keysToCheck.every((key) => {
-          return String(params[key]) === String(formData[key]);
+          return String(params[key]) === String(updatedFormData[key]);
         });
       });
       if (duplicateExperiment) {
@@ -75,7 +83,7 @@ export default function OverViewPage() {
       const islHoppingName = generateIslHoppingName();
 
       // 將 formData 的欄位動態組成 islHopping_parameter
-      const islHopping_parameter = Object.entries(formData).reduce(
+      const islHopping_parameter = Object.entries(updatedFormData).reduce(
         (acc, [key, value]) => {
           acc[key] = String(value);
           return acc;

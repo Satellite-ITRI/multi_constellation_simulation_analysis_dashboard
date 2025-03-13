@@ -90,7 +90,22 @@ export default function SimulationForm({
             />
           </div>
         );
-
+      case 'text':
+        return (
+          <div className="space-y-2">
+            <label className="text-sm font-medium">{fieldConfig.label}</label>
+            <Input
+              type="text"
+              value={formData[fieldName]}
+              onChange={(e) =>
+                setFormData((prev: any) => ({
+                  ...prev,
+                  [fieldName]: e.target.value
+                }))
+              }
+            />
+          </div>
+        );
       default:
         return null;
     }

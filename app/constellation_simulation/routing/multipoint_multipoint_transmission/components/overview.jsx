@@ -47,6 +47,14 @@ export default function OverViewPage() {
     setIsSubmitting(true);
 
     try {
+      const rawValue = Number(formData.ratio);
+      const fixedValue = parseFloat(rawValue.toFixed(4));
+      // 例如保留 6 位小數 (你可改成 1, 2, 或其他需要的位數)
+
+      const updatedFormData = {
+        ...formData,
+        ratio: fixedValue
+      };
       // 取得我們想要檢查的鍵值 (可自行排除不想檢查的欄位)
       const keysToCheck = Object.keys(
         multipoint_multipoint_transmissionMultiToMultiConfig.defaultValues
@@ -56,7 +64,7 @@ export default function OverViewPage() {
       const duplicateExperiment = applications?.find((app) => {
         const params = app.multiToMulti_parameter || {};
         return keysToCheck.every((key) => {
-          return String(params[key]) === String(formData[key]);
+          return String(params[key]) === String(updatedFormData[key]);
         });
       });
       if (duplicateExperiment) {
@@ -75,7 +83,7 @@ export default function OverViewPage() {
       const multiToMultiName = generateMultiToMultiName();
 
       // 將 formData 的欄位動態組成 multiToMulti_parameter
-      const multiToMulti_parameter = Object.entries(formData).reduce(
+      const multiToMulti_parameter = Object.entries(updatedFormData).reduce(
         (acc, [key, value]) => {
           acc[key] = String(value);
           return acc;

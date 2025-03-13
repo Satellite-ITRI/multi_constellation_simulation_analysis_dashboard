@@ -113,30 +113,17 @@ export const connection_time_simulationConnectedDurationConfig = {
     },
     stationLatitude: {
       label: '站點緯度',
-      type: 'decimal',
-      validation: {
-        min: 0,
-        max: 30,
-        required: true
-      },
+      type: 'text',
       gridSpan: 1
     },
     stationLongitude: {
       label: '站點經度',
-      type: 'decimal',
-      validation: {
-        min: 0,
-        max: 130,
-        required: true
-      },
+      type: 'text',
       gridSpan: 1
     },
     stationAltitude: {
       label: '站點高度',
-      type: 'decimal',
-      validation: {
-        required: true
-      },
+      type: 'text',
       gridSpan: 1
     }
   },
@@ -245,12 +232,7 @@ export const energy_saving_connection_isl_disconnectionIslHoppingConfig = {
     },
     avgISLPerSat: {
       label: '平均ISL連結數',
-      type: 'decimal',
-      validation: {
-        min: 0,
-        max: 3,
-        required: true
-      },
+      type: 'text',
       gridSpan: 1
     },
     degreeConstraint: {
@@ -306,12 +288,7 @@ export const dynamic_recovery_reconstructionModifyRegenRoutingConfig = {
     },
     avgISLPerSat: {
       label: '平均ISL連結數',
-      type: 'decimal',
-      validation: {
-        min: 0,
-        max: 3,
-        required: true
-      },
+      type: 'text',
       gridSpan: 1
     },
     degreeConstraint: {
@@ -357,12 +334,7 @@ export const point_multipoint_transmissionOneToMultiConfig = {
     },
     ratio: {
       label: '傳輸數量比例',
-      type: 'decimal',
-      validation: {
-        min: 0,
-        max: 1,
-        required: true
-      },
+      type: 'text',
       gridSpan: 1
     }
   },
@@ -435,22 +407,14 @@ export const energy_efficient_routing_evaluationSaveErRoutingConfig = {
     },
     ratio: {
       label: '傳輸數量比例',
-      type: 'decimal',
-      validation: {
-        min: 0,
-        max: 1,
-        required: true
-      },
+      type: 'text',
+
       gridSpan: 1
     },
     globalIslPacketDropRate: {
       label: 'ISL掉包率',
-      type: 'number',
-      validation: {
-        min: 0,
-        max: 1,
-        required: true
-      },
+      type: 'text',
+
       gridSpan: 1
     }
   },
@@ -509,12 +473,7 @@ export const single_beam_end_end_routing_evaluationEndToEndRoutingConfig = {
     },
     islBandwidth: {
       label: 'ISL頻寬(Gbps)',
-      type: 'number',
-      validation: {
-        min: 1,
-        max: 10,
-        required: true
-      },
+      type: 'text',
       gridSpan: 1
     }
   },
