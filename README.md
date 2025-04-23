@@ -1,66 +1,94 @@
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/9113740/201498864-2a900c64-d88f-4ed4-b5cf-770bcb57e1f5.png">
-  <source media="(prefers-color-scheme: light)" srcset="https://user-images.githubusercontent.com/9113740/201498152-b171abb8-9225-487a-821c-6ff49ee48579.png">
-</picture>
+# 專案交接文件：多星座模擬分析儀表板
 
-<div align="center"><strong>Next.js 14 Admin Dashboard Starter Template With Shadcn-ui</strong></div>
-<div align="center">Built with the Next.js App Router</div>
-<br />
-<div align="center">
-<a href="https://next-shadcn-dashboard-starter.vercel.app">View Demo</a>
-<span>
-</div>
+## 專案簡介
+本專案為「多星座模擬分析儀表板」，基於 Next.js 14 + TypeScript 開發，整合 Tailwind CSS、shadcn-ui、Zustand 狀態管理、Auth.js 驗證等技術，提供衛星星座模擬、資料查詢、管理與分析功能。
 
-## Overview
+## 目錄結構說明
 
-This is a starter template using the following stack:
+- `/app`：主要頁面與路由邏輯，包含模擬、參數設定、查詢、歷史紀錄等子模組。
+    - `constellation_simulation/`：星座模擬主功能模組，含 service 及多層次子頁面。
+    - `api/`：API 端點相關程式。
+    - `globals.css`：全域樣式。
+    - `layout.tsx`：全域佈局。
+- `/components`：共用元件（UI、功能模組、彈窗、表單等），如 `base/`、`ui/`、`modal/` 等。
+- `/constants`：專案常數、模擬參數、假資料等。
+- `/hooks`：自訂 React hooks（如響應式、表單、多步驟流程等）。
+- `/lib`：工具、狀態管理（如 `store.ts`）、表單 schema、搜尋參數等。
+- `/public`：靜態資源（圖片、PDF 報告等）。
+- `/types`：TypeScript 型別定義。
 
-- Framework - [Next.js 14](https://nextjs.org/13)
-- Language - [TypeScript](https://www.typescriptlang.org)
-- Styling - [Tailwind CSS](https://tailwindcss.com)
-- Components - [Shadcn-ui](https://ui.shadcn.com)
-- Schema Validations - [Zod](https://zod.dev)
-- State Management - [Zustand](https://zustand-demo.pmnd.rs)
-- Search params state manager - [Nuqs](https://nuqs.47ng.com/)
-- Auth - [Auth.js](https://authjs.dev/)
-- Tables - [Tanstack Tables](https://ui.shadcn.com/docs/components/data-table)
-- Forms - [React Hook Form](https://ui.shadcn.com/docs/components/form)
-- Command+k interface - [kbar](https://kbar.vercel.app/)
-- Linting - [ESLint](https://eslint.org)
-- Pre-commit Hooks - [Husky](https://typicode.github.io/husky/)
-- Formatting - [Prettier](https://prettier.io)
+## 主要功能
+- 星座模擬參數設定與執行
+- Handover/Phase 歷史查詢、刪除、下載結果
+- 多步驟表單、即時狀態顯示
+- 角色驗證與權限管理
+- 資料表格、搜尋、篩選、圖表分析
 
-_If you are looking for a React admin dashboard starter, here is the [repo](https://github.com/Kiranism/react-shadcn-dashboard-starter)._
+## 安裝與啟動
+1. 安裝依賴：
+   ```bash
+   npm install
+   ```
+2. 設定環境變數：
+   - 複製 `env.example.txt` 為 `.env.local`，補齊必要設定。
+3. 啟動開發伺服器：
+   ```bash
+   npm run dev
+   ```
 
-## Pages
+## 開發與維護注意事項
+- 重要 service 檔案皆有註解，若需擴充 API，請參考 `/app/constellation_simulation/constellation/service.jsx` 範例。
+- UI 元件建議放在 `/components/ui/`，可複用設計。
+- 狀態管理統一使用 `/lib/store.ts`。
+- 若有新模組，請於 README 補充。
 
-| Pages                                                                                   | Specifications                                                                                                                      |
-| :-------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------- |
-| [Signup](https://next-shadcn-dashboard-starter.vercel.app/)                             | Authentication with **NextAuth** supports Social logins and email logins (Enter dummy email for demo).                              |
-| [Dashboard](https://next-shadcn-dashboard-starter.vercel.app/dashboard)                 | Cards with recharts graphs for analytics.                                                                                           |
-| [Employee](https://next-shadcn-dashboard-starter.vercel.app/dashboard/employee)         | Tanstack tables with server side searching, filter, pagination by Nuqs which is a Type-safe search params state manager in nextjs). |
-| [Employee/new](https://next-shadcn-dashboard-starter.vercel.app/dashboard/employee/new) | A Employee Form with shadcn form (react-hook-form + zod).                                                                           |
-| [Product](https://next-shadcn-dashboard-starter.vercel.app/dashboard/product)           | Tanstack tables with server side searching, filter, pagination by Nuqs which is a Type-safe search params state manager in nextjs   |
-| [Product/new](https://next-shadcn-dashboard-starter.vercel.app/dashboard/product/new)   | A Product Form with shadcn form (react-hook-form + zod).                                                                            |
-| [Profile](https://next-shadcn-dashboard-starter.vercel.app/dashboard/profile)           | Mutistep dynamic forms using react-hook-form and zod for form validation.                                                           |
-| [Kanban Board](https://next-shadcn-dashboard-starter.vercel.app/dashboard/kanban)       | A Drag n Drop task management board with dnd-kit and zustand to persist state locally.                                              |
-| [Not Found](https://next-shadcn-dashboard-starter.vercel.app/dashboard/notfound)        | Not Found Page Added in the root level                                                                                              |
-| -                                                                                       | -                                                                                                                                   |
+## /app/constellation_simulation/input_format.ts 使用方法
 
-## Getting Started
+`/app/constellation_simulation/input_format.ts` 為本專案所有「模擬參數表單」的欄位結構、驗證規則與預設值集中管理檔案。
 
-Follow these steps to clone the repository and start the development server:
+### 功能說明
+- 定義各種模擬情境（如覆蓋分析、ISL節能、路由評估等）所需的表單欄位格式與預設參數。
+- 由 `SimulationForm` 等元件自動讀取 config，動態渲染對應欄位與驗證。
+- 欄位型態、選項、驗證規則、顯示/隱藏等皆可於此集中調整。
 
-- `git clone https://github.com/Kiranism/next-shadcn-dashboard-starter.git`
-- `npm install`
-- Create a `.env.local` file by copying the example environment file:
-  `cp env.example.txt .env.local`
-- Add the required environment variables to the `.env.local` file.
-- `npm run dev`
+### 使用方式
+1. **新增/修改模擬表單欄位：**
+   - 直接於本檔案新增或修改對應的 config 物件（如 `coverage_analysisCoverageConfig`）。
+   - 每個 config 物件下的 `fields` 定義欄位細節，`defaultValues` 設定預設參數。
+2. **表單元件自動對應：**
+   - `SimulationForm` 會依據 config 內容自動產生欄位、驗證與預設值，無須於元件硬編欄位。
+3. **欄位說明與註解：**
+   - 本檔案已針對各 config 物件與型別定義加上詳細中文註解，方便理解與維護。
 
-You should now be able to access the application at http://localhost:3000.
+### 範例
+```typescript
+export const coverage_analysisCoverageConfig: PageConfig = {
+  fields: {
+    TLE_inputFileName: {
+      label: '星系配置',
+      type: 'select',
+      options: [ ... ],
+      gridSpan: 2
+    },
+    minLatitude: {
+      label: '最小緯度',
+      type: 'decimal',
+      validation: { required: true, min: -90, max: 0 },
+      gridSpan: 1
+    },
+    // ... 其他欄位
+  },
+  defaultValues: {
+    TLE_inputFileName: 'TLE_3P_22Sats_29deg_F1.txt',
+    minLatitude: '-50',
+    // ...
+  }
+};
+```
 
-> [!WARNING]  
-> After cloning or forking the repository, be cautious when pulling or syncing with the latest changes, as this may result in breaking conflicts.
+### 注意事項
+- 欄位型態支援：`select`、`number`、`text`、`decimal`。
+- 若需動態顯示/隱藏欄位，可用 `show: false` 控制。
+- 欲擴充新模擬情境，請依現有格式新增 export config。
 
-Cheers! 🥂
+---

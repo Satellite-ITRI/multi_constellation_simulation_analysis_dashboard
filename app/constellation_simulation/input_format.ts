@@ -1,13 +1,27 @@
 // input_format.ts
+/**
+ * 本檔案定義多星座模擬分析儀表板所有模擬情境的表單欄位格式、預設值與驗證規則。
+ * 每個 export config 物件對應一種模擬情境，供 SimulationForm 等表單元件動態渲染欄位與驗證。
+ * 方便維護者快速理解各參數意義與調整欄位。
+ */
 
 export interface InputOption {
-  value: string | number;
-  label: string;
+  value: string | number; // 欄位可選值
+  label: string;         // 顯示名稱
 }
 
+/**
+ * PageConfigField 代表單一表單欄位的格式與驗證規則
+ * - label: 欄位顯示名稱
+ * - type: 欄位型態（select/number/text/decimal）
+ * - options: 若為 select，提供選項
+ * - validation: 驗證規則（最小/最大/必填）
+ * - gridSpan: 欄位佔據的網格數
+ * - show: 是否顯示（可用於動態顯示/隱藏）
+ */
 export interface PageConfigField {
   label: string;
-  type: 'select' | 'number' | 'text' | 'decimal'; // 新增 'decimal'
+  type: 'select' | 'number' | 'text' | 'decimal';
   options?: InputOption[];
   validation?: {
     min?: number;
@@ -18,6 +32,11 @@ export interface PageConfigField {
   show?: boolean;
 }
 
+/**
+ * PageConfig 代表一組模擬表單的格式
+ * - fields: 各個欄位的設定
+ * - defaultValues: 對應欄位的預設值
+ */
 export interface PageConfig {
   title?: string;
   fields: {
@@ -28,6 +47,13 @@ export interface PageConfig {
   };
 }
 
+/**
+ * 覆蓋分析模擬表單設定
+ * - TLE_inputFileName: 星系配置選擇
+ * - minLatitude/maxLatitude: 緯度範圍
+ * - leastSatCount: 覆蓋所需最少衛星數
+ * - simStartTime/simEndTime: 模擬時間區間
+ */
 export const coverage_analysisCoverageConfig: PageConfig = {
   fields: {
     TLE_inputFileName: {
@@ -99,7 +125,12 @@ export const coverage_analysisCoverageConfig: PageConfig = {
   }
 };
 
-export const connection_time_simulationConnectedDurationConfig = {
+/**
+ * 連線時長模擬表單設定
+ * - TLE_inputFileName: 星系配置
+ * - stationLatitude/Longitude/Altitude: 地面站座標
+ */
+export const connection_time_simulationConnectedDurationConfig: PageConfig = {
   fields: {
     TLE_inputFileName: {
       label: '星系配置',
@@ -148,7 +179,12 @@ export const connection_time_simulationConnectedDurationConfig = {
   }
 };
 
-export const phase_parameter_selectionPhaseConfig = {
+/**
+ * 參數選擇模擬表單設定
+ * - TLE_inputFileName: 星系配置
+ * - ISLLinkMethod: ISL連結方法
+ */
+export const phase_parameter_selectionPhaseConfig: PageConfig = {
   fields: {
     TLE_inputFileName: {
       label: '星系配置',
@@ -179,7 +215,13 @@ export const phase_parameter_selectionPhaseConfig = {
   }
 };
 
-export const constellation_configuration_strategyConstellationStrategyConfig = {
+/**
+ * 星系策略模擬表單設定
+ * - TLE_inputFileName: 星系配置
+ * - observerId: 觀察者衛星ID
+ * - ISLLinkMethod: ISL連結方法
+ */
+export const constellation_configuration_strategyConstellationStrategyConfig: PageConfig = {
   fields: {
     TLE_inputFileName: {
       label: '星系配置',
@@ -191,7 +233,6 @@ export const constellation_configuration_strategyConstellationStrategyConfig = {
       ],
       gridSpan: 1
     },
-
     observerId: {
       label: '觀察者衛星ID',
       type: 'number',
@@ -220,7 +261,14 @@ export const constellation_configuration_strategyConstellationStrategyConfig = {
   }
 };
 
-export const energy_saving_connection_isl_disconnectionIslHoppingConfig = {
+/**
+ * ISL節能模擬表單設定
+ * - TLE_inputFileName: 星系配置
+ * - ISLLinkMethod: ISL連結方法
+ * - avgISLPerSat: 平均ISL連結數
+ * - degreeConstraint: ISL最大連線數
+ */
+export const energy_saving_connection_isl_disconnectionIslHoppingConfig: PageConfig = {
   fields: {
     TLE_inputFileName: {
       label: '星系配置',
@@ -272,7 +320,15 @@ export const energy_saving_connection_isl_disconnectionIslHoppingConfig = {
   }
 };
 
-export const dynamic_recovery_reconstructionModifyRegenRoutingConfig = {
+/**
+ * 動態恢復/重建模擬表單設定
+ * - TLE_inputFileName: 星系配置
+ * - ISLLinkMethod: ISL連結方法
+ * - Action: 動作
+ * - avgISLPerSat: 平均ISL連結數
+ * - degreeConstraint: ISL最大連線數
+ */
+export const dynamic_recovery_reconstructionModifyRegenRoutingConfig: PageConfig = {
   fields: {
     TLE_inputFileName: {
       label: '星系配置',
@@ -334,85 +390,14 @@ export const dynamic_recovery_reconstructionModifyRegenRoutingConfig = {
   }
 };
 
-export const point_multipoint_transmissionOneToMultiConfig = {
-  fields: {
-    constellation: {
-      label: '星系配置',
-      type: 'select',
-      options: [
-        { value: '3x22', label: '3 * 22' },
-        { value: '6x22', label: '6 * 22' },
-        { value: '12x22', label: '12 * 22' }
-      ],
-      gridSpan: 1
-    },
-    multiPathCriteria: {
-      label: '傳輸路徑決策',
-      type: 'select',
-      options: [
-        { value: 'throughput', label: 'throughput' },
-        { value: 'None', label: 'None' }
-      ],
-      gridSpan: 1
-    },
-    ratio: {
-      label: '傳輸數量比例',
-      type: 'decimal',
-      validation: {
-        min: 0,
-        max: 1,
-        required: true
-      },
-      gridSpan: 1
-    }
-  },
-  defaultValues: {
-    constellation: '3x22',
-    ratio: '0.0001',
-    multiPathCriteria: 'throughput'
-  }
-};
-
-export const multipoint_multipoint_transmissionMultiToMultiConfig = {
-  fields: {
-    constellation: {
-      label: '星系配置',
-      type: 'select',
-      options: [
-        { value: '3x22', label: '3 * 22' },
-        { value: '6x22', label: '6 * 22' },
-        { value: '12x22', label: '12 * 22' }
-      ],
-      gridSpan: 1
-    },
-    multiPathCriteria: {
-      label: '傳輸路徑決策',
-      type: 'select',
-      options: [
-        { value: 'throughput', label: 'throughput' },
-        { value: 'None', label: 'None' }
-      ],
-      gridSpan: 1
-    },
-    ratio: {
-      label: '傳輸數量比例',
-      type: 'decimal',
-      validation: {
-        min: 0,
-        max: 1,
-        required: true
-      },
-      gridSpan: 1
-    }
-  },
-  defaultValues: {
-    constellation: '3x22',
-    multiPathCriteria: 'throughput',
-    ratio: '0.0001'
-  }
-};
-
-export const energy_efficient_routing_evaluationSaveErRoutingConfig = {
+/**
+ * 能效路由評估模擬表單設定
+ * - blccVersion: 星系配置
+ * - multiPathCriteria: 傳輸路徑決策
+ * - ratio: 傳輸數量比例
+ * - globalIslPacketDropRate: ISL掉包率
+ */
+export const energy_efficient_routing_evaluationSaveErRoutingConfig: PageConfig = {
   fields: {
     blccVersion: {
       label: '星系配置',
@@ -462,7 +447,15 @@ export const energy_efficient_routing_evaluationSaveErRoutingConfig = {
   }
 };
 
-export const single_beam_end_end_routing_evaluationEndToEndRoutingConfig = {
+/**
+ * 單波束端到端路由評估模擬表單設定
+ * - TLE_inputFileName: 星系配置
+ * - handoverDecision: 換手決策
+ * - cell_ut: 評估情境
+ * - flBeamCount: FT波束數量
+ * - islBandwidth: ISL頻寬
+ */
+export const single_beam_end_end_routing_evaluationEndToEndRoutingConfig: PageConfig = {
   fields: {
     TLE_inputFileName: {
       label: '星系配置',
@@ -531,7 +524,16 @@ export const single_beam_end_end_routing_evaluationEndToEndRoutingConfig = {
   }
 };
 
-export const singlebeamSingleBeamConfig = {
+/**
+ * 單波束設定模擬表單設定
+ * - TLE_inputFileName: 星系配置
+ * - handoverStrategy: 換手策略
+ * - handoverDecision: 換手決策
+ * - areaStationLatitudes: 站點緯度
+ * - areaStationLongitudes: 站點經度
+ * - areaStationAltitudes: 站點高度
+ */
+export const singlebeamSingleBeamConfig: PageConfig = {
   fields: {
     TLE_inputFileName: {
       label: '星系配置',
@@ -599,7 +601,16 @@ export const singlebeamSingleBeamConfig = {
   }
 };
 
-export const gso_protectionGsoConfig = {
+/**
+ * GSO保護模擬表單設定
+ * - constellation: 星系配置
+ * - handover_strategy: 換手策略
+ * - handover_decision: 換手時機
+ * - cell_ut: Cell/UT配置
+ * - beams_per_satellite: 波束數量
+ * - frequencies_per_satellite: 衛星頻率數
+ */
+export const gso_protectionGsoConfig: PageConfig = {
   fields: {
     constellation: {
       label: '星系配置',
@@ -668,7 +679,19 @@ export const gso_protectionGsoConfig = {
   }
 };
 
-export const multibeamHandoverConfig = {
+/**
+ * 多波束換手模擬表單設定
+ * - constellation: 星系配置
+ * - handover_strategy: 換手策略
+ * - handover_decision: 換手時機
+ * - cell_topology_mode: 頻率規劃
+ * - gsoProtectionMode: GSO保護
+ * - replacement_mode: 波束交換
+ * - cell_ut: 評估情境
+ * - beams_per_satellite: 波束數量
+ * - frequencies_per_satellite: 衛星頻率數
+ */
+export const multibeamHandoverConfig: PageConfig = {
   fields: {
     constellation: {
       label: '星系配置',
@@ -766,5 +789,95 @@ export const multibeamHandoverConfig = {
     cell_topology_mode: 'dynamic',
     reuse_factor: 'None',
     gso_protection_csv: ''
+  }
+};
+
+/**
+ * 一對多傳輸模擬表單設定
+ * - constellation: 星系配置
+ * - multiPathCriteria: 傳輸路徑決策
+ * - ratio: 傳輸數量比例
+ */
+export const point_multipoint_transmissionOneToMultiConfig: PageConfig = {
+  fields: {
+    constellation: {
+      label: '星系配置',
+      type: 'select',
+      options: [
+        { value: '3x22', label: '3 * 22' },
+        { value: '6x22', label: '6 * 22' },
+        { value: '12x22', label: '12 * 22' }
+      ],
+      gridSpan: 1
+    },
+    multiPathCriteria: {
+      label: '傳輸路徑決策',
+      type: 'select',
+      options: [
+        { value: 'throughput', label: 'throughput' },
+        { value: 'None', label: 'None' }
+      ],
+      gridSpan: 1
+    },
+    ratio: {
+      label: '傳輸數量比例',
+      type: 'decimal',
+      validation: {
+        min: 0,
+        max: 1,
+        required: true
+      },
+      gridSpan: 1
+    }
+  },
+  defaultValues: {
+    constellation: '3x22',
+    ratio: '0.0001',
+    multiPathCriteria: 'throughput'
+  }
+};
+
+/**
+ * 多對多傳輸模擬表單設定
+ * - constellation: 星系配置
+ * - multiPathCriteria: 傳輸路徑決策
+ * - ratio: 傳輸數量比例
+ */
+export const multipoint_multipoint_transmissionMultiToMultiConfig: PageConfig = {
+  fields: {
+    constellation: {
+      label: '星系配置',
+      type: 'select',
+      options: [
+        { value: '3x22', label: '3 * 22' },
+        { value: '6x22', label: '6 * 22' },
+        { value: '12x22', label: '12 * 22' }
+      ],
+      gridSpan: 1
+    },
+    multiPathCriteria: {
+      label: '傳輸路徑決策',
+      type: 'select',
+      options: [
+        { value: 'throughput', label: 'throughput' },
+        { value: 'None', label: 'None' }
+      ],
+      gridSpan: 1
+    },
+    ratio: {
+      label: '傳輸數量比例',
+      type: 'decimal',
+      validation: {
+        min: 0,
+        max: 1,
+        required: true
+      },
+      gridSpan: 1
+    }
+  },
+  defaultValues: {
+    constellation: '3x22',
+    multiPathCriteria: 'throughput',
+    ratio: '0.0001'
   }
 };

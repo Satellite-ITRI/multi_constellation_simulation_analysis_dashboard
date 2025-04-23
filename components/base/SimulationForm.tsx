@@ -9,17 +9,42 @@ import {
   SelectValue
 } from '@/components/ui/select';
 
+/**
+ * SimulationForm 元件 props 介面
+ */
 interface SimulationFormProps {
+  /**
+   * 當前表單資料
+   */
   formData: any;
+  /**
+   * 設定表單資料的函式
+   */
   setFormData: (data: any) => void;
+  /**
+   * 欄位設定（包含欄位型態、顯示、驗證等）
+   */
   config: any;
 }
 
+/**
+ * SimulationForm 元件
+ * 用於動態渲染模擬參數表單。根據 config 內容自動產生欄位，支援 select、number 等型態。
+ * @param formData 當前表單資料
+ * @param setFormData 設定表單資料的函式
+ * @param config 欄位設定（包含欄位型態、顯示、驗證等）
+ */
 export default function SimulationForm({
   formData,
   setFormData,
   config
 }: SimulationFormProps) {
+  /**
+   * 動態渲染單一欄位
+   * @param fieldName 欄位名稱
+   * @param fieldConfig 欄位設定
+   * @returns React 元素
+   */
   const renderField = (fieldName: string, fieldConfig: any) => {
     // 如果 show === false，就直接不渲染
     if (fieldConfig.show === false) {
@@ -28,6 +53,7 @@ export default function SimulationForm({
 
     switch (fieldConfig.type) {
       case 'select':
+        // 下拉選單欄位
         return (
           <div className="space-y-2">
             <label className="text-sm font-medium">{fieldConfig.label}</label>
@@ -52,11 +78,13 @@ export default function SimulationForm({
         );
 
       case 'number':
+        // 數值輸入欄位
         return (
           <div className="space-y-2">
             <label className="text-sm font-medium">{fieldConfig.label}</label>
             <Input
               type="number"
+              step="any" // 允許輸入小數
               value={formData[fieldName]}
               onChange={(e) =>
                 setFormData((prev: any) => ({
@@ -69,9 +97,8 @@ export default function SimulationForm({
             />
           </div>
         );
-
-      // 新增 decimal case：允許輸入浮點數，但在 state 中儲存為字串
       case 'decimal':
+        // 小數輸入欄位
         return (
           <div className="space-y-2">
             <label className="text-sm font-medium">{fieldConfig.label}</label>
@@ -90,12 +117,12 @@ export default function SimulationForm({
             />
           </div>
         );
-
       default:
         return null;
     }
   };
 
+  // 主渲染區塊，依據 config.fields 動態產生所有欄位
   return (
     <div className="grid grid-cols-1 gap-6">
       {Object.entries(config.fields).map(

@@ -28,8 +28,13 @@ const chartConfig = {
   }
 };
 
+/**
+ * StrategyMetricsChart 元件
+ * 顯示網路策略的吞吐量與延遲指標，並計算趨勢。
+ * @param data 要顯示的指標資料陣列
+ */
 export function StrategyMetricsChart({ data }) {
-  // 計算吞吐量趨勢
+  // 計算吞吐量趨勢百分比
   const lastTwo = data.slice(-2);
   const trend = (
     ((lastTwo[1].throughput - lastTwo[0].throughput) / lastTwo[0].throughput) *
@@ -44,6 +49,7 @@ export function StrategyMetricsChart({ data }) {
         <CardDescription>Throughput and Latency Indicators</CardDescription>
       </CardHeader>
       <CardContent>
+        {/* 使用 Recharts 畫出吞吐量與延遲折線圖 */}
         <ResponsiveContainer width="100%" height={300}>
           <LineChart
             data={data}
@@ -77,6 +83,7 @@ export function StrategyMetricsChart({ data }) {
               domain={[0, 50]}
               orientation="right"
             />
+            {/* 吞吐量折線 */}
             <Line
               yAxisId="left"
               type="monotone"
@@ -85,6 +92,7 @@ export function StrategyMetricsChart({ data }) {
               strokeWidth={2}
               dot={false}
             />
+            {/* 延遲折線 */}
             <Line
               yAxisId="right"
               type="monotone"
