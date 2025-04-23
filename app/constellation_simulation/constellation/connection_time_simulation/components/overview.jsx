@@ -49,6 +49,20 @@ export default function OverViewPage() {
     setIsSubmitting(true);
 
     try {
+      const rawValue1 = Number(formData.stationLatitude);
+      const fixedValue1 = parseFloat(rawValue1.toFixed(1));
+      const rawValue2 = Number(formData.stationLongitude);
+      const fixedValue2 = parseFloat(rawValue2.toFixed(1));
+      const rawValue3 = Number(formData.stationAltitude);
+      const fixedValue3 = parseFloat(rawValue3.toFixed(2));
+      // 例如保留 6 位小數 (你可改成 1, 2, 或其他需要的位數)
+
+      const updatedFormData = {
+        ...formData,
+        stationLatitude: fixedValue1,
+        stationLongitude: fixedValue2,
+        stationAltitude: fixedValue3
+      };
       // 取得我們想要檢查的鍵值 (可自行排除不想檢查的欄位)
       const keysToCheck = Object.keys(
         connection_time_simulationConnectedDurationConfig.defaultValues
@@ -58,7 +72,7 @@ export default function OverViewPage() {
       const duplicateExperiment = applications?.find((app) => {
         const params = app.connectedDuration_parameter || {};
         return keysToCheck.every((key) => {
-          return String(params[key]) === String(formData[key]);
+          return String(params[key]) === String(updatedFormData[key]);
         });
       });
       if (duplicateExperiment) {
@@ -79,13 +93,12 @@ export default function OverViewPage() {
       const connectedDurationName = generateConnectedDurationName();
 
       // 將 formData 的欄位動態組成 connectedDuration_parameter
-      const connectedDuration_parameter = Object.entries(formData).reduce(
-        (acc, [key, value]) => {
-          acc[key] = String(value);
-          return acc;
-        },
-        {}
-      );
+      const connectedDuration_parameter = Object.entries(
+        updatedFormData
+      ).reduce((acc, [key, value]) => {
+        acc[key] = String(value);
+        return acc;
+      }, {});
 
       // 組合最終 payload (不再出現 formData 層)
       const payload = {
